@@ -25,13 +25,16 @@ internal struct Crypto {
             )
 
         let encryptedBuffer = sealedBox.ciphertext
+        let authenticationTag = sealedBox.tag
+
+        let combined = encryptedBuffer + authenticationTag
 
         return formatEncryptedData(
             evVersion: config.evVersion,
             datatype: dataType,
             keyIv: keyIv.base64EncodedString(),
             ecdhPublicKey: ecdhPublicKey,
-            encryptedData: encryptedBuffer.base64EncodedString(),
+            encryptedData: combined.base64EncodedString(),
             isDebug: isDebug
         )
 
