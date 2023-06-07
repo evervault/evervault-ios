@@ -82,7 +82,7 @@ func deriveSharedSecret(ecdh: P256.KeyAgreement.PrivateKey, publicKey: String, e
     let sharedSecret = try ecdh.sharedSecretFromKeyAgreement(with: importedPublicKey)
 
     // Export the ephemeral public key and the secret key as Data
-    let exportableEphemeralPublicKey = encodePublicKey(decompressedKeyData: ephemeralPublicKey.rawRepresentation)!
+    let exportableEphemeralPublicKey = encodePublicKey(decompressedKeyData: ephemeralPublicKey.x963Representation)!
 
 
     let exportableSecret = sharedSecret.withUnsafeBytes { secretPtr in
