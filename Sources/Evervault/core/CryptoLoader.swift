@@ -1,7 +1,7 @@
 import CryptoKit
 import Foundation
 
-actor KeysLoader {
+actor CryptoLoader {
 
     private var activeTask: Task<Crypto, Error>?
     private var cachedKey: Crypto?
@@ -16,7 +16,7 @@ actor KeysLoader {
         self.isInDebugMode = isInDebugMode
     }
 
-    func loadKeys() async throws -> Crypto {
+    func loadCipher() async throws -> DataCipher {
         if let activeTask {
             return try await activeTask.value
         }
@@ -106,4 +106,5 @@ enum CryptoError: Error {
     case invalidPublicKey
     case randomGenerationFailed
     case invalidPlaintext
+    case notPossibleToHandleDataType
 }

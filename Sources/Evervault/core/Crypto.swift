@@ -1,18 +1,14 @@
 import CryptoKit
 import Foundation
 
-internal struct Crypto {
+internal struct Crypto: DataCipher {
     var ecdhTeamKey: Data
     var ecdhPublicKey: P256.KeyAgreement.PublicKey
     var derivedSecret: Data
     var config: EncryptionConfig
     var isDebug: Bool
 
-    func encrypt(data: String) throws -> String {
-        return try encryptString(string: data, dataType: "string")
-    }
-
-    private func encryptString(string: String, dataType: String) throws -> String {
+    func encryptString(string: String, dataType: String) throws -> String {
         let keyIv = try generateBytes(byteLength: config.ivLength)
 
         let symmetricKey = SymmetricKey(data: derivedSecret)

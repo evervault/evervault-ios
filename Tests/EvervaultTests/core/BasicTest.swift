@@ -10,7 +10,9 @@ final class BasicTest: XCTestCase {
         Evervault.shared.configure(
             teamId: ProcessInfo.processInfo.environment["VITE_EV_TEAM_UUID"]!,
             appId: ProcessInfo.processInfo.environment["VITE_EV_APP_UUID"]!
-//            customConfig: CustomConfig(publicKey: publicKey)
+//            customConfig: CustomConfig(
+//                isDebugMode: true
+//            )
         )
     }
 

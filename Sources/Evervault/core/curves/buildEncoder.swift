@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 func buildEncoder(curveValues: P256Constants) -> (_ decompressedKey: String) -> Data? {
     return { decompressedKey in
         let hexEncodedKey = ASN1.encode(

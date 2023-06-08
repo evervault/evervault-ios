@@ -50,19 +50,20 @@ fileprivate struct Client {
     private let http: Http
     private let debugMode: Bool?
 
-    private let keysLoader: KeysLoader
+    private let cryptoLoader: CryptoLoader
 
     init(config: Config, http: Http, debugMode: Bool?) {
         self.config = config
         self.http = http
         self.debugMode = debugMode
-        self.keysLoader = KeysLoader(config: config, http: http, isInDebugMode: debugMode)
+        self.cryptoLoader = CryptoLoader(config: config, http: http, isInDebugMode: debugMode)
     }
 
     public func encrypt(_ data: String) async throws -> String {
-        let crypto = try await keysLoader.loadKeys()
+        let cipher = try await cryptoLoader.loadCipher()
+        let handlers = DataHandlers(cipher: cipher)
 
-        return try crypto.encrypt(data: data)
+        return try handlers.encrypt(data: data)
     }
 }
 
