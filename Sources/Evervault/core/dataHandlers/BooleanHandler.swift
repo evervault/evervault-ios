@@ -8,7 +8,7 @@ internal struct BooleanHandler: DataHandler {
         data is Bool
     }
 
-    func encrypt(data: Any) throws -> String {
+    func encrypt(data: Any, context: DataHandlerContext) throws -> Any {
         try cipher.encryptString(string: String(data as! Bool), dataType: "boolean")
     }
 }

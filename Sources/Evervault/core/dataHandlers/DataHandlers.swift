@@ -1,6 +1,13 @@
 import Foundation
 
 internal struct DataHandlers {
+    struct Context: DataHandlerContext {
+        let dataHandlers: DataHandlers
+
+        func encrypt(data: Any) throws -> Any {
+            try dataHandlers.encrypt(data: data)
+        }
+    }
 
     let handlers: [DataHandler]
 
@@ -9,15 +16,18 @@ internal struct DataHandlers {
             StringHandler(cipher: cipher),
             BooleanHandler(cipher: cipher),
             NumberHandler(cipher: cipher),
+            ArrayHandler(),
+            DictionaryHandler()
         ]
     }
 
-    func encrypt(data: Any) throws -> String {
+    func encrypt(data: Any) throws -> Any {
         guard let handler = handlers.first(where: { $0.canEncrypt(data: data) }) else {
             throw CryptoError.notPossibleToHandleDataType
         }
+        let context = Context(dataHandlers: self)
 
-        return try handler.encrypt(data: data)
+        return try handler.encrypt(data: data, context: context)
     }
 
 }

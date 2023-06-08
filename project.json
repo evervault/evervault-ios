@@ -1,0 +1,98 @@
+{
+  "dependencies" : [
+    {
+      "identity" : "mockingbird",
+      "requirement" : {
+        "range" : [
+          {
+            "lower_bound" : "0.20.0",
+            "upper_bound" : "0.21.0"
+          }
+        ]
+      },
+      "type" : "sourceControl",
+      "url" : "https://github.com/birdrides/mockingbird.git"
+    }
+  ],
+  "manifest_display_name" : "Evervault",
+  "name" : "Evervault",
+  "path" : "/Users/lwesterhoff/Developer/Evervault/evervault-ios",
+  "platforms" : [
+    {
+      "name" : "ios",
+      "version" : "13.0"
+    }
+  ],
+  "products" : [
+    {
+      "name" : "Evervault",
+      "targets" : [
+        "Evervault"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    }
+  ],
+  "targets" : [
+    {
+      "c99name" : "EvervaultTests",
+      "module_type" : "SwiftTarget",
+      "name" : "EvervaultTests",
+      "path" : "Tests/EvervaultTests",
+      "product_dependencies" : [
+        "Mockingbird"
+      ],
+      "sources" : [
+        "MockingbirdMocks/EvervaultMocks.generated.swift",
+        "core/BasicTest.swift",
+        "core/curves/asn1Test.swift",
+        "core/dataHandlers/ArrayHandlerTest.swift",
+        "core/dataHandlers/BooleanHandlerTest.swift",
+        "core/dataHandlers/NumberHandler.swift",
+        "core/dataHandlers/StringHandlerTest.swift",
+        "core/keys/CageKeyTest.swift"
+      ],
+      "target_dependencies" : [
+        "Evervault"
+      ],
+      "type" : "test"
+    },
+    {
+      "c99name" : "Evervault",
+      "module_type" : "SwiftTarget",
+      "name" : "Evervault",
+      "path" : "Sources/Evervault",
+      "product_memberships" : [
+        "Evervault"
+      ],
+      "sources" : [
+        "Config.swift",
+        "Evervault.swift",
+        "core/Crypto.swift",
+        "core/CryptoLoader.swift",
+        "core/DataCipher.swift",
+        "core/Http.swift",
+        "core/HttpKeysLoader.swift",
+        "core/curves/asn1.swift",
+        "core/curves/buildEncoder.swift",
+        "core/curves/createCurve.swift",
+        "core/curves/p256.swift",
+        "core/dataHandlers/ArrayHandler.swift",
+        "core/dataHandlers/BooleanHandler.swift",
+        "core/dataHandlers/DataHandler.swift",
+        "core/dataHandlers/DataHandlers.swift",
+        "core/dataHandlers/NumberHandler.swift",
+        "core/dataHandlers/StringHandler.swift",
+        "core/keys/CageKey.swift",
+        "evervault_ios.swift",
+        "utils/EvervaultError.swift",
+        "utils/ecPointCompress.swift"
+      ],
+      "type" : "library"
+    }
+  ],
+  "tools_version" : "5.8"
+}

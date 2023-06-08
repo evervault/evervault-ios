@@ -24,7 +24,7 @@ public class Evervault {
         self.client = Client(config: config, http: config.http, debugMode: customConfig?.isDebugMode)
     }
 
-    public func encrypt(_ data: String) async throws -> String {
+    public func encrypt(_ data: Any) async throws -> Any {
         guard let client = client else {
             throw EvervaultError.initializationError
         }
@@ -59,7 +59,7 @@ fileprivate struct Client {
         self.cryptoLoader = CryptoLoader(config: config, http: http, isInDebugMode: debugMode)
     }
 
-    public func encrypt(_ data: String) async throws -> String {
+    public func encrypt(_ data: Any) async throws -> Any {
         let cipher = try await cryptoLoader.loadCipher()
         let handlers = DataHandlers(cipher: cipher)
 

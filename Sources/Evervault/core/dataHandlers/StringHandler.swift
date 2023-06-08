@@ -8,7 +8,7 @@ internal struct StringHandler: DataHandler {
         data is String
     }
 
-    func encrypt(data: Any) throws -> String {
+    func encrypt(data: Any, context: DataHandlerContext) throws -> Any {
         try cipher.encryptString(string: data as! String, dataType: "string")
     }
 }
