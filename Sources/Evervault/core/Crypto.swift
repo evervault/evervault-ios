@@ -9,30 +9,16 @@ internal struct Crypto: DataCipher {
     var isDebug: Bool
 
     func encryptString(string: String, dataType: String) throws -> String {
-        let keyIv = try generateBytes(byteLength: config.ivLength)
-
-        let symmetricKey = SymmetricKey(data: derivedSecret)
-
-        let sealedBox = try AES.GCM.seal(
-            string.data(using: .utf8)!,
-            using: symmetricKey,
-            nonce: AES.GCM.Nonce(data: keyIv),
-            authenticating: ecdhTeamKey
-        )
-
-        let encryptedBuffer = sealedBox.ciphertext
-        let authenticationTag = sealedBox.tag
-
-        let combined = encryptedBuffer + authenticationTag
-
-        return formatEncryptedData(
-            evVersion: config.evVersion,
-            datatype: dataType,
-            keyIv: keyIv.base64EncodedString(),
-            ecdhPublicKey: ecdhPublicKey,
-            encryptedData: combined.base64EncodedString(),
-            isDebug: isDebug
-        )
+        try encrypt(data: string.data(using: .utf8)!) { encryptedData, keyIv in
+            formatEncryptedData(
+                evVersion: config.evVersion,
+                datatype: dataType,
+                keyIv: keyIv.base64EncodedString(),
+                ecdhPublicKey: ecdhPublicKey,
+                encryptedData: encryptedData.base64EncodedString(),
+                isDebug: isDebug
+            )
+        }
     }
 
     func encryptData(data: Data) throws -> Data {
@@ -40,7 +26,18 @@ internal struct Crypto: DataCipher {
             throw CryptoError.exceededMaxFileSizeError(maxFileSizeInMB: config.maxFileSizeInMB)
         }
 
+        return try encrypt(data: data) { encryptedData, keyIv in
+            formatFile(
+                keyIv: keyIv,
+                ecdhPublicKey: ecdhPublicKey,
+                encryptedData: encryptedData
+            )
+        }
+    }
+
+    private func encrypt<T>(data: Data, format: (Data, Data) -> T) throws -> T {
         let keyIv = try generateBytes(byteLength: config.ivLength)
+
         let symmetricKey = SymmetricKey(data: derivedSecret)
 
         let sealedBox = try AES.GCM.seal(
@@ -55,11 +52,7 @@ internal struct Crypto: DataCipher {
 
         let combined = encryptedBuffer + authenticationTag
 
-        return formatFile(
-            keyIv: keyIv,
-            ecdhPublicKey: ecdhPublicKey,
-            encryptedData: combined
-        )
+        return format(combined, keyIv)
     }
 }
 
@@ -68,7 +61,7 @@ private func uint8ArrayToBase64String(_ uint8Array: Data) -> String {
     return data.base64EncodedString()
 }
 
-func formatEncryptedData(
+private func formatEncryptedData(
     evVersion: String,
     datatype: String,
     keyIv: String,
@@ -86,7 +79,7 @@ func formatEncryptedData(
     return "ev:\(isDebug ? "debug:" : "")\(_evVersionPrefix)\(datatype != "string" ? ":\(datatype)" : ""):\(base64RemovePadding(keyIv)):\(base64RemovePadding(compressedKey.base64EncodedString())):\(base64RemovePadding(encryptedData)):$"
 }
 
-func formatFile(
+private func formatFile(
     keyIv: Data,
     ecdhPublicKey: P256.KeyAgreement.PublicKey,
     encryptedData: Data
@@ -119,7 +112,7 @@ func formatFile(
     return fileContents + crc32HashBytes
 }
 
-func base64RemovePadding(_ str: String) -> String {
+private func base64RemovePadding(_ str: String) -> String {
     return str.replacingOccurrences(of: "={1,2}$", with: "", options: .regularExpression)
 }
 

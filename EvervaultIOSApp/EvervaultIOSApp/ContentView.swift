@@ -15,14 +15,14 @@ struct ContentView: View {
     @State private var encryptedPassword: String?
 
     var body: some View {
-        VStack(spacing: 12) {
-            HStack {
+        VStack(alignment: .leading, spacing: 12) {
+            VStack(alignment: .leading, spacing: 4) {
                 Text("Password:")
                     .bold()
                 Text(password)
             }
             if let encryptedPassword = encryptedPassword {
-                HStack {
+                VStack(alignment: .leading, spacing: 4) {
                     Text("Encrypted Password:")
                         .bold()
                     Text(encryptedPassword)
@@ -32,9 +32,10 @@ struct ContentView: View {
             }
         }
         .padding()
+        .frame(maxWidth: .infinity)
         .task {
             do {
-                encryptedPassword = try await Evervault.shared.encrypt(password)
+                encryptedPassword = try await Evervault.shared.encrypt(password) as? String
             } catch {
                 print("Error while encrypting: \(error)")
             }
