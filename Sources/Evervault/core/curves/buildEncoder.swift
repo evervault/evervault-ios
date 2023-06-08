@@ -1,6 +1,6 @@
 import Foundation
 
-func buildEncoder(curveValues: P256Constants) -> (_ decompressedKey: String) -> Data? {
+internal func buildEncoder(curveValues: P256Constants) -> (_ decompressedKey: String) -> Data? {
     return { decompressedKey in
         let hexEncodedKey = ASN1.encode(
             "30",
@@ -33,7 +33,7 @@ func buildEncoder(curveValues: P256Constants) -> (_ decompressedKey: String) -> 
     }
 }
 
-func hexStringToData(hex: String) -> Data? {
+private func hexStringToData(hex: String) -> Data? {
     let length = hex.count / 2
     var result = Data(count: length)
 

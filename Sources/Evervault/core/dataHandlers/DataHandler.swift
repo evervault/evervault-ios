@@ -1,6 +1,6 @@
 import Foundation
 
-protocol DataHandlerContext {
+internal protocol DataHandlerContext {
     func encrypt(data: Any) throws -> Any
 }
 

@@ -1,6 +1,6 @@
 import Foundation
 
-struct P256Constants {
+internal struct P256Constants {
     let p: String
     let a: String
     let b: String
@@ -10,7 +10,7 @@ struct P256Constants {
     let h: String
 }
 
-let curveConstants = P256Constants(
+internal let curveConstants = P256Constants(
     p: "FF FF FF FF 00 00 00 01 00 00 00 00 00 00 00 00 00 00 00 00 FF FF FF FF FF FF FF FF FF FF FF FF",
     a: "FF FF FF FF 00 00 00 01 00 00 00 00 00 00 00 00 00 00 00 00 FF FF FF FF FF FF FF FF FF FF FF FC",
     b: "5A C6 35 D8 AA 3A 93 E7 B3 EB BD 55 76 98 86 BC 65 1D 06 B0 CC 53 B0 F6 3B CE 3C 3E 27 D2 60 4B",

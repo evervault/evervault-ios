@@ -1,6 +1,6 @@
 import Foundation
 
-let crcTable: [UInt32] = {
+private let crcTable: [UInt32] = {
     var table = [UInt32](repeating: 0, count: 256)
     for i in 0..<256 {
         var c: UInt32 = UInt32(i)
@@ -16,7 +16,7 @@ let crcTable: [UInt32] = {
     return table
 }()
 
-func crc32(buffer: Data) -> UInt32 {
+internal func crc32(buffer: Data) -> UInt32 {
     var crc: UInt32 = 0xffffffff
     let len = buffer.count
 

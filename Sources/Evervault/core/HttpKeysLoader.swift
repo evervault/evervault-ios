@@ -1,6 +1,6 @@
 import Foundation
 
-actor HttpKeysLoader {
+internal actor HttpKeysLoader {
 
     private var activeTask: Task<CageKey, Error>?
     private var cachedKey: CageKey?

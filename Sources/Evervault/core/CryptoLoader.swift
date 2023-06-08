@@ -1,7 +1,7 @@
 import CryptoKit
 import Foundation
 
-actor CryptoLoader {
+internal actor CryptoLoader {
 
     private var activeTask: Task<Crypto, Error>?
     private var cachedKey: Crypto?
@@ -69,7 +69,7 @@ actor CryptoLoader {
 }
 
 
-func deriveSharedSecret(ecdh: P256.KeyAgreement.PrivateKey, publicKey: String, ephemeralPublicKey: P256.KeyAgreement.PublicKey) throws -> Data {
+private func deriveSharedSecret(ecdh: P256.KeyAgreement.PrivateKey, publicKey: String, ephemeralPublicKey: P256.KeyAgreement.PublicKey) throws -> Data {
     // Convert the public key from base64 string to Data
     guard let publicKeyData = Data(base64Encoded: publicKey) else {
         throw CryptoError.invalidPublicKey

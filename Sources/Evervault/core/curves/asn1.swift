@@ -1,6 +1,6 @@
 import Foundation
 
-enum ASN1 {
+internal enum ASN1 {
     static func encode(_ type: String, _ hexStrings: String...) -> String {
         let str = hexStrings.joined().replacingOccurrences(of: "\\s+", with: "", options: .regularExpression).lowercased()
         let len = str.count / 2
