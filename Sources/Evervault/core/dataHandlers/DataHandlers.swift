@@ -17,7 +17,8 @@ internal struct DataHandlers {
             BooleanHandler(cipher: cipher),
             NumberHandler(cipher: cipher),
             ArrayHandler(),
-            DictionaryHandler()
+            DictionaryHandler(),
+            BytesHandler(cipher: cipher)
         ]
     }
 

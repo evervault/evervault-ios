@@ -25,6 +25,33 @@ public final class DataCipherMock: DataCipher, Mockingbird.Mock {
     DataCipherMock.mockingbirdContext.sourceLocation = sourceLocation
   }
 
+  // MARK: Mocked `encryptData`(`data`: Data)
+  public func `encryptData`(`data`: Data) throws -> Data {
+    return try self.mockingbirdContext.mocking.didInvoke(Mockingbird.SwiftInvocation(selectorName: "`encryptData`(`data`: Data) throws -> Data", selectorType: Mockingbird.SelectorType.method, arguments: [Mockingbird.ArgumentMatcher(`data`)], returnType: Swift.ObjectIdentifier((Data).self))) {
+      self.mockingbirdContext.recordInvocation($0)
+      let mkbImpl = self.mockingbirdContext.stubbing.implementation(for: $0)
+      if let mkbImpl = mkbImpl as? (Data) throws -> Data { return try mkbImpl(`data`) }
+      if let mkbImpl = mkbImpl as? () throws -> Data { return try mkbImpl() }
+      for mkbTargetBox in self.mockingbirdContext.proxy.targets(for: $0) {
+        switch mkbTargetBox.target {
+        case .super:
+          break
+        case .object(let mkbObject):
+          guard var mkbObject = mkbObject as? MockingbirdSupertype else { break }
+          let mkbValue: Data = try mkbObject.`encryptData`(data: `data`)
+          self.mockingbirdContext.proxy.updateTarget(&mkbObject, in: mkbTargetBox)
+          return mkbValue
+        }
+      }
+      if let mkbValue = self.mockingbirdContext.stubbing.defaultValueProvider.value.provideValue(for: (Data).self) { return mkbValue }
+      self.mockingbirdContext.stubbing.failTest(for: $0, at: self.mockingbirdContext.sourceLocation)
+    }
+  }
+
+  public func `encryptData`(`data`: @autoclosure () -> Data) -> Mockingbird.Mockable<Mockingbird.ThrowingFunctionDeclaration, (Data) throws -> Data, Data> {
+    return Mockingbird.Mockable<Mockingbird.ThrowingFunctionDeclaration, (Data) throws -> Data, Data>(context: self.mockingbirdContext, invocation: Mockingbird.SwiftInvocation(selectorName: "`encryptData`(`data`: Data) throws -> Data", selectorType: Mockingbird.SelectorType.method, arguments: [Mockingbird.resolve(`data`)], returnType: Swift.ObjectIdentifier((Data).self)))
+  }
+
   // MARK: Mocked `encryptString`(`string`: String, `dataType`: String)
   public func `encryptString`(`string`: String, `dataType`: String) throws -> String {
     return try self.mockingbirdContext.mocking.didInvoke(Mockingbird.SwiftInvocation(selectorName: "`encryptString`(`string`: String, `dataType`: String) throws -> String", selectorType: Mockingbird.SelectorType.method, arguments: [Mockingbird.ArgumentMatcher(`string`), Mockingbird.ArgumentMatcher(`dataType`)], returnType: Swift.ObjectIdentifier((String).self))) {

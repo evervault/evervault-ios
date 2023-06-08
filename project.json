@@ -51,6 +51,8 @@
         "core/curves/asn1Test.swift",
         "core/dataHandlers/ArrayHandlerTest.swift",
         "core/dataHandlers/BooleanHandlerTest.swift",
+        "core/dataHandlers/DataHandlersTest.swift",
+        "core/dataHandlers/DictionaryHandlerTest.swift",
         "core/dataHandlers/NumberHandler.swift",
         "core/dataHandlers/StringHandlerTest.swift",
         "core/keys/CageKeyTest.swift"
@@ -82,13 +84,16 @@
         "core/curves/p256.swift",
         "core/dataHandlers/ArrayHandler.swift",
         "core/dataHandlers/BooleanHandler.swift",
+        "core/dataHandlers/BytesHandler.swift",
         "core/dataHandlers/DataHandler.swift",
         "core/dataHandlers/DataHandlers.swift",
+        "core/dataHandlers/DictionaryHandler.swift",
         "core/dataHandlers/NumberHandler.swift",
         "core/dataHandlers/StringHandler.swift",
         "core/keys/CageKey.swift",
         "evervault_ios.swift",
         "utils/EvervaultError.swift",
+        "utils/crc32.swift",
         "utils/ecPointCompress.swift"
       ],
       "type" : "library"

@@ -107,4 +107,5 @@ enum CryptoError: Error {
     case randomGenerationFailed
     case invalidPlaintext
     case notPossibleToHandleDataType
+    case exceededMaxFileSizeError(maxFileSizeInMB: Int)
 }

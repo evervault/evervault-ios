@@ -1,10 +1,3 @@
-//
-//  File.swift
-//  
-//
-//  Created by Lammert Westerhoff on 6/7/23.
-//
-
 import Foundation
 
 struct P256Constants {
