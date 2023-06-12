@@ -40,11 +40,8 @@ public struct PaymentCardInput: View {
             style.makeBody(configuration: PaymentCardInputStyleConfiguration(
                 cardImage: Image(cardImageName, bundle: Bundle.module),
                 cardNumberField: AnyView(
-                    TextField(text: $creditCardNumber, prompt: Text("4242 4242 4242 4242")) {
-                        Text(LocalizedString("Card number"))
-                    }
+                    MultiplatformNumberTextfield(text: $creditCardNumber, prompt: "4242 4242 4242 4242", label: "Card number")
                         .focused($focusedField, equals: .number)
-                        .keyboardType(.numberPad)
                 ),
                 expiryField: AnyView(
                     TextField(text: $expiryDate, prompt: Text(LocalizedString("MM/YY"))) {
@@ -53,11 +50,7 @@ public struct PaymentCardInput: View {
                         .focused($focusedField, equals: .expiry)
                 ),
                 cvcField: AnyView(
-                    TextField(text: $cvc, prompt: Text(LocalizedString("CVC"))) {
-                        Text(LocalizedString("CVC"))
-                    }
-                        .focused($focusedField, equals: .cvc)
-                        .keyboardType(.numberPad)
+                    MultiplatformNumberTextfield(text: $cvc, prompt: "CVC", label: "CVC")
                 )
             ))
         )
@@ -121,6 +114,26 @@ public struct PaymentCardInput: View {
                 self.cardData.error = PaymentCardError(type: "encryption_failed", message: error.localizedDescription)
             }
         }
+    }
+}
+
+fileprivate struct MultiplatformNumberTextfield: View {
+
+    @Binding var text: String
+    let prompt: String
+    let label: String
+
+    var body: some View {
+        #if os(iOS)
+        TextField(text: $text, prompt: Text(prompt)) {
+            Text(LocalizedString(label))
+        }
+            .keyboardType(.numberPad)
+        #elseif os(macOS)
+        TextField(text: $text, prompt: Text(prompt)) {
+            Text(LocalizedString(label))
+        }
+        #endif
     }
 }
 

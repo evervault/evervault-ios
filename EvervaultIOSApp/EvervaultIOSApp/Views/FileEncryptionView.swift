@@ -40,10 +40,17 @@ struct FileEncryptionView: View {
             Task {
                 if let data = try? await imageItem?.loadTransferable(type: Data.self) {
                     self.encryptedData = try? await Evervault.shared.encrypt(data) as? Data
+                    #if os(iOS)
                     if let uiImage = UIImage(data: data) {
                         image = Image(uiImage: uiImage)
                         return
                     }
+                    #elseif os(macOS)
+                    if let nsImage = NSImage(data: data) {
+                        image = Image(nsImage: nsImage)
+                        return
+                    }
+                    #endif
                 }
 
                 print("Failed")
