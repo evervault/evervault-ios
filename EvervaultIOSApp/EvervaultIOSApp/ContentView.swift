@@ -28,6 +28,9 @@ struct ContentView: View {
                 NavigationLink(destination: BasicEncryptionView()) {
                     Text("Basic Encryption")
                 }
+                NavigationLink(destination: FileEncryptionView()) {
+                    Text("File Encryption")
+                }
                 Section("Credit Card Inputs") {
                     NavigationLink(destination: CreditCardInputView()) {
                         Text("Inline (Default)")

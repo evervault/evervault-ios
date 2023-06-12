@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2F193AFC2A375CEA001ACD3A /* BasicEncryptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F193AFA2A375CE0001ACD3A /* BasicEncryptionView.swift */; };
 		2F193AFD2A375CED001ACD3A /* CreditCardInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F193AFB2A375CE0001ACD3A /* CreditCardInputView.swift */; };
+		2F193AFF2A378896001ACD3A /* FileEncryptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F193AFE2A378896001ACD3A /* FileEncryptionView.swift */; };
 		2F5529562A2F682400802999 /* EvervaultIOSAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5529552A2F682400802999 /* EvervaultIOSAppApp.swift */; };
 		2F5529582A2F682400802999 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5529572A2F682400802999 /* ContentView.swift */; };
 		2F55295A2A2F682400802999 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F5529592A2F682400802999 /* Assets.xcassets */; };
@@ -41,6 +42,7 @@
 /* Begin PBXFileReference section */
 		2F193AFA2A375CE0001ACD3A /* BasicEncryptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicEncryptionView.swift; sourceTree = "<group>"; };
 		2F193AFB2A375CE0001ACD3A /* CreditCardInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditCardInputView.swift; sourceTree = "<group>"; };
+		2F193AFE2A378896001ACD3A /* FileEncryptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileEncryptionView.swift; sourceTree = "<group>"; };
 		2F5529522A2F682400802999 /* EvervaultIOSApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EvervaultIOSApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F5529552A2F682400802999 /* EvervaultIOSAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvervaultIOSAppApp.swift; sourceTree = "<group>"; };
 		2F5529572A2F682400802999 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -88,6 +90,7 @@
 			children = (
 				2F193AFA2A375CE0001ACD3A /* BasicEncryptionView.swift */,
 				2F193AFB2A375CE0001ACD3A /* CreditCardInputView.swift */,
+				2F193AFE2A378896001ACD3A /* FileEncryptionView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -305,6 +308,7 @@
 			files = (
 				2F193AFD2A375CED001ACD3A /* CreditCardInputView.swift in Sources */,
 				2F5529582A2F682400802999 /* ContentView.swift in Sources */,
+				2F193AFF2A378896001ACD3A /* FileEncryptionView.swift in Sources */,
 				2F5529562A2F682400802999 /* EvervaultIOSAppApp.swift in Sources */,
 				2F193AFC2A375CEA001ACD3A /* BasicEncryptionView.swift in Sources */,
 			);
