@@ -1,33 +1,54 @@
 // swift-tools-version: 5.8
-// The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
 
 let package = Package(
     name: "Evervault",
+    defaultLocalization: "en",
     platforms: [
-        .iOS(.v13)
+        .iOS(.v15)
     ],
     products: [
-        // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
-            name: "Evervault",
-            targets: ["Evervault"]),
+            name: "EvervaultCore",
+            targets: ["EvervaultCore"]
+        ),
+        .library(
+            name: "EvervaultInputs",
+            targets: ["EvervaultInputs"]
+        )
     ],
     dependencies: [
-        .package(url: "https://github.com/birdrides/mockingbird.git", .upToNextMinor(from: "0.20.0")),
+        .package(url: "https://github.com/birdrides/mockingbird.git", .upToNextMinor(from: "0.20.0"))
     ],
     targets: [
-        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
-        // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
-            name: "Evervault",
-            dependencies: []),
-        .testTarget(
-            name: "EvervaultTests",
+            name: "EvervaultCore",
+            dependencies: []
+        ),
+        .target(
+            name: "EvervaultInputs",
             dependencies: [
-                "Evervault",
+                "EvervaultCore",
+            ],
+            resources: [
+                .process("Resources")
+            ]
+        ),
+        .testTarget(
+            name: "EvervaultCoreTests",
+            dependencies: [
+                "EvervaultCore",
                 .product(name: "Mockingbird", package: "mockingbird")
-            ]),
+            ]
+        ),
+        .testTarget(
+            name: "EvervaultInputsTests",
+            dependencies: [
+                "EvervaultCore",
+                "EvervaultInputs",
+                .product(name: "Mockingbird", package: "mockingbird")
+            ]
+        ),
     ]
 )

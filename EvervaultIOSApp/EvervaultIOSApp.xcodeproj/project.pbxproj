@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2F193AFC2A375CEA001ACD3A /* BasicEncryptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F193AFA2A375CE0001ACD3A /* BasicEncryptionView.swift */; };
+		2F193AFD2A375CED001ACD3A /* CreditCardInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F193AFB2A375CE0001ACD3A /* CreditCardInputView.swift */; };
 		2F5529562A2F682400802999 /* EvervaultIOSAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5529552A2F682400802999 /* EvervaultIOSAppApp.swift */; };
 		2F5529582A2F682400802999 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5529572A2F682400802999 /* ContentView.swift */; };
 		2F55295A2A2F682400802999 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F5529592A2F682400802999 /* Assets.xcassets */; };
@@ -14,7 +16,9 @@
 		2F5529672A2F682500802999 /* EvervaultIOSAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5529662A2F682500802999 /* EvervaultIOSAppTests.swift */; };
 		2F5529712A2F682500802999 /* EvervaultIOSAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5529702A2F682500802999 /* EvervaultIOSAppUITests.swift */; };
 		2F5529732A2F682500802999 /* EvervaultIOSAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5529722A2F682500802999 /* EvervaultIOSAppUITestsLaunchTests.swift */; };
-		2F5529822A2F683700802999 /* Evervault in Frameworks */ = {isa = PBXBuildFile; productRef = 2F5529812A2F683700802999 /* Evervault */; };
+		2FF315182A3354EB003814D5 /* EvervaultCore in Frameworks */ = {isa = PBXBuildFile; productRef = 2FF315172A3354EB003814D5 /* EvervaultCore */; };
+		2FF3151A2A3354EB003814D5 /* EvervaultInputs in Frameworks */ = {isa = PBXBuildFile; productRef = 2FF315192A3354EB003814D5 /* EvervaultInputs */; };
+		2FF3151E2A336FDB003814D5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2FF3151C2A336FDB003814D5 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +39,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2F193AFA2A375CE0001ACD3A /* BasicEncryptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicEncryptionView.swift; sourceTree = "<group>"; };
+		2F193AFB2A375CE0001ACD3A /* CreditCardInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditCardInputView.swift; sourceTree = "<group>"; };
 		2F5529522A2F682400802999 /* EvervaultIOSApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EvervaultIOSApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F5529552A2F682400802999 /* EvervaultIOSAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvervaultIOSAppApp.swift; sourceTree = "<group>"; };
 		2F5529572A2F682400802999 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -46,6 +52,8 @@
 		2F5529702A2F682500802999 /* EvervaultIOSAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvervaultIOSAppUITests.swift; sourceTree = "<group>"; };
 		2F5529722A2F682500802999 /* EvervaultIOSAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvervaultIOSAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		2F55297F2A2F682D00802999 /* evervault-ios */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "evervault-ios"; path = ..; sourceTree = "<group>"; };
+		2FF3151D2A336FDB003814D5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		2FF3151F2A336FE4003814D5 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,7 +61,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2F5529822A2F683700802999 /* Evervault in Frameworks */,
+				2FF3151A2A3354EB003814D5 /* EvervaultInputs in Frameworks */,
+				2FF315182A3354EB003814D5 /* EvervaultCore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -74,6 +83,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2F193AF92A375CE0001ACD3A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				2F193AFA2A375CE0001ACD3A /* BasicEncryptionView.swift */,
+				2F193AFB2A375CE0001ACD3A /* CreditCardInputView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		2F5529492A2F682400802999 = {
 			isa = PBXGroup;
 			children = (
@@ -99,6 +117,8 @@
 		2F5529542A2F682400802999 /* EvervaultIOSApp */ = {
 			isa = PBXGroup;
 			children = (
+				2F193AF92A375CE0001ACD3A /* Views */,
+				2FF3151B2A336FDB003814D5 /* Resources */,
 				2F5529552A2F682400802999 /* EvervaultIOSAppApp.swift */,
 				2F5529572A2F682400802999 /* ContentView.swift */,
 				2F5529592A2F682400802999 /* Assets.xcassets */,
@@ -139,6 +159,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		2FF3151B2A336FDB003814D5 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				2FF3151C2A336FDB003814D5 /* Localizable.strings */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -156,7 +184,8 @@
 			);
 			name = EvervaultIOSApp;
 			packageProductDependencies = (
-				2F5529812A2F683700802999 /* Evervault */,
+				2FF315172A3354EB003814D5 /* EvervaultCore */,
+				2FF315192A3354EB003814D5 /* EvervaultInputs */,
 			);
 			productName = EvervaultIOSApp;
 			productReference = 2F5529522A2F682400802999 /* EvervaultIOSApp.app */;
@@ -227,6 +256,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				nl,
 				Base,
 			);
 			mainGroup = 2F5529492A2F682400802999;
@@ -247,6 +277,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2F55295D2A2F682400802999 /* Preview Assets.xcassets in Resources */,
+				2FF3151E2A336FDB003814D5 /* Localizable.strings in Resources */,
 				2F55295A2A2F682400802999 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -272,8 +303,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F193AFD2A375CED001ACD3A /* CreditCardInputView.swift in Sources */,
 				2F5529582A2F682400802999 /* ContentView.swift in Sources */,
 				2F5529562A2F682400802999 /* EvervaultIOSAppApp.swift in Sources */,
+				2F193AFC2A375CEA001ACD3A /* BasicEncryptionView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -308,6 +341,18 @@
 			targetProxy = 2F55296D2A2F682500802999 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		2FF3151C2A336FDB003814D5 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2FF3151D2A336FDB003814D5 /* en */,
+				2FF3151F2A336FE4003814D5 /* nl */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		2F5529742A2F682500802999 /* Debug */ = {
@@ -596,9 +641,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		2F5529812A2F683700802999 /* Evervault */ = {
+		2FF315172A3354EB003814D5 /* EvervaultCore */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = Evervault;
+			productName = EvervaultCore;
+		};
+		2FF315192A3354EB003814D5 /* EvervaultInputs */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = EvervaultInputs;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-import Evervault
+import EvervaultCore
 
 @main
 struct EvervaultIOSAppApp: App {
