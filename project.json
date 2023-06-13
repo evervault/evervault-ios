@@ -1,4 +1,5 @@
 {
+  "default_localization" : "en",
   "dependencies" : [
     {
       "identity" : "mockingbird",
@@ -20,14 +21,29 @@
   "platforms" : [
     {
       "name" : "ios",
-      "version" : "13.0"
+      "version" : "15.0"
+    },
+    {
+      "name" : "macos",
+      "version" : "12.0"
     }
   ],
   "products" : [
     {
-      "name" : "Evervault",
+      "name" : "EvervaultCore",
       "targets" : [
-        "Evervault"
+        "EvervaultCore"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "EvervaultInputs",
+      "targets" : [
+        "EvervaultInputs"
       ],
       "type" : {
         "library" : [
@@ -38,15 +54,86 @@
   ],
   "targets" : [
     {
-      "c99name" : "EvervaultTests",
+      "c99name" : "EvervaultInputsTests",
       "module_type" : "SwiftTarget",
-      "name" : "EvervaultTests",
-      "path" : "Tests/EvervaultTests",
+      "name" : "EvervaultInputsTests",
+      "path" : "Tests/EvervaultInputsTests",
       "product_dependencies" : [
         "Mockingbird"
       ],
       "sources" : [
-        "MockingbirdMocks/EvervaultMocks.generated.swift",
+        "Utils/CreditCardFormatterTests.swift",
+        "Utils/CreditCardValidatorTests.swift"
+      ],
+      "target_dependencies" : [
+        "EvervaultCore",
+        "EvervaultInputs"
+      ],
+      "type" : "test"
+    },
+    {
+      "c99name" : "EvervaultInputs",
+      "module_type" : "SwiftTarget",
+      "name" : "EvervaultInputs",
+      "path" : "Sources/EvervaultInputs",
+      "product_memberships" : [
+        "EvervaultInputs"
+      ],
+      "resources" : [
+        {
+          "path" : "/Users/lwesterhoff/Developer/Evervault/evervault-ios/Sources/EvervaultInputs/Resources/Assets.xcassets",
+          "rule" : {
+            "process" : {
+
+            }
+          }
+        },
+        {
+          "path" : "/Users/lwesterhoff/Developer/Evervault/evervault-ios/Sources/EvervaultInputs/Resources/nl.lproj/Localizable.strings",
+          "rule" : {
+            "process" : {
+              "localization" : "nl"
+            }
+          }
+        },
+        {
+          "path" : "/Users/lwesterhoff/Developer/Evervault/evervault-ios/Sources/EvervaultInputs/Resources/en.lproj/Localizable.strings",
+          "rule" : {
+            "process" : {
+              "localization" : "en"
+            }
+          }
+        }
+      ],
+      "sources" : [
+        "Model/CreditCardType.swift",
+        "Model/PaymentCardData+Validation.swift",
+        "Model/PaymentCardData.swift",
+        "UI/InlinePaymentCardInputStyle.swift",
+        "UI/PaymentCardInput.swift",
+        "UI/PaymentCardInputStyle.swift",
+        "UI/PaymentCardInputStyleConfiguration.swift",
+        "UI/PaymentCardInputStyleKey.swift",
+        "UI/RowsPaymentCardInputStyle.swift",
+        "Utils/CreditCardFormatter.swift",
+        "Utils/CreditCardValidator.swift",
+        "Utils/LocalizedString.swift"
+      ],
+      "target_dependencies" : [
+        "EvervaultCore"
+      ],
+      "type" : "library"
+    },
+    {
+      "c99name" : "EvervaultCoreTests",
+      "module_type" : "SwiftTarget",
+      "name" : "EvervaultCoreTests",
+      "path" : "Tests/EvervaultCoreTests",
+      "product_dependencies" : [
+        "Mockingbird"
+      ],
+      "sources" : [
+        "MockingbirdMocks/EvervaultCoreMocks.generated.swift",
         "core/BasicTest.swift",
         "core/curves/asn1Test.swift",
         "core/dataHandlers/ArrayHandlerTest.swift",
@@ -55,20 +142,22 @@
         "core/dataHandlers/DictionaryHandlerTest.swift",
         "core/dataHandlers/NumberHandler.swift",
         "core/dataHandlers/StringHandlerTest.swift",
-        "core/keys/CageKeyTest.swift"
+        "core/keys/CageKeyTest.swift",
+        "core/utils/crc32Test.swift"
       ],
       "target_dependencies" : [
-        "Evervault"
+        "EvervaultCore"
       ],
       "type" : "test"
     },
     {
-      "c99name" : "Evervault",
+      "c99name" : "EvervaultCore",
       "module_type" : "SwiftTarget",
-      "name" : "Evervault",
-      "path" : "Sources/Evervault",
+      "name" : "EvervaultCore",
+      "path" : "Sources/EvervaultCore",
       "product_memberships" : [
-        "Evervault"
+        "EvervaultCore",
+        "EvervaultInputs"
       ],
       "sources" : [
         "Config.swift",
@@ -91,7 +180,6 @@
         "core/dataHandlers/NumberHandler.swift",
         "core/dataHandlers/StringHandler.swift",
         "core/keys/CageKey.swift",
-        "evervault_ios.swift",
         "utils/EvervaultError.swift",
         "utils/crc32.swift",
         "utils/ecPointCompress.swift"
