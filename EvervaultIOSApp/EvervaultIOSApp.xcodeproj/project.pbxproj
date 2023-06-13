@@ -14,30 +14,10 @@
 		2F5529582A2F682400802999 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5529572A2F682400802999 /* ContentView.swift */; };
 		2F55295A2A2F682400802999 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F5529592A2F682400802999 /* Assets.xcassets */; };
 		2F55295D2A2F682400802999 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F55295C2A2F682400802999 /* Preview Assets.xcassets */; };
-		2F5529672A2F682500802999 /* EvervaultIOSAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5529662A2F682500802999 /* EvervaultIOSAppTests.swift */; };
-		2F5529712A2F682500802999 /* EvervaultIOSAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5529702A2F682500802999 /* EvervaultIOSAppUITests.swift */; };
-		2F5529732A2F682500802999 /* EvervaultIOSAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5529722A2F682500802999 /* EvervaultIOSAppUITestsLaunchTests.swift */; };
 		2FF315182A3354EB003814D5 /* EvervaultCore in Frameworks */ = {isa = PBXBuildFile; productRef = 2FF315172A3354EB003814D5 /* EvervaultCore */; };
 		2FF3151A2A3354EB003814D5 /* EvervaultInputs in Frameworks */ = {isa = PBXBuildFile; productRef = 2FF315192A3354EB003814D5 /* EvervaultInputs */; };
 		2FF3151E2A336FDB003814D5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2FF3151C2A336FDB003814D5 /* Localizable.strings */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		2F5529632A2F682500802999 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2F55294A2A2F682400802999 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 2F5529512A2F682400802999;
-			remoteInfo = EvervaultIOSApp;
-		};
-		2F55296D2A2F682500802999 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2F55294A2A2F682400802999 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 2F5529512A2F682400802999;
-			remoteInfo = EvervaultIOSApp;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		2F193AFA2A375CE0001ACD3A /* BasicEncryptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicEncryptionView.swift; sourceTree = "<group>"; };
@@ -48,11 +28,6 @@
 		2F5529572A2F682400802999 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		2F5529592A2F682400802999 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2F55295C2A2F682400802999 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		2F5529622A2F682500802999 /* EvervaultIOSAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EvervaultIOSAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		2F5529662A2F682500802999 /* EvervaultIOSAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvervaultIOSAppTests.swift; sourceTree = "<group>"; };
-		2F55296C2A2F682500802999 /* EvervaultIOSAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EvervaultIOSAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		2F5529702A2F682500802999 /* EvervaultIOSAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvervaultIOSAppUITests.swift; sourceTree = "<group>"; };
-		2F5529722A2F682500802999 /* EvervaultIOSAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvervaultIOSAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		2F55297F2A2F682D00802999 /* evervault-ios */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "evervault-ios"; path = ..; sourceTree = "<group>"; };
 		2FF3151D2A336FDB003814D5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2FF3151F2A336FE4003814D5 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -65,20 +40,6 @@
 			files = (
 				2FF3151A2A3354EB003814D5 /* EvervaultInputs in Frameworks */,
 				2FF315182A3354EB003814D5 /* EvervaultCore in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2F55295F2A2F682500802999 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2F5529692A2F682500802999 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -100,8 +61,6 @@
 			children = (
 				2F55297F2A2F682D00802999 /* evervault-ios */,
 				2F5529542A2F682400802999 /* EvervaultIOSApp */,
-				2F5529652A2F682500802999 /* EvervaultIOSAppTests */,
-				2F55296F2A2F682500802999 /* EvervaultIOSAppUITests */,
 				2F5529532A2F682400802999 /* Products */,
 				2F5529802A2F683700802999 /* Frameworks */,
 			);
@@ -111,8 +70,6 @@
 			isa = PBXGroup;
 			children = (
 				2F5529522A2F682400802999 /* EvervaultIOSApp.app */,
-				2F5529622A2F682500802999 /* EvervaultIOSAppTests.xctest */,
-				2F55296C2A2F682500802999 /* EvervaultIOSAppUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -136,23 +93,6 @@
 				2F55295C2A2F682400802999 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		2F5529652A2F682500802999 /* EvervaultIOSAppTests */ = {
-			isa = PBXGroup;
-			children = (
-				2F5529662A2F682500802999 /* EvervaultIOSAppTests.swift */,
-			);
-			path = EvervaultIOSAppTests;
-			sourceTree = "<group>";
-		};
-		2F55296F2A2F682500802999 /* EvervaultIOSAppUITests */ = {
-			isa = PBXGroup;
-			children = (
-				2F5529702A2F682500802999 /* EvervaultIOSAppUITests.swift */,
-				2F5529722A2F682500802999 /* EvervaultIOSAppUITestsLaunchTests.swift */,
-			);
-			path = EvervaultIOSAppUITests;
 			sourceTree = "<group>";
 		};
 		2F5529802A2F683700802999 /* Frameworks */ = {
@@ -194,42 +134,6 @@
 			productReference = 2F5529522A2F682400802999 /* EvervaultIOSApp.app */;
 			productType = "com.apple.product-type.application";
 		};
-		2F5529612A2F682500802999 /* EvervaultIOSAppTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 2F5529792A2F682500802999 /* Build configuration list for PBXNativeTarget "EvervaultIOSAppTests" */;
-			buildPhases = (
-				2F55295E2A2F682500802999 /* Sources */,
-				2F55295F2A2F682500802999 /* Frameworks */,
-				2F5529602A2F682500802999 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				2F5529642A2F682500802999 /* PBXTargetDependency */,
-			);
-			name = EvervaultIOSAppTests;
-			productName = EvervaultIOSAppTests;
-			productReference = 2F5529622A2F682500802999 /* EvervaultIOSAppTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		2F55296B2A2F682500802999 /* EvervaultIOSAppUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 2F55297C2A2F682500802999 /* Build configuration list for PBXNativeTarget "EvervaultIOSAppUITests" */;
-			buildPhases = (
-				2F5529682A2F682500802999 /* Sources */,
-				2F5529692A2F682500802999 /* Frameworks */,
-				2F55296A2A2F682500802999 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				2F55296E2A2F682500802999 /* PBXTargetDependency */,
-			);
-			name = EvervaultIOSAppUITests;
-			productName = EvervaultIOSAppUITests;
-			productReference = 2F55296C2A2F682500802999 /* EvervaultIOSAppUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -242,14 +146,6 @@
 				TargetAttributes = {
 					2F5529512A2F682400802999 = {
 						CreatedOnToolsVersion = 14.3.1;
-					};
-					2F5529612A2F682500802999 = {
-						CreatedOnToolsVersion = 14.3.1;
-						TestTargetID = 2F5529512A2F682400802999;
-					};
-					2F55296B2A2F682500802999 = {
-						CreatedOnToolsVersion = 14.3.1;
-						TestTargetID = 2F5529512A2F682400802999;
 					};
 				};
 			};
@@ -268,8 +164,6 @@
 			projectRoot = "";
 			targets = (
 				2F5529512A2F682400802999 /* EvervaultIOSApp */,
-				2F5529612A2F682500802999 /* EvervaultIOSAppTests */,
-				2F55296B2A2F682500802999 /* EvervaultIOSAppUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -282,20 +176,6 @@
 				2F55295D2A2F682400802999 /* Preview Assets.xcassets in Resources */,
 				2FF3151E2A336FDB003814D5 /* Localizable.strings in Resources */,
 				2F55295A2A2F682400802999 /* Assets.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2F5529602A2F682500802999 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2F55296A2A2F682500802999 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -314,37 +194,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		2F55295E2A2F682500802999 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2F5529672A2F682500802999 /* EvervaultIOSAppTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2F5529682A2F682500802999 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2F5529712A2F682500802999 /* EvervaultIOSAppUITests.swift in Sources */,
-				2F5529732A2F682500802999 /* EvervaultIOSAppUITestsLaunchTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		2F5529642A2F682500802999 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 2F5529512A2F682400802999 /* EvervaultIOSApp */;
-			targetProxy = 2F5529632A2F682500802999 /* PBXContainerItemProxy */;
-		};
-		2F55296E2A2F682500802999 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 2F5529512A2F682400802999 /* EvervaultIOSApp */;
-			targetProxy = 2F55296D2A2F682500802999 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		2FF3151C2A336FDB003814D5 /* Localizable.strings */ = {
@@ -537,78 +387,6 @@
 			};
 			name = Release;
 		};
-		2F55297A2A2F682500802999 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = evervault.EvervaultIOSAppTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EvervaultIOSApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/EvervaultIOSApp";
-			};
-			name = Debug;
-		};
-		2F55297B2A2F682500802999 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = evervault.EvervaultIOSAppTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EvervaultIOSApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/EvervaultIOSApp";
-			};
-			name = Release;
-		};
-		2F55297D2A2F682500802999 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = evervault.EvervaultIOSAppUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = EvervaultIOSApp;
-			};
-			name = Debug;
-		};
-		2F55297E2A2F682500802999 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = evervault.EvervaultIOSAppUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = EvervaultIOSApp;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -626,24 +404,6 @@
 			buildConfigurations = (
 				2F5529772A2F682500802999 /* Debug */,
 				2F5529782A2F682500802999 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		2F5529792A2F682500802999 /* Build configuration list for PBXNativeTarget "EvervaultIOSAppTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				2F55297A2A2F682500802999 /* Debug */,
-				2F55297B2A2F682500802999 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		2F55297C2A2F682500802999 /* Build configuration list for PBXNativeTarget "EvervaultIOSAppUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				2F55297D2A2F682500802999 /* Debug */,
-				2F55297E2A2F682500802999 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
