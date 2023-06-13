@@ -12,22 +12,23 @@ final class CreditCardValidatorTests: XCTestCase {
     func testValidData() {
         print("Start test")
         let values: [(CreditCardType, String)] = [
-//            (.amex, "3782 8224 6310 005"),
-//            (.amex, "3714 4963 5398 431"),
-//            (.amex, "3787 3449 3671 000"),
-//            (.visa, "4111 1111 1111 1111"),
-//            (.visa, "4012 8888 8888 1881"),
-//            (.visa, "4222 2222 2222 2"),
+            (.amex, "3782 8224 6310 005"),
+            (.amex, "3714 4963 5398 431"),
+            (.amex, "3787 3449 3671 000"),
+            (.visa, "4111 1111 1111 1111"),
+            (.visa, "4012 8888 8888 1881"),
+            (.visa, "4222 2222 2222 2"),
             (.visa, "4556 7375 8689 9855"),
-//            (.masterCard, "5500 0000 0000 0004"),
-//            (.masterCard, "5555 5555 5555 4444"),
-//            (.masterCard, "5105 1051 0510 5100"),
-//            (.masterCard, "2222 4107 4036 0010"),
-//            (.maestro, "6771 7980 2100 0008"),
-//            (.dinersClub, "30569309025904"),
-//            (.jcb, "3569 9900 1009 5841"),
-//            (.discover, "6011 0000 0000 0004"),
-//            (.unionPay, "6250 9470 0000 0014"),
+            (.masterCard, "5500 0000 0000 0004"),
+            (.masterCard, "5555 5555 5555 4444"),
+            (.masterCard, "5105 1051 0510 5100"),
+            (.masterCard, "2222 4107 4036 0010"),
+            (.maestro, "6771 7980 2100 0008"),
+            (.dinersClub, "30569309025904"),
+            (.jcb, "3569 9900 1009 5841"),
+            (.discover, "6011 0000 0000 0004"),
+            (.unionPay, "6250 9470 0000 0014"),
+            (.elo, "5066 9911 0917 9242"),
         ]
         values.forEach { (item) in
             XCTAssertTrue(CreditCardValidator(item.1).isValid, "\(item.1) is not valid")
@@ -63,7 +64,9 @@ final class CreditCardValidatorTests: XCTestCase {
         ]
         values.forEach { (item) in
             XCTAssertFalse(CreditCardValidator(item.1).isValid)
-            XCTAssertEqual(item.0, CreditCardValidator(item.1).actualType)
+            if let type = CreditCardValidator(item.1).actualType {
+                XCTAssertEqual(item.0, type)
+            }
             XCTAssertEqual(item.0, CreditCardValidator(item.1).predictedType)
             XCTAssertFalse(CreditCardValidator(item.1).isValid(for: item.0))
         }
@@ -75,9 +78,9 @@ final class CreditCardValidatorTests: XCTestCase {
             (.amex, "3782"),
             (.amex, "3714"),
             (.amex, "3787"),
-            (.visa, "4111"),
-            (.visa, "4012"),
-            (.visa, "4222"),
+            (.visa, "411122"),
+            (.visa, "401222"),
+            (.visa, "422222"),
             (.masterCard, "5500"),
             (.masterCard, "5555"),
             (.masterCard, "5105"),

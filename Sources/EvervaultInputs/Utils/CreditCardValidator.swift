@@ -16,16 +16,7 @@ import Foundation
 internal struct CreditCardValidator {
 
     /// Available credit card types
-    private static let types: [CreditCardType] = [
-        .amex,
-        .visa,
-        .masterCard,
-        .maestro,
-        .dinersClub,
-        .jcb,
-        .discover,
-        .unionPay,
-    ]
+    private static let types = CreditCardType.allCases
 
     let string: String
 
@@ -148,26 +139,34 @@ internal extension CreditCardType {
     var prefixRegex: String {
         switch self {
         case .amex: return "3[47]"
-        case .visa: return "4"
+        case .dinersClub: return "3(?:0[0-5]|[68][0-9])"
+        case .discover: return "6(?:011|5[0-9]{2})"
+        case .jcb: return "(?:2131|1800|35[0-9]{3})"
+        case .elo: return "(?:401178|401179|438935|457631|457632|431274|451416|457393|504175|506699|506778|509000|509999|627780|636297|636368|650031|650033|650035|650051|650405|650439|650485|650538|650541|650598|650700|650718|650720|650727|650901|650978|651652|651679|655000|655019|655021|655058)"
+        case .hiper: return "(?:637095|63737423|63743358|637568|637599|637609|637612)"
+        case .hipercard: return "606282"
         case .masterCard: return "(?:5[1-5][0-9]{2}|222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)"
         case .maestro: return "(?:5[0678]\\d\\d|6304|6390|67\\d\\d)"
-        case .dinersClub: return "3(?:0[0-5]|[68][0-9])"
-        case .jcb: return "(?:2131|1800|35[0-9]{3})"
-        case .discover: return "6(?:011|5[0-9]{2})"
-        case .unionPay: return "62[0-5]\\d"
+        case .mir: return "220[0-4]"
+        case .unionPay: return "62[0-5]"
+        case .visa: return "4\\d{5}"
         }
     }
 
     var remainingRegex: String {
         switch self {
         case .amex: return "[0-9]{5,}"
-        case .visa: return "[0-9]{6,}"
+        case .dinersClub: return "[0-9]{4,}"
+        case .discover: return "[0-9]{3,}"
+        case .jcb: return "[0-9]{3,}"
+        case .elo: return "\\d{10}"
+        case .hiper: return "\\d{8,10}"
+        case .hipercard: return "\\d{8}"
         case .masterCard: return "[0-9]{12}"
         case .maestro: return "\\d{8,15}"
-        case .dinersClub: return "[0-9]{4,}"
-        case .jcb: return "[0-9]{3,}"
-        case .discover: return "[0-9]{3,}"
-        case .unionPay: return "{13,16}"
+        case .mir: return "\\d{12,15}"
+        case .unionPay: return "\\d{13,16}"
+        case .visa: return "\\d{7,10}"
         }
     }
 
@@ -187,7 +186,7 @@ internal extension CreditCardType {
             return IndexSet(integersIn: 12...19)
         case .dinersClub:
             return IndexSet(integersIn: 14...19)
-        case .jcb, .discover, .unionPay:
+        case .jcb, .discover, .unionPay, .mir:
             return IndexSet(integersIn: 16...19)
         default:
             return IndexSet(integer: 16)

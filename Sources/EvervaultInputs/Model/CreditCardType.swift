@@ -18,8 +18,12 @@ public enum CreditCardType: String, CaseIterable {
     case dinersClub
     case discover
     case jcb
+    case elo
+    case hiper
+    case hipercard
     case maestro
     case masterCard
+    case mir
     case unionPay
     case visa
 
@@ -33,14 +37,22 @@ public enum CreditCardType: String, CaseIterable {
             return "Discover"
         case .jcb:
             return "JCB"
+        case .elo:
+            return "Elo"
+        case .hiper:
+            return "Hiper"
+        case .hipercard:
+            return "Hipercard"
+        case .maestro:
+            return "Maestro"
         case .masterCard:
             return "Mastercard"
+        case .mir:
+            return "Mir"
         case .unionPay:
             return "UnionPay"
         case .visa:
             return "Visa"
-        case .maestro:
-            return "Maestro"
         }
     }
 }
