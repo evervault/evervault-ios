@@ -1,11 +1,54 @@
 import Foundation
 
+/// The Evervault class provides encryption capabilities for iOS and macOS platforms through the Evervault iOS SDK.
+///
+/// To use the Evervault iOS SDK, you need to configure the SDK with your team ID and app ID using the `configure` function. Once configured, you can use the `encrypt` function to securely encrypt sensitive data.
+///
+/// ## Example
+/// ```swift
+/// Evervault.shared.configure(teamId: "YOUR_TEAM_ID", appId: "YOUR_APP_ID")
+/// let encryptedData = try await Evervault.shared.encrypt("Sensitive Data")
+/// ```
+///
+/// The Evervault class also provides convenience initializers for configuring the Evervault iOS SDK with your team ID and app ID.
+///
+/// - Note: The Evervault iOS SDK documentation may provide more detailed information and additional examples.
 public class Evervault {
 
+    /// The shared instance of the `Evervault` class.
+    ///
+    /// The `shared` property provides access to the singleton instance of the `Evervault` class, allowing you to configure and use the Evervault iOS SDK.
+    ///
+    /// ## Declaration
+    /// ```swift
+    /// public static let shared = Evervault()
+    /// ```
+    ///
+    /// ## Example
+    /// ```swift
+    /// Evervault.shared.configure(teamId: "YOUR_TEAM_ID", appId: "YOUR_APP_ID")
+    /// let encryptedData = try await Evervault.shared.encrypt("Sensitive Data")
+    /// ```
+    ///
+    /// The `shared` property allows you to access the singleton instance of the `Evervault` class. You can use it to configure the Evervault iOS SDK with your team ID and app ID, as well as to call other encryption functionalities like the `encrypt` method.
+    ///
+    /// It's recommended to configure the Evervault iOS SDK using the `shared` instance before using any other functionalities.
+    ///
+    /// - Note: The Evervault iOS SDK documentation may provide more detailed information and additional examples.
     public static let shared = Evervault()
 
     private var client: Client?
 
+    /// Configures the Evervault iOS SDK with the specified team ID and app ID.
+    ///
+    /// - Parameters:
+    ///   - teamId: The team ID provided by Evervault. This uniquely identifies your team.
+    ///   - appId: The app ID provided by Evervault. This uniquely identifies your app.
+    ///   - customConfig: An optional custom configuration for advanced settings. Default is `nil`.
+    ///
+    /// Only use this initializer if you need multiple instances of `Evervault` with different settings. Otherwise use `configure` on a `shared` instance.
+    ///
+    /// Make sure to replace `"YOUR_TEAM_ID"` and `"YOUR_APP_ID"` with your actual Evervault team ID and app ID.
     convenience public init(teamId: String, appId: String, customConfig: CustomConfig? = nil) {
         self.init()
         configure(teamId: teamId, appId: appId, customConfig: customConfig)
@@ -14,6 +57,29 @@ public class Evervault {
     private init() {
     }
 
+    /// Configures the Evervault iOS SDK with the specified team ID, app ID, and an optional custom configuration.
+    ///
+    /// - Parameters:
+    ///   - teamId: The team ID provided by Evervault. This uniquely identifies your team.
+    ///   - appId: The app ID provided by Evervault. This uniquely identifies your app.
+    ///   - customConfig: An optional custom configuration for advanced settings. Default is `nil`.
+    ///
+    /// The `configure` function must be called before using any other functionalities of the Evervault iOS SDK. It establishes a connection between your app and the Evervault encryption service by providing the necessary identification information (team ID and app ID).
+    ///
+    /// Additionally, you can provide a `CustomConfig` object to customize advanced settings for the Evervault iOS SDK.
+    ///
+    /// Make sure to replace `"YOUR_TEAM_ID"` and `"YOUR_APP_ID"` with your actual Evervault team ID and app ID.
+    ///
+    /// It's recommended to call the `configure` function early in your app's lifecycle, such as during app initialization or in the `application(_:didFinishLaunchingWithOptions:)` method.
+    ///
+    /// Once the Evervault iOS SDK is configured, you can use other encryption functionalities, such as the `encrypt` method, to securely encrypt sensitive data.
+    ///
+    /// ## Example
+    /// ```swift
+    /// Evervault.shared.configure(teamId: "YOUR_TEAM_ID", appId: "YOUR_APP_ID")
+    /// ```
+    ///
+    /// - Note: The Evervault iOS SDK documentation may provide more detailed information and additional examples.
     public func configure(teamId: String, appId: String, customConfig: CustomConfig? = nil) {
         let config = Config(
             teamId: teamId,
@@ -24,6 +90,29 @@ public class Evervault {
         self.client = Client(config: config, http: config.http, debugMode: customConfig?.isDebugMode)
     }
 
+    /// Encrypts the provided data using the Evervault encryption service.
+    ///
+    /// - Parameter data: The data to be encrypted. Supported data types include Boolean, Numerics, Strings, Arrays, Dictionaries, and Data.
+    /// - Returns: The encrypted data. The return type is `Any`, and the caller is responsible for safely casting the result based on the original data type.
+    /// - Throws: An error if the encryption process fails.
+    ///
+    /// ## Declaration
+    /// ```swift
+    /// public func encrypt(_ data: Any) async throws -> Any
+    /// ```
+    ///
+    /// ## Example
+    /// ```swift
+    /// let encryptedData = try await Evervault.shared.encrypt("Sensitive Data")
+    /// ```
+    ///
+    /// The `encrypt` function allows you to securely encrypt sensitive data using the Evervault encryption service. It supports a variety of data types, including Boolean, Numerics, Strings, Arrays, Dictionaries, and Data.
+    ///
+    /// The function returns the encrypted data as `Any`, and the caller is responsible for safely casting the result based on the original data type. For Boolean, Numerics, and Strings, the encrypted data is returned as a String. For Arrays and Dictionaries, the encrypted data maintains the same structure but is encrypted. For Data, the encrypted data is returned as encrypted Data.
+    ///
+    /// Note that the encryption process is performed asynchronously using the `async` and `await` keywords. It's recommended to call this function from within an `async` context or use `await` when calling it.
+    ///
+    /// - Note: The Evervault iOS SDK documentation may provide more detailed information and additional examples.
     public func encrypt(_ data: Any) async throws -> Any {
         guard let client = client else {
             throw EvervaultError.initializationError
@@ -59,7 +148,7 @@ fileprivate struct Client {
         self.cryptoLoader = CryptoLoader(config: config, http: http, isInDebugMode: debugMode)
     }
 
-    public func encrypt(_ data: Any) async throws -> Any {
+    internal func encrypt(_ data: Any) async throws -> Any {
         let cipher = try await cryptoLoader.loadCipher()
         let handlers = DataHandlers(cipher: cipher)
 
@@ -67,8 +156,24 @@ fileprivate struct Client {
     }
 }
 
+/// A struct that represents custom configuration options for the Evervault iOS SDK.
+///
+/// The `CustomConfig` struct allows you to customize advanced settings for the Evervault iOS SDK. These settings include options like enabling debug mode, specifying custom URLs, or providing a public key for encryption.
+///
+/// It's important to note that the `CustomConfig` struct should not be used under normal circumstances, as the default configuration provided by the Evervault iOS SDK is typically sufficient for most use cases.
+///
+/// ## Example
+/// ```swift
+/// let customConfig = CustomConfig(isDebugMode: true, urls: ConfigUrls(keysUrl: "https://custom-keys-url.com"), publicKey: "CUSTOM_PUBLIC_KEY")
+/// Evervault.shared.configure(teamId: "YOUR_TEAM_ID", appId: "YOUR_APP_ID", customConfig: customConfig)
+/// ```
 public struct CustomConfig {
-  var isDebugMode: Bool?
-  var urls: ConfigUrls?
-  var publicKey: String?
+    /// A boolean value indicating whether debug mode is enabled. Default is `nil`.
+    public var isDebugMode: Bool?
+
+    /// URLs for custom configuration options.
+    public var urls: ConfigUrls?
+
+    /// A public key to be used for encryption.
+    public var publicKey: String?
 }

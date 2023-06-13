@@ -17,7 +17,6 @@ internal struct Config {
     var appId: String
     var encryption: EncryptionConfig
     var httpConfig: HttpConfig
-    var input: InputConfig
     var debugKey: CageKey = DEBUG_KEY
 
     init(teamId: String, appId: String, configUrls: ConfigUrls, publicKey: String?) {
@@ -25,15 +24,16 @@ internal struct Config {
         self.appId = appId
         self.encryption = EncryptionConfig(publicKey: publicKey)
         self.httpConfig = HttpConfig(keysUrl: configUrls.keysUrl)
-        self.input = InputConfig(inputsUrl: configUrls.inputsUrl, inputsOrigin: configUrls.inputsOrigin)
     }
 
 }
 
+/// A struct that represents custom URLs for the Evervault iOS SDK configuration.
+///
+/// The `ConfigUrls` struct allows you to specify custom URLs for specific configuration options in the Evervault iOS SDK.
 public struct ConfigUrls {
-    var keysUrl: String = KEYS_URL
-    var inputsUrl: String = INPUTS_URL
-    var inputsOrigin: String = INPUTS_ORIGIN
+    /// The URL for the custom keys endpoint. Default is the Evervault keys URL.
+    public var keysUrl: String = KEYS_URL
 }
 
 internal struct EncryptionConfig {
@@ -57,9 +57,4 @@ internal struct EncryptionConfig {
 
 internal struct HttpConfig {
     var keysUrl: String
-}
-
-internal struct InputConfig {
-    var inputsUrl: String
-    var inputsOrigin: String
 }
