@@ -75,13 +75,13 @@
       </BuildableProductRunnable>
       <EnvironmentVariables>
          <EnvironmentVariable
-            key = "VITE_EV_TEAM_UUID"
-            value = "team_2cc9843ad3d4"
+            key = "EV_TEAM_UUID"
+            value = "team_"
             isEnabled = "YES">
          </EnvironmentVariable>
          <EnvironmentVariable
-            key = "VITE_EV_APP_UUID"
-            value = "app_b2630facb2f9"
+            key = "EV_APP_UUID"
+            value = "app_"
             isEnabled = "YES">
          </EnvironmentVariable>
       </EnvironmentVariables>
