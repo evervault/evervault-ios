@@ -27,7 +27,7 @@ The Evervault iOS SDK can be easily installed using the Swift Package Manager.
 
 ### Configuration
 
-Before using the Evervault iOS SDK, you need to configure it with your Evervault team ID and app ID. This step is essential for establishing a connection with the Evervault encryption service.
+Before using the Evervault iOS SDK, you need to configure it with your Evervault Team ID and App ID. This step is essential for establishing a connection with the Evervault encryption service.
 
 First import the module at the top of your Swift file.
 

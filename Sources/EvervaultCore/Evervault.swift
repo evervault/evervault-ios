@@ -2,7 +2,7 @@ import Foundation
 
 /// The Evervault class provides encryption capabilities for iOS and macOS platforms through the Evervault iOS SDK.
 ///
-/// To use the Evervault iOS SDK, you need to configure the SDK with your team ID and app ID using the `configure` function. Once configured, you can use the `encrypt` function to securely encrypt sensitive data.
+/// To use the Evervault iOS SDK, you need to configure the SDK with your Team ID and App ID using the `configure` function. Once configured, you can use the `encrypt` function to securely encrypt sensitive data.
 ///
 /// ## Example
 /// ```swift
@@ -10,7 +10,7 @@ import Foundation
 /// let encryptedData = try await Evervault.shared.encrypt("Sensitive Data")
 /// ```
 ///
-/// The Evervault class also provides convenience initializers for configuring the Evervault iOS SDK with your team ID and app ID.
+/// The Evervault class also provides convenience initializers for configuring the Evervault iOS SDK with your Team ID and App ID.
 ///
 /// - Note: The Evervault iOS SDK documentation may provide more detailed information and additional examples.
 public class Evervault {
@@ -30,7 +30,7 @@ public class Evervault {
     /// let encryptedData = try await Evervault.shared.encrypt("Sensitive Data")
     /// ```
     ///
-    /// The `shared` property allows you to access the singleton instance of the `Evervault` class. You can use it to configure the Evervault iOS SDK with your team ID and app ID, as well as to call other encryption functionalities like the `encrypt` method.
+    /// The `shared` property allows you to access the singleton instance of the `Evervault` class. You can use it to configure the Evervault iOS SDK with your Team ID and App ID, as well as to call other encryption functionalities like the `encrypt` method.
     ///
     /// It's recommended to configure the Evervault iOS SDK using the `shared` instance before using any other functionalities.
     ///
@@ -39,16 +39,16 @@ public class Evervault {
 
     private var client: Client?
 
-    /// Configures the Evervault iOS SDK with the specified team ID and app ID.
+    /// Configures the Evervault iOS SDK with the specified Team ID and App ID.
     ///
     /// - Parameters:
-    ///   - teamId: The team ID provided by Evervault. This uniquely identifies your team.
-    ///   - appId: The app ID provided by Evervault. This uniquely identifies your app.
+    ///   - teamId: The Team ID provided by Evervault. This uniquely identifies your team.
+    ///   - appId: The App ID provided by Evervault. This uniquely identifies your app.
     ///   - customConfig: An optional custom configuration for advanced settings. Default is `nil`.
     ///
     /// Only use this initializer if you need multiple instances of `Evervault` with different settings. Otherwise use `configure` on a `shared` instance.
     ///
-    /// Make sure to replace `"YOUR_TEAM_ID"` and `"YOUR_APP_ID"` with your actual Evervault team ID and app ID.
+    /// Make sure to replace `"YOUR_TEAM_ID"` and `"YOUR_APP_ID"` with your actual Evervault Team ID and App ID.
     convenience public init(teamId: String, appId: String, customConfig: CustomConfig? = nil) {
         self.init()
         configure(teamId: teamId, appId: appId, customConfig: customConfig)
@@ -57,18 +57,18 @@ public class Evervault {
     private init() {
     }
 
-    /// Configures the Evervault iOS SDK with the specified team ID, app ID, and an optional custom configuration.
+    /// Configures the Evervault iOS SDK with the specified Team ID, App ID, and an optional custom configuration.
     ///
     /// - Parameters:
-    ///   - teamId: The team ID provided by Evervault. This uniquely identifies your team.
-    ///   - appId: The app ID provided by Evervault. This uniquely identifies your app.
+    ///   - teamId: The Team ID provided by Evervault. This uniquely identifies your team.
+    ///   - appId: The App ID provided by Evervault. This uniquely identifies your app.
     ///   - customConfig: An optional custom configuration for advanced settings. Default is `nil`.
     ///
-    /// The `configure` function must be called before using any other functionalities of the Evervault iOS SDK. It establishes a connection between your app and the Evervault encryption service by providing the necessary identification information (team ID and app ID).
+    /// The `configure` function must be called before using any other functionalities of the Evervault iOS SDK. It establishes a connection between your app and the Evervault encryption service by providing the necessary identification information (Team ID and App ID).
     ///
     /// Additionally, you can provide a `CustomConfig` object to customize advanced settings for the Evervault iOS SDK.
     ///
-    /// Make sure to replace `"YOUR_TEAM_ID"` and `"YOUR_APP_ID"` with your actual Evervault team ID and app ID.
+    /// Make sure to replace `"YOUR_TEAM_ID"` and `"YOUR_APP_ID"` with your actual Evervault Team ID and App ID.
     ///
     /// It's recommended to call the `configure` function early in your app's lifecycle, such as during app initialization or in the `application(_:didFinishLaunchingWithOptions:)` method.
     ///
