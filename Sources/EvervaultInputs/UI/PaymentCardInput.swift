@@ -111,7 +111,7 @@ public struct PaymentCardInput: View {
                 updatedCardData = try await update?(updatedCardData) ?? updatedCardData
                 self.cardData = updatedCardData
             } catch {
-                self.cardData.error = PaymentCardError(type: "encryption_failed", message: error.localizedDescription)
+                self.cardData.error = .encryptionFailed(message: error.localizedDescription)
             }
         }
     }

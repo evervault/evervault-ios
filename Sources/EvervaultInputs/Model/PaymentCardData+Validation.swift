@@ -36,9 +36,9 @@ internal extension PaymentCardData {
             self.error = nil
         } else {
             if !validator.isPotentiallyValid {
-                self.error = PaymentCardError(type: "invalid_pan", message: "The credit card number you entered was invalid")
+                self.error = .invalidPan
             } else if monthNumber != nil && !(1...12).contains(monthNumber!) {
-                self.error = PaymentCardError(type: "invalid_month", message: "The month number you entered was invalid")
+                self.error = .invalidMonth
             }
         }
 
@@ -54,5 +54,19 @@ internal extension PaymentCardData {
 
     mutating func updateExpiry(_ expiry: String) {
         self = .init(number: self.card.number, cvc: self.card.cvc, expiry: expiry)
+    }
+}
+
+extension PaymentCardError {
+
+    var description: String {
+        switch self {
+        case .invalidPan:
+            return "The credit card number you entered was invalid"
+        case .invalidMonth:
+            return "The month number you entered was invalid"
+        case .encryptionFailed(let message):
+            return "Encryption failed: \(message)"
+        }
     }
 }
