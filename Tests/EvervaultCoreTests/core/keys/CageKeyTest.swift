@@ -4,20 +4,12 @@ import XCTest
 
 final class CageKeyTest: XCTestCase {
 
-    private let publicKey = "BDeIKmwjqB35+tnMzQFEvXIvM2kyK6DX75NBEhSZxCR5CQZYnh1fwWsXMEqqKihmEGfMX0+EDHtmZNP/TK7mqMc="
-
-    override func setUpWithError() throws {
-        Evervault.shared.configure(
-            teamId: ProcessInfo.processInfo.environment["VITE_EV_TEAM_UUID"]!,
-            appId: ProcessInfo.processInfo.environment["VITE_EV_APP_UUID"]!,
-            customConfig: CustomConfig(isDebugMode: true, publicKey: publicKey)
-        )
-    }
+    private let publicKey = "BF1/Mo85D7t/XvC3I+YYpJvP+OsSyxIbSrhtDhg1SClQ2xdoyGpXYrplO/f8AZ+7cGkUnMF3tzSfLC5Io8BuNyw="
 
     func testPublicKey() throws {
         let key = CageKey(publicKey: publicKey)
         XCTAssertEqual(key.ecdhP256KeyUncompressed, publicKey)
-        XCTAssertEqual(key.ecdhP256Key, "AzeIKmwjqB35+tnMzQFEvXIvM2kyK6DX75NBEhSZxCR5")
+        XCTAssertEqual(key.ecdhP256Key, "Al1/Mo85D7t/XvC3I+YYpJvP+OsSyxIbSrhtDhg1SClQ")
     }
 
 }

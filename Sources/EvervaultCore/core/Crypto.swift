@@ -2,21 +2,20 @@ import CryptoKit
 import Foundation
 
 internal struct Crypto: DataCipher {
-    var ecdhTeamKey: Data
-    var ecdhPublicKey: P256.KeyAgreement.PublicKey
-    var derivedSecret: Data
-    var config: EncryptionConfig
-    var isDebug: Bool
+    let encryptionFormatter: EncryptionFormatter
+    let ecdhTeamKey: Data
+    let ecdhPublicKey: P256.KeyAgreement.PublicKey
+    let derivedSecret: Data
+    let config: EncryptionConfig
+    let isDebug: Bool
 
     func encryptString(string: String, dataType: String) throws -> String {
         try encrypt(data: string.data(using: .utf8)!) { encryptedData, keyIv in
-            formatEncryptedData(
-                evVersion: config.evVersion,
+            encryptionFormatter.formatEncryptedData(
                 datatype: dataType,
                 keyIv: keyIv.base64EncodedString(),
-                ecdhPublicKey: ecdhPublicKey,
-                encryptedData: encryptedData.base64EncodedString(),
-                isDebug: isDebug
+                publicKey: ecdhPublicKey,
+                encryptedData: encryptedData.base64EncodedString()
             )
         }
     }
@@ -61,24 +60,6 @@ private func uint8ArrayToBase64String(_ uint8Array: Data) -> String {
     return data.base64EncodedString()
 }
 
-private func formatEncryptedData(
-    evVersion: String,
-    datatype: String,
-    keyIv: String,
-    ecdhPublicKey: P256.KeyAgreement.PublicKey,
-    encryptedData: String,
-    isDebug: Bool
-) -> String {
-    let _evVersionPrefix = base64RemovePadding(
-        evVersion.data(using: .utf8)!.base64EncodedString()
-    )
-
-    let exportableEcdhPublicKey = ecdhPublicKey.x963Representation
-    let compressedKey = ecPointCompress(ecdhRawPublicKey: exportableEcdhPublicKey)
-
-    return "ev:\(isDebug ? "debug:" : "")\(_evVersionPrefix)\(datatype != "string" ? ":\(datatype)" : ""):\(base64RemovePadding(keyIv)):\(base64RemovePadding(compressedKey.base64EncodedString())):\(base64RemovePadding(encryptedData)):$"
-}
-
 private func formatFile(
     keyIv: Data,
     ecdhPublicKey: P256.KeyAgreement.PublicKey,
@@ -110,10 +91,6 @@ private func formatFile(
     crc32HashBytes.append(UInt8((crc32Hash >> 24) & 0xFF))
 
     return fileContents + crc32HashBytes
-}
-
-private func base64RemovePadding(_ str: String) -> String {
-    return str.replacingOccurrences(of: "={1,2}$", with: "", options: .regularExpression)
 }
 
 

@@ -1,9 +1,9 @@
 import Foundation
 
-internal struct CageKey {
+internal struct CageKey: Equatable {
     let ecdhP256Key: String
     let ecdhP256KeyUncompressed: String
-    var isDebugMode: Bool
+    let isDebugMode: Bool
 
     init(ecdhP256Key: String, ecdhP256KeyUncompressed: String, isDebugMode: Bool = false) {
         self.ecdhP256Key = ecdhP256Key

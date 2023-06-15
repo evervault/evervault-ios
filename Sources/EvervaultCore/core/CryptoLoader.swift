@@ -58,6 +58,7 @@ internal actor CryptoLoader {
         let isDebugMode = isInDebugMode ?? cageKey.isDebugMode
 
         return Crypto(
+            encryptionFormatter: R1StdEncryptionFormatter(evVersion: config.encryption.evVersion, isDebug: isDebugMode),
             ecdhTeamKey: Data(base64Encoded: cageKey.ecdhP256Key)!,
             ecdhPublicKey: privateKey.publicKey,
             derivedSecret: derivedAesKey,

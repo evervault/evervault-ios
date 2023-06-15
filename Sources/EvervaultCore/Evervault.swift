@@ -128,7 +128,7 @@ private extension Config {
             config: httpConfig,
             teamId: teamId,
             appId: appId,
-            context: "default" // "inputs"
+            context: "default"
         )
     }
 }

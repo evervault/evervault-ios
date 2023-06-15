@@ -76,12 +76,12 @@
       <EnvironmentVariables>
          <EnvironmentVariable
             key = "EV_TEAM_UUID"
-            value = "team_"
+            value = "team_2cc9843ad3d4"
             isEnabled = "YES">
          </EnvironmentVariable>
          <EnvironmentVariable
             key = "EV_APP_UUID"
-            value = "app_"
+            value = "app_b2630facb2f9"
             isEnabled = "YES">
          </EnvironmentVariable>
       </EnvironmentVariables>

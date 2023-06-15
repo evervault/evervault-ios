@@ -1,8 +1,6 @@
 import Foundation
 
 private let KEYS_URL = "https://keys.evervault.com"
-private let INPUTS_ORIGIN = "https://inputs.evervault.com"
-private let INPUTS_URL = "\(INPUTS_ORIGIN)/v2/index.html"
 
 private let DEBUG_KEY = CageKey(
     ecdhP256Key: "Al1/Mo85D7t/XvC3I+YYpJvP+OsSyxIbSrhtDhg1SClQ",
