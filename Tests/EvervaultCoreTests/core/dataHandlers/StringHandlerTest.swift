@@ -6,14 +6,14 @@ import Mockingbird
 
 final class StringHandlerTest: XCTestCase {
 
-    var cipherMock: DataCipherMock!
+    var encryptionServiceMock: EncryptionServiceMock!
     var contextMock: DataHandlerContextMock!
     var handler: StringHandler!
 
     override func setUp() {
-        cipherMock = mock(DataCipher.self)
+        encryptionServiceMock = mock(EncryptionService.self)
         contextMock = mock(DataHandlerContext.self)
-        handler = StringHandler(cipher: cipherMock)
+        handler = StringHandler(encryptionService: encryptionServiceMock)
     }
 
     func testCanEncrypt() {
@@ -28,9 +28,9 @@ final class StringHandlerTest: XCTestCase {
     }
 
     func testEncrypt() throws {
-        given(cipherMock.encryptString(string: any(), dataType: any())).willReturn("encrypted")
+        given(encryptionServiceMock.encryptString(string: any(), dataType: any())).willReturn("encrypted")
         XCTAssertEqual(try handler.encrypt(data: "String value", context: contextMock) as? String, "encrypted")
-        verify(cipherMock.encryptString(string: "String value", dataType: "string")).wasCalled()
+        verify(encryptionServiceMock.encryptString(string: "String value", dataType: .string)).wasCalled()
         verify(contextMock.encrypt(data: any())).wasNeverCalled()
     }
 

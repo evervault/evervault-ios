@@ -6,18 +6,18 @@ import Mockingbird
 
 final class DataHandlersTest: XCTestCase {
 
-    var cipherMock: DataCipherMock!
+    var encryptionServiceMock: EncryptionServiceMock!
     var contextMock: DataHandlerContextMock!
     var dataHandlers: DataHandlers!
 
     override func setUp() {
-        cipherMock = mock(DataCipher.self)
+        encryptionServiceMock = mock(EncryptionService.self)
         contextMock = mock(DataHandlerContext.self)
-        dataHandlers = DataHandlers(cipher: cipherMock)
+        dataHandlers = DataHandlers(encryptionService: encryptionServiceMock)
     }
 
     func testEncryptComplex() throws {
-        given(cipherMock.encryptString(string: any(), dataType: any())).will { string, type in
+        given(encryptionServiceMock.encryptString(string: any(), dataType: any())).will { string, type in
             "_\(type):\(string)_"
         }
 
@@ -43,6 +43,6 @@ final class DataHandlersTest: XCTestCase {
 
         XCTAssertEqual(dictionaryResult[true] as! String, "_boolean:false_")
 
-        verify(cipherMock.encryptString(string: any(), dataType: any())).wasCalled(5)
+        verify(encryptionServiceMock.encryptString(string: any(), dataType: any())).wasCalled(5)
     }
 }

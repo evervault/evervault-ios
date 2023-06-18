@@ -81,10 +81,10 @@
       ],
       "resources" : [
         {
-          "path" : "/Users/lwesterhoff/Developer/Evervault/evervault-ios/Sources/EvervaultInputs/Resources/Assets.xcassets",
+          "path" : "/Users/lwesterhoff/Developer/Evervault/evervault-ios/Sources/EvervaultInputs/Resources/en.lproj/Localizable.strings",
           "rule" : {
             "process" : {
-
+              "localization" : "en"
             }
           }
         },
@@ -97,10 +97,10 @@
           }
         },
         {
-          "path" : "/Users/lwesterhoff/Developer/Evervault/evervault-ios/Sources/EvervaultInputs/Resources/en.lproj/Localizable.strings",
+          "path" : "/Users/lwesterhoff/Developer/Evervault/evervault-ios/Sources/EvervaultInputs/Resources/Assets.xcassets",
           "rule" : {
             "process" : {
-              "localization" : "en"
+
             }
           }
         }
@@ -135,6 +135,7 @@
       "sources" : [
         "MockingbirdMocks/EvervaultCoreMocks.generated.swift",
         "core/BasicTest.swift",
+        "core/HttpKeysLoaderTest.swift",
         "core/curves/asn1Test.swift",
         "core/dataHandlers/ArrayHandlerTest.swift",
         "core/dataHandlers/BooleanHandlerTest.swift",
@@ -142,8 +143,10 @@
         "core/dataHandlers/DictionaryHandlerTest.swift",
         "core/dataHandlers/NumberHandler.swift",
         "core/dataHandlers/StringHandlerTest.swift",
+        "core/format/R1StdEncryptionFormatterTest.swift",
         "core/keys/CageKeyTest.swift",
-        "core/utils/crc32Test.swift"
+        "core/utils/crc32Test.swift",
+        "core/utils/ecPointCompressTest.swift"
       ],
       "target_dependencies" : [
         "EvervaultCore"
@@ -163,8 +166,12 @@
         "Config.swift",
         "Evervault.swift",
         "core/Crypto.swift",
+        "core/CryptoDataCipher.swift",
         "core/CryptoLoader.swift",
         "core/DataCipher.swift",
+        "core/DataType.swift",
+        "core/EncryptedData.swift",
+        "core/EncryptionService.swift",
         "core/Http.swift",
         "core/HttpKeysLoader.swift",
         "core/curves/asn1.swift",
@@ -179,7 +186,13 @@
         "core/dataHandlers/DictionaryHandler.swift",
         "core/dataHandlers/NumberHandler.swift",
         "core/dataHandlers/StringHandler.swift",
+        "core/format/EncryptionFormatter.swift",
+        "core/format/File.swift",
+        "core/format/R1StdEncryptionFormatter.swift",
         "core/keys/CageKey.swift",
+        "core/keys/CryptoSharedSecretDeriver.swift",
+        "core/keys/GeneratedSharedKey.swift",
+        "core/keys/SharedSecretDeriver.swift",
         "utils/EvervaultError.swift",
         "utils/crc32.swift",
         "utils/ecPointCompress.swift"

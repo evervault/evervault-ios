@@ -2,13 +2,13 @@ import Foundation
 
 internal struct BytesHandler: DataHandler {
 
-    let cipher: DataCipher
+    let encryptionService: EncryptionService
 
     func canEncrypt(data: Any) -> Bool {
         data is Data
     }
 
     func encrypt(data: Any, context: DataHandlerContext) throws -> Any {
-        try cipher.encryptData(data: data as! Data)
+        try encryptionService.encryptData(data: data as! Data)
     }
 }

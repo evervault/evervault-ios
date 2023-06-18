@@ -8,15 +8,19 @@ internal actor CryptoLoader {
 
     private let config: Config
     private let http: Http
+    private let sharedSecretDeriver: SharedSecretDeriver
+    private let dataCipherFactory: DataCipherFactory
     private let isInDebugMode: Bool?
 
-    init(config: Config, http: Http, isInDebugMode: Bool?) {
+    init(config: Config, http: Http, sharedSecretDeriver: SharedSecretDeriver, dataCipherFactory: DataCipherFactory, isInDebugMode: Bool?) {
         self.config = config
         self.http = http
+        self.sharedSecretDeriver = sharedSecretDeriver
+        self.dataCipherFactory = dataCipherFactory
         self.isInDebugMode = isInDebugMode
     }
 
-    func loadCipher() async throws -> DataCipher {
+    func loadCipher() async throws -> EncryptionService {
         if let activeTask {
             return try await activeTask.value
         }
@@ -52,55 +56,32 @@ internal actor CryptoLoader {
             cageKey = try await http.loadKeys()
         }
 
-        let privateKey = P256.KeyAgreement.PrivateKey()
-        let derivedAesKey = try deriveSharedSecret(ecdh: privateKey, publicKey: cageKey.ecdhP256KeyUncompressed, ephemeralPublicKey: privateKey.publicKey)
+        let generated = try sharedSecretDeriver.deriveSharedSecret(cageKey: cageKey)
+        let teamKeyPublic = Data(base64Encoded: cageKey.ecdhP256Key)!
+
+        let sharedKey = generated.sharedKey
+        let generatedEcdhKey = generated.generatedEcdhKey
 
         let isDebugMode = isInDebugMode ?? cageKey.isDebugMode
 
         return Crypto(
-            encryptionFormatter: R1StdEncryptionFormatter(evVersion: config.encryption.evVersion, isDebug: isDebugMode),
-            ecdhTeamKey: Data(base64Encoded: cageKey.ecdhP256Key)!,
-            ecdhPublicKey: privateKey.publicKey,
-            derivedSecret: derivedAesKey,
-            config: config.encryption,
-            isDebug: isDebugMode
+            encryptionFormatter: R1StdEncryptionFormatter(
+                evVersion: config.encryption.evVersion,
+                publicKey: generatedEcdhKey,
+                isDebug: isDebugMode
+            ),
+            dataCipher: dataCipherFactory.createCipher(
+                ecdhTeamKey: teamKeyPublic,
+                derivedSecret: sharedKey,
+                config: config.encryption
+            ),
+            config: config.encryption
         )
 
     }
 }
 
 
-private func deriveSharedSecret(ecdh: P256.KeyAgreement.PrivateKey, publicKey: String, ephemeralPublicKey: P256.KeyAgreement.PublicKey) throws -> Data {
-    // Convert the public key from base64 string to Data
-    guard let publicKeyData = Data(base64Encoded: publicKey) else {
-        throw CryptoError.invalidPublicKey
-    }
-
-    // Import the public key as a CryptoKey object
-    let importedPublicKey = try P256.KeyAgreement.PublicKey(x963Representation: publicKeyData)
-
-    // Perform the key agreement to derive the shared secret
-    let sharedSecret = try ecdh.sharedSecretFromKeyAgreement(with: importedPublicKey)
-
-    // Export the ephemeral public key and the secret key as Data
-    let exportableEphemeralPublicKey = encodePublicKey(decompressedKeyData: ephemeralPublicKey.x963Representation)!
-
-
-    let exportableSecret = sharedSecret.withUnsafeBytes { secretPtr in
-        Data(secretPtr)
-    }
-
-    // Concatenate the secret key and the ephemeral public key
-    var concatSecret = Data()
-    concatSecret.append(exportableSecret)
-    concatSecret.append(Data([0x00, 0x00, 0x00, 0x01]))
-    concatSecret.append(exportableEphemeralPublicKey)
-
-    // Hash the concatenated secret using SHA-256
-    let hashDigest = SHA256.hash(data: concatSecret)
-
-    return Data(hashDigest)
-}
 
 // Helper function to handle CryptoKit errors
 enum CryptoError: Error {

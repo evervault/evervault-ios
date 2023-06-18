@@ -11,14 +11,14 @@ internal struct DataHandlers {
 
     let handlers: [DataHandler]
 
-    init(cipher: DataCipher) {
+    init(encryptionService: EncryptionService) {
         handlers = [
-            StringHandler(cipher: cipher),
-            BooleanHandler(cipher: cipher),
-            NumberHandler(cipher: cipher),
+            StringHandler(encryptionService: encryptionService),
+            BooleanHandler(encryptionService: encryptionService),
+            NumberHandler(encryptionService: encryptionService),
             ArrayHandler(),
             DictionaryHandler(),
-            BytesHandler(cipher: cipher)
+            BytesHandler(encryptionService: encryptionService)
         ]
     }
 

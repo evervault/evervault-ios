@@ -87,7 +87,12 @@ public class Evervault {
             configUrls: customConfig?.urls ?? ConfigUrls(),
             publicKey: customConfig?.publicKey
         )
-        self.client = Client(config: config, http: config.http, debugMode: customConfig?.isDebugMode)
+        self.client = Client(
+            config: config,
+            http: config.http,
+            evervaultFactory: CryptoEvervaultFactory(),
+            debugMode: customConfig?.isDebugMode
+        )
     }
 
     /// Encrypts the provided data using the Evervault encryption service.
@@ -133,6 +138,22 @@ private extension Config {
     }
 }
 
+private protocol EvervaultFactory {
+    func createSharedSecretDeriver() -> SharedSecretDeriver
+    func createDataCipherFactory() -> DataCipherFactory
+}
+
+private struct CryptoEvervaultFactory: EvervaultFactory {
+
+    func createSharedSecretDeriver() -> SharedSecretDeriver {
+        return CryptoSharedSecretDeriver()
+    }
+
+    func createDataCipherFactory() -> DataCipherFactory {
+        return CryptoDataCipherFactory()
+    }
+}
+
 fileprivate struct Client {
 
     private let config: Config
@@ -141,16 +162,22 @@ fileprivate struct Client {
 
     private let cryptoLoader: CryptoLoader
 
-    init(config: Config, http: Http, debugMode: Bool?) {
+    init(config: Config, http: Http, evervaultFactory: EvervaultFactory, debugMode: Bool?) {
         self.config = config
         self.http = http
         self.debugMode = debugMode
-        self.cryptoLoader = CryptoLoader(config: config, http: http, isInDebugMode: debugMode)
+        self.cryptoLoader = CryptoLoader(
+            config: config,
+            http: http,
+            sharedSecretDeriver: evervaultFactory.createSharedSecretDeriver(),
+            dataCipherFactory: evervaultFactory.createDataCipherFactory(),
+            isInDebugMode: debugMode
+        )
     }
 
     internal func encrypt(_ data: Any) async throws -> Any {
         let cipher = try await cryptoLoader.loadCipher()
-        let handlers = DataHandlers(cipher: cipher)
+        let handlers = DataHandlers(encryptionService: cipher)
 
         return try handlers.encrypt(data: data)
     }

@@ -14,77 +14,6 @@ import Swift
 
 private let mkbGenericStaticMockContext = Mockingbird.GenericStaticMockContext()
 
-// MARK: - Mocked DataCipher
-public final class DataCipherMock: EvervaultCore.DataCipher, Mockingbird.Mock {
-  typealias MockingbirdSupertype = EvervaultCore.DataCipher
-  public static let mockingbirdContext = Mockingbird.Context()
-  public let mockingbirdContext = Mockingbird.Context(["generator_version": "0.20.0", "module_name": "EvervaultCore"])
-
-  fileprivate init(sourceLocation: Mockingbird.SourceLocation) {
-    self.mockingbirdContext.sourceLocation = sourceLocation
-    DataCipherMock.mockingbirdContext.sourceLocation = sourceLocation
-  }
-
-  // MARK: Mocked `encryptData`(`data`: Data)
-  public func `encryptData`(`data`: Data) throws -> Data {
-    return try self.mockingbirdContext.mocking.didInvoke(Mockingbird.SwiftInvocation(selectorName: "`encryptData`(`data`: Data) throws -> Data", selectorType: Mockingbird.SelectorType.method, arguments: [Mockingbird.ArgumentMatcher(`data`)], returnType: Swift.ObjectIdentifier((Data).self))) {
-      self.mockingbirdContext.recordInvocation($0)
-      let mkbImpl = self.mockingbirdContext.stubbing.implementation(for: $0)
-      if let mkbImpl = mkbImpl as? (Data) throws -> Data { return try mkbImpl(`data`) }
-      if let mkbImpl = mkbImpl as? () throws -> Data { return try mkbImpl() }
-      for mkbTargetBox in self.mockingbirdContext.proxy.targets(for: $0) {
-        switch mkbTargetBox.target {
-        case .super:
-          break
-        case .object(let mkbObject):
-          guard var mkbObject = mkbObject as? MockingbirdSupertype else { break }
-          let mkbValue: Data = try mkbObject.`encryptData`(data: `data`)
-          self.mockingbirdContext.proxy.updateTarget(&mkbObject, in: mkbTargetBox)
-          return mkbValue
-        }
-      }
-      if let mkbValue = self.mockingbirdContext.stubbing.defaultValueProvider.value.provideValue(for: (Data).self) { return mkbValue }
-      self.mockingbirdContext.stubbing.failTest(for: $0, at: self.mockingbirdContext.sourceLocation)
-    }
-  }
-
-  public func `encryptData`(`data`: @autoclosure () -> Data) -> Mockingbird.Mockable<Mockingbird.ThrowingFunctionDeclaration, (Data) throws -> Data, Data> {
-    return Mockingbird.Mockable<Mockingbird.ThrowingFunctionDeclaration, (Data) throws -> Data, Data>(context: self.mockingbirdContext, invocation: Mockingbird.SwiftInvocation(selectorName: "`encryptData`(`data`: Data) throws -> Data", selectorType: Mockingbird.SelectorType.method, arguments: [Mockingbird.resolve(`data`)], returnType: Swift.ObjectIdentifier((Data).self)))
-  }
-
-  // MARK: Mocked `encryptString`(`string`: String, `dataType`: String)
-  public func `encryptString`(`string`: String, `dataType`: String) throws -> String {
-    return try self.mockingbirdContext.mocking.didInvoke(Mockingbird.SwiftInvocation(selectorName: "`encryptString`(`string`: String, `dataType`: String) throws -> String", selectorType: Mockingbird.SelectorType.method, arguments: [Mockingbird.ArgumentMatcher(`string`), Mockingbird.ArgumentMatcher(`dataType`)], returnType: Swift.ObjectIdentifier((String).self))) {
-      self.mockingbirdContext.recordInvocation($0)
-      let mkbImpl = self.mockingbirdContext.stubbing.implementation(for: $0)
-      if let mkbImpl = mkbImpl as? (String, String) throws -> String { return try mkbImpl(`string`, `dataType`) }
-      if let mkbImpl = mkbImpl as? () throws -> String { return try mkbImpl() }
-      for mkbTargetBox in self.mockingbirdContext.proxy.targets(for: $0) {
-        switch mkbTargetBox.target {
-        case .super:
-          break
-        case .object(let mkbObject):
-          guard var mkbObject = mkbObject as? MockingbirdSupertype else { break }
-          let mkbValue: String = try mkbObject.`encryptString`(string: `string`, dataType: `dataType`)
-          self.mockingbirdContext.proxy.updateTarget(&mkbObject, in: mkbTargetBox)
-          return mkbValue
-        }
-      }
-      if let mkbValue = self.mockingbirdContext.stubbing.defaultValueProvider.value.provideValue(for: (String).self) { return mkbValue }
-      self.mockingbirdContext.stubbing.failTest(for: $0, at: self.mockingbirdContext.sourceLocation)
-    }
-  }
-
-  public func `encryptString`(`string`: @autoclosure () -> String, `dataType`: @autoclosure () -> String) -> Mockingbird.Mockable<Mockingbird.ThrowingFunctionDeclaration, (String, String) throws -> String, String> {
-    return Mockingbird.Mockable<Mockingbird.ThrowingFunctionDeclaration, (String, String) throws -> String, String>(context: self.mockingbirdContext, invocation: Mockingbird.SwiftInvocation(selectorName: "`encryptString`(`string`: String, `dataType`: String) throws -> String", selectorType: Mockingbird.SelectorType.method, arguments: [Mockingbird.resolve(`string`), Mockingbird.resolve(`dataType`)], returnType: Swift.ObjectIdentifier((String).self)))
-  }
-}
-
-/// Returns a concrete mock of `DataCipher`.
-public func mock(_ type: EvervaultCore.DataCipher.Protocol, file: StaticString = #file, line: UInt = #line) -> DataCipherMock {
-  return DataCipherMock(sourceLocation: Mockingbird.SourceLocation(file, line))
-}
-
 // MARK: - Mocked DataHandlerContext
 public final class DataHandlerContextMock: EvervaultCore.DataHandlerContext, Mockingbird.Mock {
   typealias MockingbirdSupertype = EvervaultCore.DataHandlerContext
@@ -127,4 +56,75 @@ public final class DataHandlerContextMock: EvervaultCore.DataHandlerContext, Moc
 /// Returns a concrete mock of `DataHandlerContext`.
 public func mock(_ type: EvervaultCore.DataHandlerContext.Protocol, file: StaticString = #file, line: UInt = #line) -> DataHandlerContextMock {
   return DataHandlerContextMock(sourceLocation: Mockingbird.SourceLocation(file, line))
+}
+
+// MARK: - Mocked EncryptionService
+public final class EncryptionServiceMock: EvervaultCore.EncryptionService, Mockingbird.Mock {
+  typealias MockingbirdSupertype = EvervaultCore.EncryptionService
+  public static let mockingbirdContext = Mockingbird.Context()
+  public let mockingbirdContext = Mockingbird.Context(["generator_version": "0.20.0", "module_name": "EvervaultCore"])
+
+  fileprivate init(sourceLocation: Mockingbird.SourceLocation) {
+    self.mockingbirdContext.sourceLocation = sourceLocation
+    EncryptionServiceMock.mockingbirdContext.sourceLocation = sourceLocation
+  }
+
+  // MARK: Mocked `encryptData`(`data`: Data)
+  public func `encryptData`(`data`: Data) throws -> Data {
+    return try self.mockingbirdContext.mocking.didInvoke(Mockingbird.SwiftInvocation(selectorName: "`encryptData`(`data`: Data) throws -> Data", selectorType: Mockingbird.SelectorType.method, arguments: [Mockingbird.ArgumentMatcher(`data`)], returnType: Swift.ObjectIdentifier((Data).self))) {
+      self.mockingbirdContext.recordInvocation($0)
+      let mkbImpl = self.mockingbirdContext.stubbing.implementation(for: $0)
+      if let mkbImpl = mkbImpl as? (Data) throws -> Data { return try mkbImpl(`data`) }
+      if let mkbImpl = mkbImpl as? () throws -> Data { return try mkbImpl() }
+      for mkbTargetBox in self.mockingbirdContext.proxy.targets(for: $0) {
+        switch mkbTargetBox.target {
+        case .super:
+          break
+        case .object(let mkbObject):
+          guard var mkbObject = mkbObject as? MockingbirdSupertype else { break }
+          let mkbValue: Data = try mkbObject.`encryptData`(data: `data`)
+          self.mockingbirdContext.proxy.updateTarget(&mkbObject, in: mkbTargetBox)
+          return mkbValue
+        }
+      }
+      if let mkbValue = self.mockingbirdContext.stubbing.defaultValueProvider.value.provideValue(for: (Data).self) { return mkbValue }
+      self.mockingbirdContext.stubbing.failTest(for: $0, at: self.mockingbirdContext.sourceLocation)
+    }
+  }
+
+  public func `encryptData`(`data`: @autoclosure () -> Data) -> Mockingbird.Mockable<Mockingbird.ThrowingFunctionDeclaration, (Data) throws -> Data, Data> {
+    return Mockingbird.Mockable<Mockingbird.ThrowingFunctionDeclaration, (Data) throws -> Data, Data>(context: self.mockingbirdContext, invocation: Mockingbird.SwiftInvocation(selectorName: "`encryptData`(`data`: Data) throws -> Data", selectorType: Mockingbird.SelectorType.method, arguments: [Mockingbird.resolve(`data`)], returnType: Swift.ObjectIdentifier((Data).self)))
+  }
+
+  // MARK: Mocked `encryptString`(`string`: String, `dataType`: EvervaultCore.DataType)
+  public func `encryptString`(`string`: String, `dataType`: EvervaultCore.DataType) throws -> String {
+    return try self.mockingbirdContext.mocking.didInvoke(Mockingbird.SwiftInvocation(selectorName: "`encryptString`(`string`: String, `dataType`: EvervaultCore.DataType) throws -> String", selectorType: Mockingbird.SelectorType.method, arguments: [Mockingbird.ArgumentMatcher(`string`), Mockingbird.ArgumentMatcher(`dataType`)], returnType: Swift.ObjectIdentifier((String).self))) {
+      self.mockingbirdContext.recordInvocation($0)
+      let mkbImpl = self.mockingbirdContext.stubbing.implementation(for: $0)
+      if let mkbImpl = mkbImpl as? (String, EvervaultCore.DataType) throws -> String { return try mkbImpl(`string`, `dataType`) }
+      if let mkbImpl = mkbImpl as? () throws -> String { return try mkbImpl() }
+      for mkbTargetBox in self.mockingbirdContext.proxy.targets(for: $0) {
+        switch mkbTargetBox.target {
+        case .super:
+          break
+        case .object(let mkbObject):
+          guard var mkbObject = mkbObject as? MockingbirdSupertype else { break }
+          let mkbValue: String = try mkbObject.`encryptString`(string: `string`, dataType: `dataType`)
+          self.mockingbirdContext.proxy.updateTarget(&mkbObject, in: mkbTargetBox)
+          return mkbValue
+        }
+      }
+      if let mkbValue = self.mockingbirdContext.stubbing.defaultValueProvider.value.provideValue(for: (String).self) { return mkbValue }
+      self.mockingbirdContext.stubbing.failTest(for: $0, at: self.mockingbirdContext.sourceLocation)
+    }
+  }
+
+  public func `encryptString`(`string`: @autoclosure () -> String, `dataType`: @autoclosure () -> EvervaultCore.DataType) -> Mockingbird.Mockable<Mockingbird.ThrowingFunctionDeclaration, (String, EvervaultCore.DataType) throws -> String, String> {
+    return Mockingbird.Mockable<Mockingbird.ThrowingFunctionDeclaration, (String, EvervaultCore.DataType) throws -> String, String>(context: self.mockingbirdContext, invocation: Mockingbird.SwiftInvocation(selectorName: "`encryptString`(`string`: String, `dataType`: EvervaultCore.DataType) throws -> String", selectorType: Mockingbird.SelectorType.method, arguments: [Mockingbird.resolve(`string`), Mockingbird.resolve(`dataType`)], returnType: Swift.ObjectIdentifier((String).self)))
+  }
+}
+
+/// Returns a concrete mock of `EncryptionService`.
+public func mock(_ type: EvervaultCore.EncryptionService.Protocol, file: StaticString = #file, line: UInt = #line) -> EncryptionServiceMock {
+  return EncryptionServiceMock(sourceLocation: Mockingbird.SourceLocation(file, line))
 }

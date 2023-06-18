@@ -6,14 +6,14 @@ import Mockingbird
 
 final class BooleanHandlerTest: XCTestCase {
 
-    var cipherMock: DataCipherMock!
+    var encryptionServiceMock: EncryptionServiceMock!
     var contextMock: DataHandlerContextMock!
     var handler: BooleanHandler!
 
     override func setUp() {
-        cipherMock = mock(DataCipher.self)
+        encryptionServiceMock = mock(EncryptionService.self)
         contextMock = mock(DataHandlerContext.self)
-        handler = BooleanHandler(cipher: cipherMock)
+        handler = BooleanHandler(encryptionService: encryptionServiceMock)
     }
 
     func testCanEncrypt() {
@@ -28,16 +28,16 @@ final class BooleanHandlerTest: XCTestCase {
     }
 
     func testEncryptTrue() throws {
-        given(cipherMock.encryptString(string: any(), dataType: any())).willReturn("encrypted")
+        given(encryptionServiceMock.encryptString(string: any(), dataType: any())).willReturn("encrypted")
         XCTAssertEqual(try handler.encrypt(data: true, context: contextMock) as? String, "encrypted")
-        verify(cipherMock.encryptString(string: "true", dataType: "boolean")).wasCalled()
+        verify(encryptionServiceMock.encryptString(string: "true", dataType: .boolean)).wasCalled()
         verify(contextMock.encrypt(data: any())).wasNeverCalled()
     }
 
     func testEncryptFalse() throws {
-        given(cipherMock.encryptString(string: any(), dataType: any())).willReturn("encrypted")
+        given(encryptionServiceMock.encryptString(string: any(), dataType: any())).willReturn("encrypted")
         XCTAssertEqual(try handler.encrypt(data: false, context: contextMock) as? String, "encrypted")
-        verify(cipherMock.encryptString(string: "false", dataType: "boolean")).wasCalled()
+        verify(encryptionServiceMock.encryptString(string: "false", dataType: .boolean)).wasCalled()
         verify(contextMock.encrypt(data: any())).wasNeverCalled()
     }
 

@@ -20,6 +20,7 @@ final class BasicTest: XCTestCase {
 
     func testPublicKey() async throws {
         let encryptedString = try await Evervault.shared.encrypt("Big Secret") as! String
+        print(encryptedString)
         XCTAssertTrue(encryptedStringRegex.matches(in: encryptedString, range: NSRange(location: 0, length: encryptedString.utf16.count)).count > 0)
     }
 
