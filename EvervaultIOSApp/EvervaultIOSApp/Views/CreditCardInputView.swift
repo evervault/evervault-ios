@@ -57,14 +57,9 @@ struct CreditCardInputView: View {
 
                 if let error = cardData.error {
                     VStack(alignment: .leading, spacing: 4) {
-                        Text("Error type:")
-                            .bold()
-                        Text(error.type)
-                    }
-                    VStack(alignment: .leading, spacing: 4) {
                         Text("Error message:")
                             .bold()
-                        Text(error.message)
+                        Text(error.localizedDescription)
                     }
                 }
             }
