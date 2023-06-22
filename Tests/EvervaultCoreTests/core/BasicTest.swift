@@ -4,8 +4,6 @@ import XCTest
 
 final class BasicTest: XCTestCase {
 
-    private let publicKey = "BDeIKmwjqB35+tnMzQFEvXIvM2kyK6DX75NBEhSZxCR5CQZYnh1fwWsXMEqqKihmEGfMX0+EDHtmZNP/TK7mqMc="
-
     private let encryptedStringRegex = try! NSRegularExpression(pattern: "((ev(:|%3A))(debug(:|%3A))?(([A-z0-9+/=%]+)(:|%3A))?((number|boolean|string)(:|%3A))?(([A-z0-9+/=%]+)(:|%3A)){3}(\\$|%24))|(((eyJ[A-z0-9+=.]+){2})([\\w]{8}(-[\\w]{4}){3}-[\\w]{12}))")
 
     override func setUpWithError() throws {
@@ -18,7 +16,7 @@ final class BasicTest: XCTestCase {
         )
     }
 
-    func testPublicKey() async throws {
+    func testEncryptString() async throws {
         let encryptedString = try await Evervault.shared.encrypt("Big Secret") as! String
         print(encryptedString)
         XCTAssertTrue(encryptedStringRegex.matches(in: encryptedString, range: NSRange(location: 0, length: encryptedString.utf16.count)).count > 0)

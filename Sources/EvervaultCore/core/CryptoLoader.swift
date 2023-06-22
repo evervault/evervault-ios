@@ -90,4 +90,5 @@ enum CryptoError: Error {
     case invalidPlaintext
     case notPossibleToHandleDataType
     case exceededMaxFileSizeError(maxFileSizeInMB: Int)
+    case encryptionFailed
 }

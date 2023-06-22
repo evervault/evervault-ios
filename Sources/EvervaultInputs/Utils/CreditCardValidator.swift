@@ -32,7 +32,7 @@ internal struct CreditCardValidator {
     /// Get predicted card type
     /// Card number validation is not perfroms here
     public var predictedType: CreditCardType? {
-        CreditCardValidator.types.first { type in
+    CreditCardValidator.types.first { type in
             NSPredicate(format: "SELF MATCHES %@", "^\(type.prefixRegex).*$")
                 .evaluate(
                     with: string
@@ -72,7 +72,7 @@ internal struct CreditCardValidator {
         }
 
         guard let type = predictedType else {
-            return !NSPredicate(format: "SELF MATCHES %@", CreditCardType.invalidRegex).evaluate(with: string) && string.count <= 4
+            return !NSPredicate(format: "SELF MATCHES %@", CreditCardType.invalidRegex).evaluate(with: string) && string.count <= 6
         }
 
         return string.count < type.validNumberLength.last!
