@@ -12,16 +12,6 @@ import EvervaultInputs
 
 struct ContentView: View {
 
-    enum Target {
-        case basicEncryption
-        case creditCardInputInline
-    }
-
-    private let password = "SuperSecretPassword"
-    @State private var encryptedPassword: String?
-
-    @State private var cardData = PaymentCardData()
-
     var body: some View {
         NavigationSplitView {
             List {
