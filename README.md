@@ -164,7 +164,7 @@ Feel free to experiment with the sample app to understand the capabilities of th
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/evervault/evervault-js.
+Bug reports and pull requests are welcome on GitHub at https://github.com/evervault/evervault-ios.
 
 ## Feedback
 
