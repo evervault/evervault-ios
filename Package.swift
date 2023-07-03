@@ -19,12 +19,8 @@ let package = Package(
         ),
         .library(
             name: "EvervaultCages",
-            targets: ["EvervaultCages"]
+            targets: ["EvervaultCages", "AttestationBindings"]
         ),
-        .library(
-            name: "AttestationBindings",
-            targets: ["AttestationBindings"]
-        )
     ],
     dependencies: [
         .package(url: "https://github.com/birdrides/mockingbird.git", .upToNextMinor(from: "0.20.0"))
@@ -52,9 +48,8 @@ let package = Package(
         ),
         .binaryTarget(
             name: "AttestationBindings",
-//            path: "AttestationBindings.xcframework"
-            url: "https://github.com/lammertw/attestation-doc-validation/releases/download/0.0.3/AttestationBindings.xcframework.zip",
-            checksum: "9bb3e9f85c6c99c16526ee61566e1f4424a5b44b0f264e6186d27114db40c878"
+            url: "https://github.com/evervault/evervault-ios/releases/download/0.0.1/AttestationBindings.xcframework.zip",
+            checksum: "b74bdf0909f5ca2b14670ea9cbe90f6a9ce39e0762226427b9be484c2ba4930e"
         ),
         .testTarget(
             name: "EvervaultCoreTests",
