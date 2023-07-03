@@ -43,7 +43,6 @@ internal struct EncryptionConfig {
     let authTagLength: Int = 128 // bits
     let publicHash: String = "sha256"
     let evVersion: String = "NOC" // (Tk9D) NIST-P256 KDF
-    let header: Header = Header(iss: "evervault", version: 1)
     let maxFileSizeInMB: Int = MAX_FILE_SIZE_IN_MB
     let maxFileSizeInBytes: Int = MAX_FILE_SIZE_IN_MB * 1024 * 1024
 

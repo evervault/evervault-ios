@@ -6,7 +6,7 @@ let package = Package(
     name: "Evervault",
     defaultLocalization: "en",
     platforms: [
-        .iOS(.v15), .macOS(.v12)
+        .iOS(.v15)
     ],
     products: [
         .library(
@@ -16,6 +16,14 @@ let package = Package(
         .library(
             name: "EvervaultInputs",
             targets: ["EvervaultInputs"]
+        ),
+        .library(
+            name: "EvervaultCages",
+            targets: ["EvervaultCages"]
+        ),
+        .library(
+            name: "AttestationBindings",
+            targets: ["AttestationBindings"]
         )
     ],
     dependencies: [
@@ -34,6 +42,19 @@ let package = Package(
             resources: [
                 .process("Resources")
             ]
+        ),
+        .target(
+            name: "EvervaultCages",
+            dependencies: [
+                "AttestationBindings",
+                "EvervaultCore",
+            ]
+        ),
+        .binaryTarget(
+            name: "AttestationBindings",
+//            path: "AttestationBindings.xcframework"
+            url: "https://github.com/lammertw/attestation-doc-validation/releases/download/0.0.3/AttestationBindings.xcframework.zip",
+            checksum: "9bb3e9f85c6c99c16526ee61566e1f4424a5b44b0f264e6186d27114db40c878"
         ),
         .testTarget(
             name: "EvervaultCoreTests",

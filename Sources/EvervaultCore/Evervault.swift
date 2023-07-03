@@ -48,7 +48,6 @@ public class Evervault {
     ///
     /// Only use this initializer if you need multiple instances of `Evervault` with different settings. Otherwise use `configure` on a `shared` instance.
     ///
-    /// Make sure to replace `"YOUR_TEAM_ID"` and `"YOUR_APP_ID"` with your actual Evervault Team ID and App ID.
     convenience public init(teamId: String, appId: String, customConfig: CustomConfig? = nil) {
         self.init()
         configure(teamId: teamId, appId: appId, customConfig: customConfig)
@@ -68,8 +67,6 @@ public class Evervault {
     ///
     /// Additionally, you can provide a `CustomConfig` object to customize advanced settings for the Evervault iOS SDK.
     ///
-    /// Make sure to replace `"YOUR_TEAM_ID"` and `"YOUR_APP_ID"` with your actual Evervault Team ID and App ID.
-    ///
     /// It's recommended to call the `configure` function early in your app's lifecycle, such as during app initialization or in the `application(_:didFinishLaunchingWithOptions:)` method.
     ///
     /// Once the Evervault iOS SDK is configured, you can use other encryption functionalities, such as the `encrypt` method, to securely encrypt sensitive data.
@@ -78,6 +75,8 @@ public class Evervault {
     /// ```swift
     /// Evervault.shared.configure(teamId: "YOUR_TEAM_ID", appId: "YOUR_APP_ID")
     /// ```
+    ///
+    /// Make sure to replace `"YOUR_TEAM_ID"` and `"YOUR_APP_ID"` with your actual Evervault Team ID and App ID.
     ///
     /// - Note: The Evervault iOS SDK documentation may provide more detailed information and additional examples.
     public func configure(teamId: String, appId: String, customConfig: CustomConfig? = nil) {
