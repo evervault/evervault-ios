@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+import EvervaultCages
 import EvervaultCore
 import EvervaultInputs
 
@@ -38,6 +39,12 @@ struct ContentView: View {
                     NavigationLink(destination: CreditCardInputView()
                         .paymentCardInputStyle(CustomPaymentCardInputStyle())) {
                         Text("Custom Style")
+                    }
+                }
+
+                Section("Cages") {
+                    NavigationLink(destination: CageView()) {
+                        Text("Cage HTTP Request")
                     }
                 }
             }

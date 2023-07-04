@@ -10,8 +10,8 @@ extension Evervault {
 }
 
 public struct AttestationData {
-    let cageName: String
-    let pcrs: [PCRs]
+    public let cageName: String
+    public let pcrs: [PCRs]
 
     public init(cageName: String, pcrs: PCRs...) {
         self.cageName = cageName
@@ -20,10 +20,10 @@ public struct AttestationData {
 }
 
 public struct PCRs {
-    let pcr0: String
-    let pcr1: String
-    let pcr2: String
-    let pcr8: String
+    public let pcr0: String
+    public let pcr1: String
+    public let pcr2: String
+    public let pcr8: String
 
     public init(pcr0: String, pcr1: String, pcr2: String, pcr8: String) {
         self.pcr0 = pcr0
@@ -33,16 +33,15 @@ public struct PCRs {
     }
 }
 
-class AttestationSessionDelegate: NSObject, URLSessionDelegate {
+public class AttestationSessionDelegate: NSObject, URLSessionDelegate {
 
-    let cageAttestationData: [AttestationData]
+    private let cageAttestationData: [AttestationData]
 
-    init(cageAttestationData: [AttestationData]) {
+    public init(cageAttestationData: [AttestationData]) {
         self.cageAttestationData = cageAttestationData
     }
 
-
-    func urlSession(_ session: URLSession,
+    public func urlSession(_ session: URLSession,
                     didReceive challenge: URLAuthenticationChallenge,
                     completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
         guard let serverTrust = challenge.protectionSpace.serverTrust,
