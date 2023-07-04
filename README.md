@@ -144,9 +144,9 @@ struct CustomPaymentCardInputStyle: PaymentCardInputStyle {
 
 ### Cages (Beta)
 
-Evervault Cages allow developers to easily deploy Docker containers in a Secure Enclave. Endpoints of Cages are requested using normal HTTP requests. For this to work from iOS, it needs to verify the attestation before completing the TLS handshake. See Cages's [TLS Attestation](https://docs.evervault.com/products/cages#tls-attestation) to learn more.
+The Evervault Cages SDK provides an accessible solution for developers to deploy Docker containers within a Secure Enclave. It enables you to interact with your Cages endpoints via standard HTTP requests directly from your iOS applications. A key feature that enables this is the attestation verification performed before completing the TLS handshake. For a deeper understanding of this process, you can explore our [TLS Attestation documentation](https://docs.evervault.com/products/cages#tls-attestation).
 
-The attestation verification is done in a custom `URLSessionDelegate`: `AttestationSessionDelegate`. The delegate is initialized with one or more `AttestationData` objects:
+The attestation verification is executed using a custom `URLSessionDelegate` named `AttestationSessionDelegate`. This delegate needs initialization with one or more `AttestationData` objects:
 
 ```swift
 struct AttestationData {
@@ -162,9 +162,9 @@ struct PCRs {
 }
 ```
 
-These PCRs need to match the PCRs of the Cage.
+It is crucial to ensure that the supplied PCRs align with the PCRs of the respective Cage.
 
-You can either create your own `URLSession`s and configure them with the delegate or you can use `Evervault.cageSession(cageAttestationData:)` to create such a `URLSession` for you:
+For the configuration of your `URLSession` instances, there are two available paths. You can either create `URLSession`s manually and configure them with the delegate, or take advantage of the `Evervault.cageSession(cageAttestationData:)` method to generate a `URLSession` that is ready-to-use:
 
 ```swift
 let url = URL(string: "https://\(cageName).\(appId).cages.evervault.com/attestation-doc")!
@@ -172,7 +172,7 @@ let urlSession = Evervault.cageSession(
     cageAttestationData: AttestationData(
         cageName: cageName,
         pcrs: PCRs(
-            // replace with valid PCR string when not running in debug mode
+            // Replace with legitimate PCR strings when not in debug mode
             pcr0: "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
             pcr1: "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
             pcr2: "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
@@ -183,29 +183,31 @@ let urlSession = Evervault.cageSession(
 let response = try await urlSession.data(from: url)
 ```
 
-#### Limitations
+#### Considerations
 
-- Keep it mind that the Cage PCRs change with each new Cage deployment. Therefore it's possible that an older version of your app with hardcoded PCRs would stop working. You can however support older deployments by providing multipl `PCRs` objects:
+- It's crucial to note that the PCR values associated with a Cage change with each new deployment. Consequently, older versions of your app with hardcoded PCRs may stop functioning. To alleviate this, you can accommodate previous deployments by providing multiple `PCRs` objects:
 
 ```swift
 AttestationData(
     cageName: cageName,
-    pcrs: PCRs(
-        pcr0: "fd4b",
-        pcr1: "bc3f",
-        pcr2: "2c10",
-        pcr8: "dfb3"
-    ),
-    PCRs(
-        pcr0: "c779",
-        pcr1: "bc3f",
-        pcr2: "4cbf",
-        pcr8: "dfb3"
-    )
+    pcrs: [
+        PCRs(
+            pcr0: "fd4b",
+            pcr1: "bc3f",
+            pcr2: "2c10",
+            pcr8: "dfb3"
+        ),
+        PCRs(
+            pcr0: "c779",
+            pcr1: "bc3f",
+            pcr2: "4cbf",
+            pcr8: "dfb3"
+        )
+    ]
 )
 ```
 
-- Since the Cage works wirth self signed certificates, you need to add an exception for the Cage to the *App Transport Security Settings* of your Info.plist file:
+- Given that Cages operate with self-signed certificates, it's necessary to include an exception for your Cage within the *App Transport Security Settings* in your Info.plist file:
 
 ```xml
 <key>NSAppTransportSecurity</key>
@@ -223,10 +225,12 @@ AttestationData(
 </dict>
 ```
 
-- The iOS SDK only works with Cages that have API Key Authentication set to `false` in your cage.toml file:
+- Please be aware that the iOS SDK is compatible only with Cages that have the API Key Authentication set to `false` in your cage.toml file:
 ```
 api_key_auth = false
 ```
+
+These considerations are essential to remember for a seamless integration and operation of the Evervault Cages SDK in your iOS applications.
 
 ## Sample App
 
