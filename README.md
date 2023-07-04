@@ -65,13 +65,13 @@ To use `PaymentCardInput`, make sure you have imported the `EvervaultInputs` mod
 import EvervaultInputs
 
 struct ContentView: View {
-    
+
     @State private var cardData = PaymentCardData()
-    
+
     var body: some View {
         VStack {
             PaymentCardInput(cardData: $cardData)
-            
+
             // Data captured:
             Text("Encrypted credit card number: \(cardData.card.number)")
         }
@@ -86,7 +86,7 @@ The encrypted credit card number and CVC are captured in the `PaymentCardData` B
 Internally, the `PaymentCardInput` view uses SwiftUI `TextField`s. These can be customized using SwiftUI modifiers like any other `TextField`s in your application:
 
 ```swift
-    PaymentCardInput(cardData: $cardData)      
+    PaymentCardInput(cardData: $cardData)
         .font(.footnote)
         .foregroundColor(.blue)
 ```
@@ -140,6 +140,92 @@ struct CustomPaymentCardInputStyle: PaymentCardInputStyle {
 ```swift
     PaymentCardInput(cardData: $cardData)
         .paymentCardInputStyle(CustomPaymentCardInputStyle())
+```
+
+### Cages (Beta)
+
+Evervault Cages allow developers to easily deploy Docker containers in a Secure Enclave. Endpoints of Cages are requested using normal HTTP requests. For this to work from iOS, it needs to verify the attestation before completing the TLS handshake. See Cages's [TLS Attestation](https://docs.evervault.com/products/cages#tls-attestation) to learn more.
+
+The attestation verification is done in a custom `URLSessionDelegate`: `AttestationSessionDelegate`. The delegate is initialized with one or more `AttestationData` objects:
+
+```swift
+struct AttestationData {
+    let cageName: String
+    let pcrs: [PCRs]
+}
+
+struct PCRs {
+    let pcr0: String
+    let pcr1: String
+    let pcr2: String
+    let pcr8: String
+}
+```
+
+These PCRs need to match the PCRs of the Cage.
+
+You can either create your own `URLSession`s and configure them with the delegate or you can use `Evervault.cageSession(cageAttestationData:)` to create such a `URLSession` for you:
+
+```swift
+let url = URL(string: "https://\(cageName).\(appId).cages.evervault.com/attestation-doc")!
+let urlSession = Evervault.cageSession(
+    cageAttestationData: AttestationData(
+        cageName: cageName,
+        pcrs: PCRs(
+            // replace with valid PCR string when not running in debug mode
+            pcr0: "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+            pcr1: "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+            pcr2: "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+            pcr8: "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+        )
+    )
+)
+let response = try await urlSession.data(from: url)
+```
+
+#### Limitations
+
+- Keep it mind that the Cage PCRs change with each new Cage deployment. Therefore it's possible that an older version of your app with hardcoded PCRs would stop working. You can however support older deployments by providing multipl `PCRs` objects:
+
+```swift
+AttestationData(
+    cageName: cageName,
+    pcrs: PCRs(
+        pcr0: "fd4b",
+        pcr1: "bc3f",
+        pcr2: "2c10",
+        pcr8: "dfb3"
+    ),
+    PCRs(
+        pcr0: "c779",
+        pcr1: "bc3f",
+        pcr2: "4cbf",
+        pcr8: "dfb3"
+    )
+)
+```
+
+- Since the Cage works wirth self signed certificates, you need to add an exception for the Cage to the *App Transport Security Settings* of your Info.plist file:
+
+```xml
+<key>NSAppTransportSecurity</key>
+<dict>
+    <key>NSExceptionDomains</key>
+    <dict>
+        <key>evervault.com</key>
+        <dict>
+            <key>NSIncludesSubdomains</key>
+            <true/>
+            <key>NSExceptionAllowsInsecureHTTPLoads</key>
+            <true/>
+        </dict>
+    </dict>
+</dict>
+```
+
+- The iOS SDK only works with Cages that have API Key Authentication set to `false` in your cage.toml file:
+```
+api_key_auth = false
 ```
 
 ## Sample App
