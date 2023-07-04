@@ -167,6 +167,7 @@ It is crucial to ensure that the supplied PCRs align with the PCRs of the respec
 For the configuration of your `URLSession` instances, there are two available paths. You can either create `URLSession`s manually and configure them with the delegate, or take advantage of the `Evervault.cageSession(cageAttestationData:)` method to generate a `URLSession` that is ready-to-use:
 
 ```swift
+import EvervaultCore
 import EvervaultCages
 
 let url = URL(string: "https://\(cageName).\(appId).cages.evervault.com/attestation-doc")!
