@@ -17,15 +17,11 @@
   ],
   "manifest_display_name" : "Evervault",
   "name" : "Evervault",
-  "path" : "/Users/lwesterhoff/Developer/Evervault/evervault-ios",
+  "path" : "/Users/jeremywagemans/Evervault/evervault-ios",
   "platforms" : [
     {
       "name" : "ios",
       "version" : "15.0"
-    },
-    {
-      "name" : "macos",
-      "version" : "12.0"
     }
   ],
   "products" : [
@@ -44,6 +40,18 @@
       "name" : "EvervaultInputs",
       "targets" : [
         "EvervaultInputs"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "EvervaultCages",
+      "targets" : [
+        "EvervaultCages",
+        "AttestationBindings"
       ],
       "type" : {
         "library" : [
@@ -81,15 +89,7 @@
       ],
       "resources" : [
         {
-          "path" : "/Users/lwesterhoff/Developer/Evervault/evervault-ios/Sources/EvervaultInputs/Resources/en.lproj/Localizable.strings",
-          "rule" : {
-            "process" : {
-              "localization" : "en"
-            }
-          }
-        },
-        {
-          "path" : "/Users/lwesterhoff/Developer/Evervault/evervault-ios/Sources/EvervaultInputs/Resources/nl.lproj/Localizable.strings",
+          "path" : "/Users/jeremywagemans/Evervault/evervault-ios/Sources/EvervaultInputs/Resources/nl.lproj/Localizable.strings",
           "rule" : {
             "process" : {
               "localization" : "nl"
@@ -97,7 +97,15 @@
           }
         },
         {
-          "path" : "/Users/lwesterhoff/Developer/Evervault/evervault-ios/Sources/EvervaultInputs/Resources/Assets.xcassets",
+          "path" : "/Users/jeremywagemans/Evervault/evervault-ios/Sources/EvervaultInputs/Resources/en.lproj/Localizable.strings",
+          "rule" : {
+            "process" : {
+              "localization" : "en"
+            }
+          }
+        },
+        {
+          "path" : "/Users/jeremywagemans/Evervault/evervault-ios/Sources/EvervaultInputs/Resources/Assets.xcassets",
           "rule" : {
             "process" : {
 
@@ -135,6 +143,7 @@
       "sources" : [
         "MockingbirdMocks/EvervaultCoreMocks.generated.swift",
         "core/BasicTest.swift",
+        "core/DecryptTest.swift",
         "core/HttpKeysLoaderTest.swift",
         "core/curves/asn1Test.swift",
         "core/dataHandlers/ArrayHandlerTest.swift",
@@ -160,7 +169,8 @@
       "path" : "Sources/EvervaultCore",
       "product_memberships" : [
         "EvervaultCore",
-        "EvervaultInputs"
+        "EvervaultInputs",
+        "EvervaultCages"
       ],
       "sources" : [
         "Config.swift",
@@ -173,6 +183,7 @@
         "core/EncryptedData.swift",
         "core/EncryptionService.swift",
         "core/Http.swift",
+        "core/HttpDecrypter.swift",
         "core/HttpKeysLoader.swift",
         "core/curves/asn1.swift",
         "core/curves/buildEncoder.swift",
@@ -198,7 +209,37 @@
         "utils/ecPointCompress.swift"
       ],
       "type" : "library"
+    },
+    {
+      "c99name" : "EvervaultCages",
+      "module_type" : "SwiftTarget",
+      "name" : "EvervaultCages",
+      "path" : "Sources/EvervaultCages",
+      "product_memberships" : [
+        "EvervaultCages"
+      ],
+      "sources" : [
+        "AttestationSessionDelegate.swift"
+      ],
+      "target_dependencies" : [
+        "AttestationBindings",
+        "EvervaultCore"
+      ],
+      "type" : "library"
+    },
+    {
+      "c99name" : "AttestationBindings",
+      "module_type" : "BinaryTarget",
+      "name" : "AttestationBindings",
+      "path" : "remote/archive/AttestationBindings.xcframework.zip",
+      "product_memberships" : [
+        "EvervaultCages"
+      ],
+      "sources" : [
+
+      ],
+      "type" : "binary"
     }
   ],
-  "tools_version" : "5.8"
+  "tools_version" : "5.7.1"
 }
