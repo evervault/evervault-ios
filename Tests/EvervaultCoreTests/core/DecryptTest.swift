@@ -13,7 +13,7 @@ final class EvervaultDecryptTest: XCTestCase {
     
     func testDecryptThrowsErrorForUnsupportedEncryptedType() async throws {
         let encryptedNumber = 123
-        var token = try await createClientSideToken(data: ["data": encryptedNumber])
+        var token = try await createClientSideToken(data: encryptedNumber)
         var errorThrown = false
         do {
             let _: Int = try await evervault.decrypt(token: token, data: encryptedNumber)
@@ -24,7 +24,7 @@ final class EvervaultDecryptTest: XCTestCase {
         XCTAssertTrue(errorThrown)
         
         let encryptedArray = [123, 123]
-        token = try await createClientSideToken(data: ["data": encryptedArray])
+        token = try await createClientSideToken(data: encryptedArray)
         errorThrown = false
         do {
             let _: Int = try await evervault.decrypt(token: token, data: encryptedArray)
@@ -38,7 +38,7 @@ final class EvervaultDecryptTest: XCTestCase {
     func testDecryptThrowsErrorForInvalidReturnCast() async throws {
         let str = "Hello World!"
         let encrypted = try await evervault.encrypt(str)
-        let token = try await createClientSideToken(data: ["data": encrypted])
+        let token = try await createClientSideToken(data: encrypted)
         var errorThrown = false
         do {
             let _: Int = try await evervault.decrypt(token: token, data: encrypted)
@@ -51,14 +51,14 @@ final class EvervaultDecryptTest: XCTestCase {
     
     func testDecryptDoesNotThrowForNonEncryptedData() async throws {
         let str = "Hello World!"
-        let token = try await createClientSideToken(data: ["data": str])
+        let token = try await createClientSideToken(data: str)
         let decrypted: String = try await evervault.decrypt(token: token, data: str)
         XCTAssertEqual(str, decrypted)
     }
     
     func testDecryptDoesNotThrowForInvalidEncryptedData() async throws {
         let str = "ev:Tk9D:+HgtYJkhglHsipoC:helloworld:helloworld:$"
-        let token = try await createClientSideToken(data: ["data": str])
+        let token = try await createClientSideToken(data: str)
         let decrypted: String = try await evervault.decrypt(token: token, data: str)
         XCTAssertEqual(str, decrypted)
     }
@@ -66,7 +66,7 @@ final class EvervaultDecryptTest: XCTestCase {
     func testDecryptString() async throws {
         let str = "Hello World!"
         let encrypted = try await evervault.encrypt(str)
-        let token = try await createClientSideToken(data: ["data": encrypted])
+        let token = try await createClientSideToken(data: encrypted)
         let decrypted: String = try await evervault.decrypt(token: token, data: encrypted)
         XCTAssertEqual(str, decrypted)
     }
@@ -74,7 +74,7 @@ final class EvervaultDecryptTest: XCTestCase {
     func testDecryptInt() async throws {
         let number = 12345
         let encrypted = try await evervault.encrypt(number)
-        let token = try await createClientSideToken(data: ["data": encrypted])
+        let token = try await createClientSideToken(data: encrypted)
         let decrypted: Int = try await evervault.decrypt(token: token, data: encrypted)
         XCTAssertEqual(number, decrypted)
     }
@@ -82,7 +82,7 @@ final class EvervaultDecryptTest: XCTestCase {
     func testDecryptDouble() async throws {
         let number = 123.45
         let encrypted = try await evervault.encrypt(number)
-        let token = try await createClientSideToken(data: ["data": encrypted])
+        let token = try await createClientSideToken(data: encrypted)
         let decrypted: Double = try await evervault.decrypt(token: token, data: encrypted)
         XCTAssertEqual(number, decrypted)
     }
@@ -90,7 +90,7 @@ final class EvervaultDecryptTest: XCTestCase {
     func testDecryptTrue() async throws {
         let bool = true
         let encrypted = try await evervault.encrypt(bool)
-        let token = try await createClientSideToken(data: ["data": encrypted])
+        let token = try await createClientSideToken(data: encrypted)
         let decrypted: Bool = try await evervault.decrypt(token: token, data: encrypted)
         XCTAssertEqual(bool, decrypted)
     }
@@ -98,7 +98,7 @@ final class EvervaultDecryptTest: XCTestCase {
     func testDecryptFalse() async throws {
         let bool = false
         let encrypted = try await evervault.encrypt(bool)
-        let token = try await createClientSideToken(data: ["data": encrypted])
+        let token = try await createClientSideToken(data: encrypted)
         let decrypted: Bool = try await evervault.decrypt(token: token, data: encrypted)
         XCTAssertEqual(bool, decrypted)
     }
@@ -106,7 +106,7 @@ final class EvervaultDecryptTest: XCTestCase {
     func testDecryptArray() async throws {
         let array = ["hello world", "lol"]
         let encrypted = try await evervault.encrypt(array)
-        let token = try await createClientSideToken(data: ["data": encrypted])
+        let token = try await createClientSideToken(data: encrypted)
         let decrypted: [String] = try await evervault.decrypt(token: token, data: encrypted)
         XCTAssertEqual(array, decrypted)
     }
@@ -137,7 +137,7 @@ final class EvervaultDecryptTest: XCTestCase {
         XCTAssertEqual(array[4] as! Bool, actualArray[4] as! Bool)
     }
     
-    private func createClientSideToken(data: [String: Any]) async throws -> String {
+    private func createClientSideToken(data: Any) async throws -> String {
         let credentials = "\(appId):\(apiKey)".data(using: .utf8)!.base64EncodedString()
         var request = URLRequest(url: URL(string: "https://api.evervault.com/client-side-tokens")!)
         request.httpMethod = "POST"

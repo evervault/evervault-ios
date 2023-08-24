@@ -23,7 +23,7 @@ internal struct Http {
         try await keysLoader.loadKeys()
     }
     
-    func decryptDictionary(token: String, data: [String: Any]) async throws -> [String: Any] {
-        try await decrypter.decryptDictionary(token: token, data: data)
+    func decrypt(token: String, data: Any) async throws -> Any {
+        try await decrypter.decrypt(token: token, data: data)
     }
 }

@@ -215,13 +215,11 @@ fileprivate struct Client {
         let decrypted: (Any)?
         
         if let dataAsString = data as? String {
-            let decryptedDict = try await http.decryptDictionary(token: token, data: ["data": dataAsString])
-            decrypted = decryptedDict["data"]
+            decrypted = try await http.decrypt(token: token, data: dataAsString)
         } else if let dataAsArray = data as? Array<String> {
-            let decryptedDict = try await http.decryptDictionary(token: token, data: ["data": dataAsArray])
-            decrypted = decryptedDict["data"]
+            decrypted = try await http.decrypt(token: token, data: dataAsArray)
         } else if let dataAsDict = data as? [String: Any] {
-            decrypted = try await http.decryptDictionary(token: token, data: dataAsDict)
+            decrypted = try await http.decrypt(token: token, data: dataAsDict)
         } else {
             throw EvervaultError.unsupportedEncryptedTypeError
         }
