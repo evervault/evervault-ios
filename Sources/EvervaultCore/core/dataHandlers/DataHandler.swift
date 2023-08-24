@@ -5,7 +5,6 @@ internal protocol DataHandlerContext {
 }
 
 internal protocol DataHandler {
-
     func canEncrypt(data: Any) -> Bool
     func encrypt(data: Any, context: DataHandlerContext) throws -> Any
 }
