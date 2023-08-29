@@ -1,6 +1,7 @@
 import Foundation
 
 private let KEYS_URL = "https://keys.evervault.com"
+private let API_URL = "https://api.evervault.com"
 
 private let DEBUG_KEY = CageKey(
     ecdhP256Key: "Al1/Mo85D7t/XvC3I+YYpJvP+OsSyxIbSrhtDhg1SClQ",
@@ -21,7 +22,7 @@ internal struct Config {
         self.teamId = teamId
         self.appId = appId
         self.encryption = EncryptionConfig(publicKey: publicKey)
-        self.httpConfig = HttpConfig(keysUrl: configUrls.keysUrl)
+        self.httpConfig = HttpConfig(keysUrl: configUrls.keysUrl, apiUrl: configUrls.apiUrl)
     }
 
 }
@@ -32,6 +33,7 @@ internal struct Config {
 public struct ConfigUrls {
     /// The URL for the custom keys endpoint. Default is the Evervault keys URL.
     public var keysUrl: String = KEYS_URL
+    public var apiUrl: String = API_URL
 }
 
 internal struct EncryptionConfig {
@@ -54,4 +56,5 @@ internal struct EncryptionConfig {
 
 internal struct HttpConfig {
     var keysUrl: String
+    var apiUrl: String
 }

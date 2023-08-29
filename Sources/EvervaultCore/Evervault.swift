@@ -123,6 +123,36 @@ public class Evervault {
         }
         return try await client.encrypt(data)
     }
+    
+    /// Decrypts the provided data using the Evervault encryption service
+    ///
+    /// - Parameter token: A short-lived client-side token generated through your backend application to decrypt data.
+    /// - Parameter data: The data to be decrypted. Supported data types include Boolean, Numerics, Strings, Arrays, Dictionaries, and Data.
+    /// - Returns: The decrypted data. The return type can b
+    /// - Throws: An error if the decryption process fails.
+    ///
+    /// ## Declaration
+    /// ```swift
+    /// public func decrypt(token: String, data: Any) async throws -> T
+    /// ```
+    ///
+    /// ## Example
+    /// ```swift
+    /// let decryptedData = try await Evervault.shared.decrypt("<token>", "<encryptedString>")
+    /// ```
+    ///
+    /// The `decrypt` function allows you to decrypt data previously encrypted data using a short-lived client-side token provided by your backend application.
+    /// Client-Side Tokens are time bound tokens that can be created using the Evervault's REST API or one of Evervault's backend SDKs.
+    ///
+    /// Note that the decryption process is performed asynchronously using the `async` and `await` keywords. It's recommended to call this function from within an `async` context or use `await` when calling it.
+    ///
+    /// - Note: The Evervault iOS SDK documentation may provide more detailed information and additional examples.
+    public func decrypt<T>(token: String, data: Any) async throws -> T {
+        guard let client = client else {
+            throw EvervaultError.initializationError
+        }
+        return try await client.decrypt(token: token, data: data)
+    }
 
 }
 
@@ -179,6 +209,26 @@ fileprivate struct Client {
         let handlers = DataHandlers(encryptionService: cipher)
 
         return try handlers.encrypt(data: data)
+    }
+        
+    internal func decrypt<T>(token: String, data: Any) async throws -> T {
+        let decrypted: (Any)?
+        
+        if let dataAsString = data as? String {
+            decrypted = try await http.decrypt(token: token, data: dataAsString)
+        } else if let dataAsArray = data as? Array<String> {
+            decrypted = try await http.decrypt(token: token, data: dataAsArray)
+        } else if let dataAsDict = data as? [String: Any] {
+            decrypted = try await http.decrypt(token: token, data: dataAsDict)
+        } else {
+            throw EvervaultError.unsupportedEncryptedTypeError
+        }
+        
+        guard let castedDecrypted = decrypted as? T else {
+            throw EvervaultError.invalidCast
+        }
+        
+        return castedDecrypted
     }
 }
 
