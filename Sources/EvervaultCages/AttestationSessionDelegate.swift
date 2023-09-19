@@ -3,6 +3,10 @@ import Foundation
 import AttestationBindings
 import EvervaultCore
 
+enum AttestationError: Error {
+    case failedAttestation
+}
+
 extension Evervault {
     public static func cageSession(cageAttestationData: AttestationData...) -> URLSession {
         return URLSession(configuration: .default, delegate: AttestationSessionDelegate(cageAttestationData: cageAttestationData), delegateQueue: nil)
@@ -44,6 +48,7 @@ public class AttestationSessionDelegate: NSObject, URLSessionDelegate {
     public func urlSession(_ session: URLSession,
                     didReceive challenge: URLAuthenticationChallenge,
                     completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+        
         guard let serverTrust = challenge.protectionSpace.serverTrust,
             let certificate = (SecTrustCopyCertificateChain(serverTrust) as? [SecCertificate])?.first else {
             completionHandler(.performDefaultHandling, nil)
@@ -52,8 +57,11 @@ public class AttestationSessionDelegate: NSObject, URLSessionDelegate {
 
         let remoteCertificateData = SecCertificateCopyData(certificate) as Data
         let cageName = parseCageNameFromHost(challenge.protectionSpace.host)
+        
 
         let certData = remoteCertificateData
+        let attestationDocB64 = AttestationDocumentCache.shared.getCachedAttestationDoc()
+        
 
         func attestConnectionRecursive(pcrsArray: inout [AttestationBindings.PCRs], pcrs: [PCRs], index: Int = 0) -> Bool {
             guard pcrs.count > index else {
@@ -62,7 +70,18 @@ public class AttestationSessionDelegate: NSObject, URLSessionDelegate {
                     var certDataCopy = certData
                     return certDataCopy.withUnsafeMutableBytes { (pointer: UnsafeMutableRawBufferPointer) in
                         if let rawPointer = pointer.baseAddress?.assumingMemoryBound(to: UInt8.self) {
-                            return attest_connection(rawPointer, certData.count, baseAddress, pcrs.count)
+
+                
+                            guard let attestationDocData = Data(base64Encoded: attestationDocB64) else {
+                                return false 
+                            }
+
+                            return attestationDocData.withUnsafeBytes { attestationDocBytesPointer -> Bool 
+                                let attestationDocRawPointer = attestationDocBytesPointer.baseAddress!.assumingMemoryBound(to: UInt8.
+                                let resultFromAttest = attest_cage(rawPointer, certData.count, baseAddress, pcrs.count, attestationDocRawPointer, attestationDocData.count)
+                                return resultFromAttest
+                            }
+                            
                         }
                         return false
                     }
@@ -75,7 +94,7 @@ public class AttestationSessionDelegate: NSObject, URLSessionDelegate {
             let pcr1CStr = pcrsAtIndex.pcr1.utf8CString
             let pcr2CStr = pcrsAtIndex.pcr2.utf8CString
             let pcr8CStr = pcrsAtIndex.pcr8.utf8CString
-
+            
             return pcr0CStr.withUnsafeBufferPointer { pcr0Bytes in
                 pcr1CStr.withUnsafeBufferPointer { pcr1Bytes in
                     pcr2CStr.withUnsafeBufferPointer { pcr2Bytes in
@@ -87,7 +106,8 @@ public class AttestationSessionDelegate: NSObject, URLSessionDelegate {
                                 pcr_8: pcr8Bytes.baseAddress!
                             ))
 
-                            return attestConnectionRecursive(pcrsArray: &pcrsArray, pcrs: pcrs, index: index + 1)
+                            let attestResult = attestConnectionRecursive(pcrsArray: &pcrsArray, pcrs: pcrs, index: index + 1)
+                            return attestResult
                         }
                     }
                 }
@@ -101,9 +121,14 @@ public class AttestationSessionDelegate: NSObject, URLSessionDelegate {
 
         var pcrsArray = [AttestationBindings.PCRs]()
         let result = attestConnectionRecursive(pcrsArray: &pcrsArray, pcrs: pcrs.pcrs)
+    
 
         guard result else {
-            completionHandler(.rejectProtectionSpace, URLCredential(trust: challenge.protectionSpace.serverTrust!))
+            print("FAILED ATTESTATION")
+            
+            // Cancel the challenge
+            challenge.sender?.cancel(challenge)
+            completionHandler(.cancelAuthenticationChallenge, nil)
             return
         }
 
