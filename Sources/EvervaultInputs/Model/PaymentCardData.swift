@@ -32,6 +32,12 @@ public struct PaymentCard: Equatable {
 
     /// The number of the credit card.
     public var number: String = ""
+    
+    /// The first 8 digits of the card number.
+    public var bin: String = ""
+    
+    /// The last 4 digits of the card number.
+    public var lastFour: String = ""
 
     /// The cvc (Card Verification Code) of the credit card.
     public var cvc: String = ""
