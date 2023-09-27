@@ -18,6 +18,18 @@ struct CreditCardInputView: View {
                         .bold()
                     Text(cardData.card.number)
                 }
+                
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Bin:")
+                        .bold()
+                    Text(cardData.card.bin)
+                }
+                
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Last 4:")
+                        .bold()
+                    Text(cardData.card.lastFour)
+                }
 
                 VStack(alignment: .leading, spacing: 4) {
                     Text("CVC:")
