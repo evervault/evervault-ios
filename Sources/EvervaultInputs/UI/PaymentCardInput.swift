@@ -77,7 +77,7 @@ public struct PaymentCardInput: View {
         .onChange(of: self.rawCardData.card.number) { number in
             updateCardData { cardData in
                 var updatedCardData = cardData
-                updatedCardData.card.number = number.isEmpty ? "" : try await Evervault.shared.encrypt(number) as? String ?? ""
+                updatedCardData.card.number = number.isEmpty ? "" : try await Evervault.shared.encrypt(number.replacingOccurrences(of: " ", with: "")) as? String ?? ""
                 return updatedCardData
             }
         }
