@@ -19,10 +19,8 @@ internal extension PaymentCardData {
 
         self.card.number = formattedNumber
         if validator.isValid {
-            self.card.bin = String(number.prefix(8));
-        }
-        if validator.isValid {
-            self.card.lastFour = String(number.suffix(4));
+            self.card.bin = (self.card.type == .amex) ? String(number.prefix(6)) : String(number.prefix(8))
+            self.card.lastFour = String(number.suffix(4))
         }
         self.card.cvc = String(cvc.numbers.prefix(CreditCardValidator.maxCvcLength(for: self.card.type)))
 
