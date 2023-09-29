@@ -21,7 +21,7 @@ class AttestationDocumentCache {
     private var attestationDocMap: [String: String?] = [:]
     
     // Two hours = 72000
-    private let refreshInterval: TimeInterval = 30
+    private let refreshInterval: TimeInterval = 7200
     
     //Pull in all new ADs and then scedule it after refreshInterval
     private func updateCache() {
