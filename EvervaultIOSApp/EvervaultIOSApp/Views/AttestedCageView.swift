@@ -1,8 +1,8 @@
 //
-//  CageView.swift
+//  AttestedCageView.swift
 //  EvervaultIOSApp
 //
-//  Created by Lammert Westerhoff on 7/3/23.
+//  Created by Donal Tuohy on 29/09/2023.
 //
 
 import SwiftUI
