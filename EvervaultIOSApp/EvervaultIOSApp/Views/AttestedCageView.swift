@@ -51,8 +51,8 @@ struct AttestedCageView: View {
             do {
                 let response = try await urlSession.data(from: url)
                 print(response)
-                let cageRespone = try! JSONDecoder().decode(CageResponse.self, from: response.0)
-                responseText = cageRespone.response
+                let cageResponse = try! JSONDecoder().decode(CageResponse.self, from: response.0)
+                responseText = cageResponse.response
             } catch {
                 responseText = error.localizedDescription
                 print("Error: \(error.localizedDescription)")

@@ -14,7 +14,7 @@ class AttestationDocumentCache {
     private let backgroundQueue = DispatchQueue(label: "com.evervault.attestationDocQueue")
     
     private init() {
-        print("Started polling for attestation docs... every \(refreshInterval) seconds")
+        print("Started polling for Cage attestation docs every \(refreshInterval) seconds")
         scheduleCacheUpdate()
     }
     
