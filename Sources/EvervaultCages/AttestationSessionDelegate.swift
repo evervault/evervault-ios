@@ -9,7 +9,7 @@ enum AttestationError: Error {
 
 extension Evervault {
     
-    @available(*, deprecated, message: "Use cageAttestationSession instead.")
+    @available(*, deprecated, message: "Use cageAttestationSession instead. Note - change domain name from *.cages.evervault.com to *.cage.evervault.com")
     public static func cageSession(cageAttestationData: AttestationData...) -> URLSession {
         return URLSession(configuration: .default, delegate: AttestationSessionDelegate(cageAttestationData: cageAttestationData), delegateQueue: nil)
     }
