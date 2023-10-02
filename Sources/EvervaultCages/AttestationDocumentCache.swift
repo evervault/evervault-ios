@@ -20,8 +20,15 @@ class AttestationDocumentCache {
     
     private var attestationDocMap: [String: String?] = [:]
     
-    // Two hours = 72000
-    private let refreshInterval: TimeInterval = 7200
+    private let refreshInterval: TimeInterval = {
+        if let intervalString = ProcessInfo.processInfo.environment["EV_CAGES_POLLING_INTERVAL"],
+           let interval = TimeInterval(intervalString) {
+            return interval
+        } else {
+            // Two hours = 7200
+            return 20
+        }
+    }()
     
     //Pull in all new ADs and then scedule it after refreshInterval
     private func updateCache() {

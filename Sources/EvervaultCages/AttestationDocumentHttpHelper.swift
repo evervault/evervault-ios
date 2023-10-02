@@ -26,10 +26,18 @@ class AttestationDocumentHttpHelper {
     
     private init() {}
     
+    private let domain: String = {
+        if let domainFromEnv = ProcessInfo.processInfo.environment["EV_DOMAIN"], !domainFromEnv.isEmpty {
+            return domainFromEnv
+        } else {
+            return "evervault.com"
+        }
+    }()
+    
     func buildCageUrl(cageIdentifier: String) throws -> URL {
         var components = URLComponents()
         components.scheme = "https"
-        components.host = "\(cageIdentifier).cage.evervault.com"
+        components.host = "\(cageIdentifier).cage.\(domain)"
         components.path = "/.well-known/attestation"
         
         guard let url = components.url else {
