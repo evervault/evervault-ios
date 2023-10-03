@@ -26,7 +26,7 @@ class AttestationDocumentCache {
             return interval
         } else {
             // Two hours = 7200
-            return 20
+            return 7200
         }
     }()
     
