@@ -30,7 +30,7 @@ class AttestationDocumentCache {
         }
     }()
     
-    //Pull in all new ADs and then scedule it after refreshInterval
+    //Pull in all new ADs and then schedule it after refreshInterval
     private func updateCache() {
         backgroundQueue.async { [weak self] in
             guard let self = self else { return }
