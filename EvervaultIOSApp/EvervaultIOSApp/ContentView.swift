@@ -46,6 +46,10 @@ struct ContentView: View {
                     NavigationLink(destination: CageView()) {
                         Text("Cage HTTP Request")
                     }
+                    
+                    NavigationLink(destination: AttestedCageView()) {
+                        Text("New Cage HTTP Request")
+                    }
                 }
             }
         } detail: {}
