@@ -68,6 +68,9 @@ public struct PaymentCardInput: View {
                         Text(LocalizedString("MM/YY"))
                     }
                         .focused($focusedField, equals: .expiry)
+                    #if os(iOS)
+                        .keyboardType(.numberPad)
+                    #endif
                 ),
                 cvcField: AnyView(
                     MultiplatformNumberTextfield(text: $cvc, prompt: "CVC", label: "CVC")
