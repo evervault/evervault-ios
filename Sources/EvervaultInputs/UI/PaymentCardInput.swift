@@ -64,13 +64,12 @@ public struct PaymentCardInput: View {
                         .focused($focusedField, equals: .number)
                 ),
                 expiryField: AnyView(
-                    TextField(text: $expiryDate, prompt: Text(LocalizedString("MM/YY"))) {
-                        Text(LocalizedString("MM/YY"))
-                    }
+                    MultiplatformNumberTextfield(text: $expiryDate, prompt: "MM/YY", label: "Expiry")
                         .focused($focusedField, equals: .expiry)
                 ),
                 cvcField: AnyView(
                     MultiplatformNumberTextfield(text: $cvc, prompt: "CVC", label: "CVC")
+                        .focused($focusedField, equals: .cvc)
                 )
             ))
         )
@@ -103,6 +102,10 @@ public struct PaymentCardInput: View {
         .onChange(of: cvc) { value in
             self.rawCardData.updateCvc(value)
             self.cvc = self.rawCardData.card.cvc
+            
+            if value.count == 0 {
+                focusedField = .expiry
+            }
         }
         .onChange(of: expiryDate) { value in
             var value = value
@@ -118,6 +121,10 @@ public struct PaymentCardInput: View {
 
             if value.count == 5 {
                 focusedField = .cvc
+            }
+            
+            if value.count == 0 {
+                focusedField = .number
             }
         }
     }
