@@ -63,6 +63,6 @@ struct AttestedCageView: View {
 
 struct AttestedCageView_Previews: PreviewProvider {
     static var previews: some View {
-        CageView()
+        AttestedCageView()
     }
 }
