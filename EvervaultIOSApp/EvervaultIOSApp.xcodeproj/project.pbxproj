@@ -19,6 +19,7 @@
 		2FF3151A2A3354EB003814D5 /* EvervaultInputs in Frameworks */ = {isa = PBXBuildFile; productRef = 2FF315192A3354EB003814D5 /* EvervaultInputs */; };
 		2FF3151E2A336FDB003814D5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2FF3151C2A336FDB003814D5 /* Localizable.strings */; };
 		2FF645C42A53577100475285 /* CageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF645C32A53577100475285 /* CageView.swift */; };
+		4602E6242AD58DD100EEC8B5 /* AttestedCageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4602E6232AD58DD100EEC8B5 /* AttestedCageView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,7 @@
 		2FF3151F2A336FE4003814D5 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2FF645C22A534FE900475285 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		2FF645C32A53577100475285 /* CageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CageView.swift; sourceTree = "<group>"; };
+		4602E6232AD58DD100EEC8B5 /* AttestedCageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttestedCageView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +57,7 @@
 			isa = PBXGroup;
 			children = (
 				2F193AFA2A375CE0001ACD3A /* BasicEncryptionView.swift */,
+				4602E6232AD58DD100EEC8B5 /* AttestedCageView.swift */,
 				2F193AFB2A375CE0001ACD3A /* CreditCardInputView.swift */,
 				2F193AFE2A378896001ACD3A /* FileEncryptionView.swift */,
 				2FF645C32A53577100475285 /* CageView.swift */,
@@ -198,6 +201,7 @@
 			files = (
 				2F193AFD2A375CED001ACD3A /* CreditCardInputView.swift in Sources */,
 				2F5529582A2F682400802999 /* ContentView.swift in Sources */,
+				4602E6242AD58DD100EEC8B5 /* AttestedCageView.swift in Sources */,
 				2FF645C42A53577100475285 /* CageView.swift in Sources */,
 				2F193AFF2A378896001ACD3A /* FileEncryptionView.swift in Sources */,
 				2F5529562A2F682400802999 /* EvervaultIOSAppApp.swift in Sources */,
