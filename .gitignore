@@ -119,5 +119,8 @@ fastlane/test_output
 iOSInjectionProject/
 
 # End of https://www.toptal.com/developers/gitignore/api/swift,MacOS
-
 .netrc
+
+# Changeset
+node_modules
+package-lock.json
