@@ -3,7 +3,7 @@
 import XCTest
 @testable import EvervaultInputs
 
-final class CreditCardValidatorTests: XCTestCase {
+final class CreditCardNumberValidatorTests: XCTestCase {
 
     /// Card numbers provided from
     /// https://www.paypalobjects.com/en_GB/vhelp/paypalmanager_help/credit_card_numbers.htm
@@ -31,10 +31,10 @@ final class CreditCardValidatorTests: XCTestCase {
             (.elo, "5066 9911 0917 9242"),
         ]
         values.forEach { (item) in
-            XCTAssertTrue(CreditCardValidator(item.1).isValid, "\(item.1) is not valid")
-            XCTAssertEqual(item.0, CreditCardValidator(item.1).actualType)
-            XCTAssertEqual(item.0, CreditCardValidator(item.1).predictedType)
-            XCTAssertTrue(CreditCardValidator(item.1).isValid(for: item.0))
+            XCTAssertTrue(CreditCardNumberValidator(item.1).isValid, "\(item.1) is not valid")
+            XCTAssertEqual(item.0, CreditCardNumberValidator(item.1).actualType)
+            XCTAssertEqual(item.0, CreditCardNumberValidator(item.1).predictedType)
+            XCTAssertTrue(CreditCardNumberValidator(item.1).isValid(for: item.0))
         }
     }
 
@@ -63,12 +63,12 @@ final class CreditCardValidatorTests: XCTestCase {
             (.unionPay, "6250 9470 0000 0015"),
         ]
         values.forEach { (item) in
-            XCTAssertFalse(CreditCardValidator(item.1).isValid)
-            if let type = CreditCardValidator(item.1).actualType {
+            XCTAssertFalse(CreditCardNumberValidator(item.1).isValid)
+            if let type = CreditCardNumberValidator(item.1).actualType {
                 XCTAssertEqual(item.0, type)
             }
-            XCTAssertEqual(item.0, CreditCardValidator(item.1).predictedType)
-            XCTAssertFalse(CreditCardValidator(item.1).isValid(for: item.0))
+            XCTAssertEqual(item.0, CreditCardNumberValidator(item.1).predictedType)
+            XCTAssertFalse(CreditCardNumberValidator(item.1).isValid(for: item.0))
         }
     }
 
@@ -92,10 +92,10 @@ final class CreditCardValidatorTests: XCTestCase {
             (.unionPay, "6250"),
         ]
         values.forEach { (item) in
-            XCTAssertFalse(CreditCardValidator(item.1).isValid)
-            XCTAssertNil(CreditCardValidator(item.1).actualType)
-            XCTAssertEqual(item.0, CreditCardValidator(item.1).predictedType)
-            XCTAssertFalse(CreditCardValidator(item.1).isValid(for: item.0))
+            XCTAssertFalse(CreditCardNumberValidator(item.1).isValid)
+            XCTAssertNil(CreditCardNumberValidator(item.1).actualType)
+            XCTAssertEqual(item.0, CreditCardNumberValidator(item.1).predictedType)
+            XCTAssertFalse(CreditCardNumberValidator(item.1).isValid(for: item.0))
         }
     }
 

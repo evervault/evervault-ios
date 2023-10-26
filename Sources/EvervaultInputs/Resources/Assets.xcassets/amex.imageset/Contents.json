@@ -3,6 +3,16 @@
     {
       "filename" : "amex.pdf",
       "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "amex_dark.pdf",
+      "idiom" : "universal"
     }
   ],
   "info" : {

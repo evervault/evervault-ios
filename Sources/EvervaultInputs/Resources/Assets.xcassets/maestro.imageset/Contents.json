@@ -3,6 +3,16 @@
     {
       "filename" : "maestro.pdf",
       "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "mastercard_dark.pdf",
+      "idiom" : "universal"
     }
   ],
   "info" : {

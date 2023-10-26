@@ -1,9 +1,0 @@
-
-/* Label for card number entry text field */
-"Card number" = "Card number";
-
-/* Label for entering CVC in text field */
-"CVC" = "CVC";
-
-/* label for text field to enter card expiry */
-"MM/YY" = "MM/YY";

@@ -1,7 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "diners.pdf",
+      "filename" : "diners_light.pdf",
+      "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "diners_dark.pdf",
       "idiom" : "universal"
     }
   ],
