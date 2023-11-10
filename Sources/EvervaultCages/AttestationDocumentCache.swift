@@ -25,8 +25,8 @@ class AttestationDocumentCache {
            let interval = TimeInterval(intervalString) {
             return interval
         } else {
-            // Two hours = 300
-            return 20
+            // Five minutes = 300
+            return 300
         }
     }()
     
