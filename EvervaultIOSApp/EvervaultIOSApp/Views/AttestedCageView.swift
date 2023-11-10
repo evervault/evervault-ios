@@ -14,26 +14,13 @@ private struct CageResponse: Decodable {
     let response: String
 }
 
-struct DecodablePcrs: Decodable {
-    public let pcr0: String
-    public let pcr1: String
-    public let pcr2: String
-    public let pcr8: String
-
-    public init(pcr0: String, pcr1: String, pcr2: String, pcr8: String) {
-        self.pcr0 = pcr0
-        self.pcr1 = pcr1
-        self.pcr2 = pcr2
-        self.pcr8 = pcr8
-    }
-}
-
 struct AttestedCageView: View {
 
+    // replace with your provider
     public var provider: (@escaping ([PCRs]?, Error?) -> Void) -> Void = { completion in
-        URLSession.shared.dataTask(with: URL(string: "https://blackhole.posterior.io/eb063918-CqvzXFC2")!) { data, _, error in
+        URLSession.shared.dataTask(with: URL(string: "https://example.provider.com")!) { data, _, error in
             guard let data = data, error == nil else {
-                completion(nil, error ?? NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "No data or error."]))
+                completion(nil, error ?? NSError(domain: "Evervault Provider", code: -1, userInfo: [NSLocalizedDescriptionKey: "No data or error."]))
                 return
             }
             do {
