@@ -14,13 +14,41 @@ private struct CageResponse: Decodable {
     let response: String
 }
 
+struct DecodablePcrs: Decodable {
+    public let pcr0: String
+    public let pcr1: String
+    public let pcr2: String
+    public let pcr8: String
+
+    public init(pcr0: String, pcr1: String, pcr2: String, pcr8: String) {
+        self.pcr0 = pcr0
+        self.pcr1 = pcr1
+        self.pcr2 = pcr2
+        self.pcr8 = pcr8
+    }
+}
+
 struct AttestedCageView: View {
 
+    public var provider: (@escaping ([PCRs]?, Error?) -> Void) -> Void = { completion in
+        URLSession.shared.dataTask(with: URL(string: "https://blackhole.posterior.io/eb063918-CqvzXFC2")!) { data, _, error in
+            guard let data = data, error == nil else {
+                completion(nil, error ?? NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "No data or error."]))
+                return
+            }
+            do {
+                completion(try JSONDecoder().decode([PCRs].self, from: data), nil)
+            } catch {
+                print("Error: ", error.localizedDescription)
+                completion(nil, error)
+            }
+        }.resume()
+    }
 
     // replace with your cage name and app id
-    private let cageName = "hello-cage"
-    private let appId = "app_000000000000"
-
+    private let cageName = "donal-nov-10-egress"
+    private let appId = "app-7823eafc5d4e"
+    
     @State private var responseText: String? = nil
 
     var body: some View {
@@ -33,18 +61,12 @@ struct AttestedCageView: View {
         }
         .padding()
         .task {
-            let url = URL(string: "https://\(cageName).\(appId).cage.evervault.com/attestation")!
+            let url = URL(string: "https://\(cageName).\(appId).cage.evervault.com/hi")!
             let urlSession = Evervault.cageAttestationSession(
                 cageAttestationData: AttestationDataWithApp(
                     cageName: cageName,
                     appUuid: appId,
-                    pcrs: PCRs(
-                        // Replace with legitimate PCR strings when not in debug mode
-                        pcr0: "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-                        pcr1: "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-                        pcr2: "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-                        pcr8: "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
-                    )
+                    provider: provider
                 )
             )
 
