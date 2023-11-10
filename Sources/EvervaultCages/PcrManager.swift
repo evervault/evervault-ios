@@ -37,7 +37,7 @@ class PcrManager {
         }
     }()
     
-    //Pull in all new ADs and then schedule it after refreshInterval
+    //Pull in all new PCRs with stored provider and then schedule it after refreshInterval
     private func updateStore() {
         backgroundQueue.async { [weak self] in
             guard let self = self else { return }

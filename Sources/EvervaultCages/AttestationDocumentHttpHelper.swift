@@ -92,7 +92,6 @@ class AttestationDocumentHttpHelper {
                 }
                 
                 do {
-                    // Attempt to deserialize the JSON object.
                     if let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
                        let attestationDoc = jsonObject["attestation_doc"] as? String {
                         completion(.success(attestationDoc))
