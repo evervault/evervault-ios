@@ -33,8 +33,8 @@ struct AttestedCageView: View {
     }
 
     // replace with your cage name and app id
-    private let cageName = "donal-nov-10-egress"
-    private let appId = "app-7823eafc5d4e"
+    private let cageName = "hello-cage"
+    private let appId = "app-000000000000"
     
     @State private var responseText: String? = nil
 
@@ -48,7 +48,7 @@ struct AttestedCageView: View {
         }
         .padding()
         .task {
-            let url = URL(string: "https://\(cageName).\(appId).cage.evervault.com/hi")!
+            let url = URL(string: "https://\(cageName).\(appId).cage.evervault.com/hello")!
             let urlSession = Evervault.cageAttestationSession(
                 cageAttestationData: AttestationDataWithApp(
                     cageName: cageName,
