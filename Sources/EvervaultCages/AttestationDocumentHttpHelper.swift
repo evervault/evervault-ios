@@ -9,15 +9,24 @@ class AttestationDocumentHttpHelper {
         case invalidJSONResponse
         case noData
         case missingAttestationDoc
+        case httpError(statusCode: Int)
         
         var errorDescription: String? {
             switch self {
-            case .invalidURL: return "Invalid Cage Attestation URL."
-            case .requestError(let error): return "Request error: \(error.localizedDescription)"
-            case .invalidHTTPResponse: return "Invalid HTTP response."
-            case .invalidJSONResponse: return "Invalid JSON response."
-            case .noData: return "No data received from the server."
-            case .missingAttestationDoc: return "Attestation document not found in JSON."
+            case .invalidURL:
+                return "Invalid Cage Attestation URL."
+            case .requestError(let error):
+                return "Request error: \(error.localizedDescription)"
+            case .invalidHTTPResponse:
+                return "Invalid HTTP response."
+            case .invalidJSONResponse:
+                return "Invalid JSON response."
+            case .noData:
+                return "No data received from the server."
+            case .missingAttestationDoc:
+                return "Attestation document not found in JSON."
+            case .httpError(let statusCode):
+                return "HTTP Error: \(statusCode)"
             }
         }
     }
@@ -51,20 +60,33 @@ class AttestationDocumentHttpHelper {
         do {
             let url = try buildCageUrl(cageIdentifier: cageIdentifier)
             
-            let session = URLSession.shared
-            let task = session.dataTask(with: url) { (data, response, error) in
+            let configuration = URLSessionConfiguration.default
+            configuration.timeoutIntervalForRequest = 120.0
+            configuration.timeoutIntervalForResource = 120.0
+            let session = URLSession(configuration: configuration)
+            
+            let task = session.dataTask(with: url) { data, response, error in
                 
                 if let error = error {
+                    print("Evervault: Request error for cage attestation document of \(cageIdentifier): \(error.localizedDescription)")
                     completion(.failure(.requestError(error)))
                     return
                 }
                 
-                guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+                guard let httpResponse = response as? HTTPURLResponse else {
+                    print("Evervault: Invalid HTTP response for cage attestation document of \(cageIdentifier).")
                     completion(.failure(.invalidHTTPResponse))
                     return
                 }
                 
+                guard httpResponse.statusCode == 200 else {
+                    print("Evervault: HTTP error fetching attestation document for \(cageIdentifier). Status code: \(httpResponse.statusCode)")
+                    completion(.failure(.httpError(statusCode: httpResponse.statusCode)))
+                    return
+                }
+                
                 guard let data = data else {
+                    print("Evervault: No data received fetching attestation document for \(cageIdentifier).")
                     completion(.failure(.noData))
                     return
                 }
@@ -74,9 +96,11 @@ class AttestationDocumentHttpHelper {
                        let attestationDoc = jsonObject["attestation_doc"] as? String {
                         completion(.success(attestationDoc))
                     } else {
+                        print("Evervault: Missing valid attestation doc structure in response for \(cageIdentifier).")
                         completion(.failure(.missingAttestationDoc))
                     }
                 } catch {
+                    print("Evervault: Invalid JSON response fetching attestation document for \(cageIdentifier). Error: \(error.localizedDescription)")
                     completion(.failure(.invalidJSONResponse))
                 }
             }
@@ -84,6 +108,7 @@ class AttestationDocumentHttpHelper {
             task.resume()
             
         } catch let error as AttestationError {
+            print("Evervault: Attestation error for \(cageIdentifier): \(error.localizedDescription)")
             completion(.failure(error))
         } catch {
             completion(.failure(.invalidURL))

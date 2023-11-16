@@ -33,12 +33,20 @@ public struct AttestationData {
 public struct AttestationDataWithApp {
     public let cageName: String
     public let appUuid: String
-    public let pcrs: [PCRs]
+    public let provider: (@escaping ([PCRs]?, Error?) -> Void) -> Void
 
     public init(cageName: String, appUuid: String, pcrs: PCRs...) {
         self.cageName = cageName
         self.appUuid = appUuid
-        self.pcrs = pcrs
+        self.provider = { completion in
+            completion(pcrs, nil)
+        }
+    }
+    
+    public init(cageName: String, appUuid: String, provider: @escaping (@escaping ([PCRs]?, Error?) -> Void) -> Void) {
+        self.cageName = cageName
+        self.appUuid = appUuid
+        self.provider = provider
     }
     
     public var identifier: String {
@@ -47,7 +55,7 @@ public struct AttestationDataWithApp {
 }
 
 
-public struct PCRs {
+public struct PCRs: Decodable {
     public let pcr0: String
     public let pcr1: String
     public let pcr2: String
@@ -163,8 +171,9 @@ public class TrustedAttestationSessionDelegate: NSObject, URLSessionDelegate {
         
         AttestationDocumentCache.shared.getCachedAttestationDoc(cageIdentifier: cageIdentifier) { attestationDocB64 in
             guard let attestationDocB64 = attestationDocB64 else {
-                print("Failed to get cached attestation doc for \(cageIdentifier)")
-                completionHandler(.performDefaultHandling, nil)
+                print("Evervault: Failed to retrieve cached attestation document for \(cageIdentifier). Cancelling request.")
+                challenge.sender?.cancel(challenge)
+                completionHandler(.cancelAuthenticationChallenge, nil)
                 return
             }
             
@@ -222,23 +231,33 @@ public class TrustedAttestationSessionDelegate: NSObject, URLSessionDelegate {
                 }
             }
             
-            guard let pcrs = self.cageAttestationData.first(where: { $0.identifier == cageIdentifier }) else {
+            guard let attestationData = self.cageAttestationData.first(where: { $0.identifier == cageIdentifier }) else {
+                print("Evervault: No matching PCRs specified for \(cageIdentifier). Not attesting connection.")
                 completionHandler(.performDefaultHandling, nil)
                 return
             }
             
-            var pcrsArray = [AttestationBindings.PCRs]()
-            let result = attestConnectionRecursive(pcrsArray: &pcrsArray, pcrs: pcrs.pcrs)
-            
-            
-            guard result else {
-                // Cancel the challenge
-                challenge.sender?.cancel(challenge)
-                completionHandler(.cancelAuthenticationChallenge, nil)
-                return
-            }
-            
-            completionHandler(.useCredential, URLCredential(trust: serverTrust))
+            PcrManager.shared.fetchPcrs(cageIdentifier: cageIdentifier, provider: attestationData.provider, completion: { pcrs, error in
+                guard let fetchedPcrs = pcrs, error == nil else {
+                    print("Evervault: Error fetching PCRs or no PCRs found for \(cageIdentifier). Cancelling request.")
+                    challenge.sender?.cancel(challenge)
+                    completionHandler(.cancelAuthenticationChallenge, nil)
+                    return
+                }
+                
+                var pcrsArray = [AttestationBindings.PCRs]()
+                let result = attestConnectionRecursive(pcrsArray: &pcrsArray, pcrs: fetchedPcrs)
+                                
+                guard result else {
+                    print("Evervault: Attestation failed for \(cageIdentifier). Cancelling authentication challenge.")
+                    challenge.sender?.cancel(challenge)
+                    completionHandler(.cancelAuthenticationChallenge, nil)
+                    return
+                }
+                
+                completionHandler(.performDefaultHandling, nil)
+                  
+            })
         }
     }
 }

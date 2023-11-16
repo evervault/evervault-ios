@@ -14,7 +14,7 @@ class AttestationDocumentCache {
     private let backgroundQueue = DispatchQueue(label: "com.evervault.attestationDocQueue")
     
     private init() {
-        print("Started polling for Cage attestation docs every \(refreshInterval) seconds")
+        print("Evervault: Started polling for Cage attestation docs every \(refreshInterval) seconds")
         scheduleCacheUpdate()
     }
     
@@ -25,8 +25,8 @@ class AttestationDocumentCache {
            let interval = TimeInterval(intervalString) {
             return interval
         } else {
-            // Two hours = 7200
-            return 7200
+            // Five minutes = 300
+            return 300
         }
     }()
     
@@ -55,12 +55,11 @@ class AttestationDocumentCache {
         helper.fetchCageAttestationDoc(cageIdentifier: cageIdentifier) { result in
             switch result {
             case .success(let attestationDoc):
-                print("Received Attestation Document for ", cageIdentifier)
+                print("Evervault: Received Attestation Document for ", cageIdentifier)
                 self.attestationDocMap[cageIdentifier] = attestationDoc
                 
             case .failure(let error):
-                print("Error fetching attestation document for \(cageIdentifier). Error: \(error.localizedDescription)")
-                // Handle the error accordingly here
+                print("Evervault: Error fetching attestation document for \(cageIdentifier). Error: \(error.localizedDescription)")
             }
         }
     }
@@ -76,12 +75,12 @@ class AttestationDocumentCache {
         helper.fetchCageAttestationDoc(cageIdentifier: cageIdentifier) { result in
             switch result {
             case .success(let attestationDoc):
-                print("Received Attestation Document for \(cageIdentifier)")
+                print("Evervault: Fetched Attestation Document for \(cageIdentifier)")
                 self.attestationDocMap[cageIdentifier] = attestationDoc
                 completion(attestationDoc)
                 
             case .failure(let error):
-                print("Error fetching attestation document for \(cageIdentifier). Error: \(error.localizedDescription)")
+                print("Evervault: Error fetching attestation document for \(cageIdentifier). Error: \(error.localizedDescription)")
                 completion(nil)
             }
         }
