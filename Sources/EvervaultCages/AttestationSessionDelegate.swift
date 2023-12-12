@@ -56,12 +56,12 @@ public struct AttestationDataWithApp {
 
 
 public struct PCRs: Decodable {
-    public let pcr0: String
-    public let pcr1: String
-    public let pcr2: String
-    public let pcr8: String
+    public let pcr0: String?
+    public let pcr1: String?
+    public let pcr2: String?
+    public let pcr8: String?
 
-    public init(pcr0: String, pcr1: String, pcr2: String, pcr8: String) {
+    public init(pcr0: String?, pcr1: String?, pcr2: String?, pcr8: String?) {
         self.pcr0 = pcr0
         self.pcr1 = pcr1
         self.pcr2 = pcr2
@@ -107,27 +107,21 @@ public class AttestationSessionDelegate: NSObject, URLSessionDelegate {
             }
 
             let pcrsAtIndex = pcrs[index]
-            let pcr0CStr = pcrsAtIndex.pcr0.utf8CString
-            let pcr1CStr = pcrsAtIndex.pcr1.utf8CString
-            let pcr2CStr = pcrsAtIndex.pcr2.utf8CString
-            let pcr8CStr = pcrsAtIndex.pcr8.utf8CString
+            let pcr0CStr = pcrsAtIndex.pcr0?.withCString { $0 } ?? nil
+            let pcr1CStr = pcrsAtIndex.pcr1?.withCString { $0 } ?? nil
+            let pcr2CStr = pcrsAtIndex.pcr2?.withCString { $0 } ?? nil
+            let pcr8CStr = pcrsAtIndex.pcr8?.withCString { $0 } ?? nil
 
-            return pcr0CStr.withUnsafeBufferPointer { pcr0Bytes in
-                pcr1CStr.withUnsafeBufferPointer { pcr1Bytes in
-                    pcr2CStr.withUnsafeBufferPointer { pcr2Bytes in
-                        pcr8CStr.withUnsafeBufferPointer { pcr8Bytes in
-                            pcrsArray.append(AttestationBindings.PCRs(
-                                pcr_0: pcr0Bytes.baseAddress!,
-                                pcr_1: pcr1Bytes.baseAddress!,
-                                pcr_2: pcr2Bytes.baseAddress!,
-                                pcr_8: pcr8Bytes.baseAddress!
-                            ))
+            let pcrStruct = AttestationBindings.PCRs(
+                pcr_0: pcr0CStr,
+                pcr_1: pcr1CStr,
+                pcr_2: pcr2CStr,
+                pcr_8: pcr8CStr
+            )
 
-                            return attestConnectionRecursive(pcrsArray: &pcrsArray, pcrs: pcrs, index: index + 1)
-                        }
-                    }
-                }
-            }
+            pcrsArray.append(pcrStruct)
+
+            return attestConnectionRecursive(pcrsArray: &pcrsArray, pcrs: pcrs, index: index + 1)
         }
 
         guard let pcrs = cageAttestationData.first(where: { $0.cageName == cageName }) else {
@@ -207,28 +201,21 @@ public class TrustedAttestationSessionDelegate: NSObject, URLSessionDelegate {
                 }
                 
                 let pcrsAtIndex = pcrs[index]
-                let pcr0CStr = pcrsAtIndex.pcr0.utf8CString
-                let pcr1CStr = pcrsAtIndex.pcr1.utf8CString
-                let pcr2CStr = pcrsAtIndex.pcr2.utf8CString
-                let pcr8CStr = pcrsAtIndex.pcr8.utf8CString
-                
-                return pcr0CStr.withUnsafeBufferPointer { pcr0Bytes in
-                    pcr1CStr.withUnsafeBufferPointer { pcr1Bytes in
-                        pcr2CStr.withUnsafeBufferPointer { pcr2Bytes in
-                            pcr8CStr.withUnsafeBufferPointer { pcr8Bytes in
-                                pcrsArray.append(AttestationBindings.PCRs(
-                                    pcr_0: pcr0Bytes.baseAddress!,
-                                    pcr_1: pcr1Bytes.baseAddress!,
-                                    pcr_2: pcr2Bytes.baseAddress!,
-                                    pcr_8: pcr8Bytes.baseAddress!
-                                ))
-                                
-                                let attestResult = attestConnectionRecursive(pcrsArray: &pcrsArray, pcrs: pcrs, index: index + 1)
-                                return attestResult
-                            }
-                        }
-                    }
-                }
+                let pcr0CStr = pcrsAtIndex.pcr0?.withCString { $0 } ?? nil
+                let pcr1CStr = pcrsAtIndex.pcr1?.withCString { $0 } ?? nil
+                let pcr2CStr = pcrsAtIndex.pcr2?.withCString { $0 } ?? nil
+                let pcr8CStr = pcrsAtIndex.pcr8?.withCString { $0 } ?? nil
+
+                let pcrStruct = AttestationBindings.PCRs(
+                    pcr_0: pcr0CStr,
+                    pcr_1: pcr1CStr,
+                    pcr_2: pcr2CStr,
+                    pcr_8: pcr8CStr
+                )
+
+                pcrsArray.append(pcrStruct)
+
+                return attestConnectionRecursive(pcrsArray: &pcrsArray, pcrs: pcrs, index: index + 1)
             }
             
             guard let attestationData = self.cageAttestationData.first(where: { $0.identifier == cageIdentifier }) else {
