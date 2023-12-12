@@ -61,7 +61,7 @@ public struct PCRs: Decodable {
     public let pcr2: String?
     public let pcr8: String?
 
-    public init(pcr0: String?, pcr1: String?, pcr2: String?, pcr8: String?) {
+    public init(pcr0: String? = nil, pcr1: String? = nil, pcr2: String? = nil, pcr8: String? = nil) {
         self.pcr0 = pcr0
         self.pcr1 = pcr1
         self.pcr2 = pcr2
