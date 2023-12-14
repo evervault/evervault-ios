@@ -33,24 +33,29 @@ struct CageView: View {
         }
         .padding()
         .task {
-            let url = URL(string: "https://\(cageName).\(appId).cages.evervault.com/attestation-doc")!
+            let url = URL(string: "https://\(cageName).\(appId).cages.evervault.com/hello")!
             let urlSession = Evervault.cageSession(
-                cageAttestationData: AttestationData(
-                    cageName: cageName,
-                    pcrs: PCRs(
-                        // Replace with legitimate PCR strings when not in debug mode
-                        pcr0: "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-                        pcr1: "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-                        pcr2: "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-                        pcr8: "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+                cageAttestationData:
+                    AttestationData(
+                        cageName: cageName,
+                        pcrs: 
+                            PCRs( //Can use a partial set of PCRs
+                              pcr0: "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+                        ),
+                            PCRs( //Or can use a full set of PCRs
+                            
+                              pcr0: "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+                              pcr1: "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+                              pcr2: "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+                              pcr8: "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+                        )
                     )
-                )
-            )
+            );
 
             do {
                 let response = try await urlSession.data(from: url)
-                let cageRespone = try! JSONDecoder().decode(CageResponse.self, from: response.0)
-                responseText = cageRespone.response
+                let cageResponse = try! JSONDecoder().decode(CageResponse.self, from: response.0)
+                responseText = cageResponse.response
             } catch {
                 responseText = error.localizedDescription
                 print("Error: \(error.localizedDescription)")
