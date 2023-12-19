@@ -39,7 +39,7 @@ jobs:
             echo "Tag already exists. No new release needed."
         else
             echo "Tag ($PACKAGE_VERSION) does not exist. Creating a new tag and a new release..."
-            git tag $PACKAGE_VERSION
+            git tag $PACKAGE_VERSION && git push origin $PACKAGE_VERSION
             echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
             CHANGELOG=$(awk '
                 BEGIN { recording=0; }
