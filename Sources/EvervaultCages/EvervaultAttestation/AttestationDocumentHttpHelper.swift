@@ -43,10 +43,10 @@ class AttestationDocumentHttpHelper {
         }
     }()
     
-    func buildCageUrl(cageIdentifier: String) throws -> URL {
+    func buildUrl(host: String, identifier: String) throws -> URL {
         var components = URLComponents()
         components.scheme = "https"
-        components.host = "\(cageIdentifier).cage.\(domain)"
+        components.host = "\(identifier).\(host).\(domain)"
         components.path = "/.well-known/attestation"
         
         guard let url = components.url else {
@@ -56,9 +56,9 @@ class AttestationDocumentHttpHelper {
         return url
     }
     
-    func fetchCageAttestationDoc(cageIdentifier: String, completion: @escaping (Result<String, AttestationError>) -> Void) {
+    func fetchAttestationDoc(host: String, identifier: String, completion: @escaping (Result<String, AttestationError>) -> Void) {
         do {
-            let url = try buildCageUrl(cageIdentifier: cageIdentifier)
+            let url = try buildUrl(host: host, identifier: identifier)
             
             let configuration = URLSessionConfiguration.default
             configuration.timeoutIntervalForRequest = 120.0
@@ -68,25 +68,25 @@ class AttestationDocumentHttpHelper {
             let task = session.dataTask(with: url) { data, response, error in
                 
                 if let error = error {
-                    print("Evervault: Request error for cage attestation document of \(cageIdentifier): \(error.localizedDescription)")
+                    print("Evervault: Request error for attestation document of \(identifier): \(error.localizedDescription)")
                     completion(.failure(.requestError(error)))
                     return
                 }
                 
                 guard let httpResponse = response as? HTTPURLResponse else {
-                    print("Evervault: Invalid HTTP response for cage attestation document of \(cageIdentifier).")
+                    print("Evervault: Invalid HTTP response for attestation document of \(identifier).")
                     completion(.failure(.invalidHTTPResponse))
                     return
                 }
                 
                 guard httpResponse.statusCode == 200 else {
-                    print("Evervault: HTTP error fetching attestation document for \(cageIdentifier). Status code: \(httpResponse.statusCode)")
+                    print("Evervault: HTTP error fetching attestation document for \(identifier). Status code: \(httpResponse.statusCode)")
                     completion(.failure(.httpError(statusCode: httpResponse.statusCode)))
                     return
                 }
                 
                 guard let data = data else {
-                    print("Evervault: No data received fetching attestation document for \(cageIdentifier).")
+                    print("Evervault: No data received fetching attestation document for \(identifier).")
                     completion(.failure(.noData))
                     return
                 }
@@ -96,11 +96,11 @@ class AttestationDocumentHttpHelper {
                        let attestationDoc = jsonObject["attestation_doc"] as? String {
                         completion(.success(attestationDoc))
                     } else {
-                        print("Evervault: Missing valid attestation doc structure in response for \(cageIdentifier).")
+                        print("Evervault: Missing valid attestation doc structure in response for \(identifier).")
                         completion(.failure(.missingAttestationDoc))
                     }
                 } catch {
-                    print("Evervault: Invalid JSON response fetching attestation document for \(cageIdentifier). Error: \(error.localizedDescription)")
+                    print("Evervault: Invalid JSON response fetching attestation document for \(identifier). Error: \(error.localizedDescription)")
                     completion(.failure(.invalidJSONResponse))
                 }
             }
@@ -108,7 +108,7 @@ class AttestationDocumentHttpHelper {
             task.resume()
             
         } catch let error as AttestationError {
-            print("Evervault: Attestation error for \(cageIdentifier): \(error.localizedDescription)")
+            print("Evervault: Attestation error for \(identifier): \(error.localizedDescription)")
             completion(.failure(error))
         } catch {
             completion(.failure(.invalidURL))

@@ -51,6 +51,13 @@ let package = Package(
             url: "https://github.com/evervault/evervault-ios/releases/download/0.0.5/AttestationBindings.xcframework.zip",
             checksum: "77d9e009074b9c0bbaf524e36eec0b4ca08af7db9fd7d91f2da0e2241aeee44e"
         ),
+        .target(
+            name: "EvervaultEnclaves",
+            dependencies: [
+                "EvervaultCore",
+                "EvervaultCages"
+            ]
+        ),
         .testTarget(
             name: "EvervaultCoreTests",
             dependencies: [
