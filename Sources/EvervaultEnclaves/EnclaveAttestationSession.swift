@@ -1,6 +1,5 @@
 import Foundation
 
-import EvervaultAttestation
 import EvervaultCages
 import EvervaultCore
 

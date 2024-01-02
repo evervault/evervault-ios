@@ -10,6 +10,7 @@ import SwiftUI
 import EvervaultCages
 import EvervaultCore
 import EvervaultInputs
+//import EvervaultEnclaves
 
 struct ContentView: View {
 
@@ -50,6 +51,10 @@ struct ContentView: View {
                     NavigationLink(destination: AttestedCageView()) {
                         Text("New Cage HTTP Request")
                     }
+                    
+//                    NavigationLink(destination: AttestedEnclaveView()) {
+//                        Text("New Enclave HTTP Request")
+//                    }
                 }
             }
         } detail: {}

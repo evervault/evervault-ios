@@ -4,15 +4,15 @@ import EvervaultCore
 import EvervaultCages
 import EvervaultEnclaves
 
-private struct CageResponse: Decodable {
+private struct EnclaveResponse: Decodable {
     let response: String
 }
 
-struct AttestedCageView: View {
+struct AttestedEnclaveView: View {
 
     // replace with your provider
     public var provider: (@escaping ([PCRs]?, Error?) -> Void) -> Void = { completion in
-        URLSession.shared.dataTask(with: URL(string: "https://example.provider.com")!) { data, _, error in
+        URLSession.shared.dataTask(with: URL(string: "https://gist.githubusercontent.com/donaltuohy/5dbc1c175bcd0f0a9a621184cf3c78dc/raw/24582f4590ad074bd409049b4589be5300ebf6ce/pcrs.json")!) { data, _, error in
             guard let data = data, error == nil else {
                 completion(nil, error ?? NSError(domain: "Evervault Provider", code: -1, userInfo: [NSLocalizedDescriptionKey: "No data or error."]))
                 return
@@ -27,7 +27,7 @@ struct AttestedCageView: View {
     }
 
     // replace with your cage name and app id
-    private let cageName = "donal-prod-jan-2"
+    private let enclaveName = "donal-prod-jan-2"
     private let appId = "app-7823eafc5d4e"
     
     @State private var responseText: String? = nil
@@ -42,10 +42,10 @@ struct AttestedCageView: View {
         }
         .padding()
         .task {
-            let url = URL(string: "https://\(cageName).\(appId).cage.evervault.com/hello")!
+            let url = URL(string: "https://\(enclaveName).\(appId).enclave.evervault.com/hello")!
             let urlSession = Evervault.enclaveAttestationSession(
                 enclaveAttestationData: EnclaveAttestationData(
-                    cageName: cageName,
+                    enclaveName: enclaveName,
                     appUuid: appId,
                     provider: provider
                 )
@@ -54,8 +54,8 @@ struct AttestedCageView: View {
             do {
                 let response = try await urlSession.data(from: url)
                 print(response)
-                let cageResponse = try! JSONDecoder().decode(CageResponse.self, from: response.0)
-                responseText = cageResponse.response
+                let enclaveResponse = try! JSONDecoder().decode(EnclaveResponse.self, from: response.0)
+                responseText = enclaveResponse.response
             } catch {
                 responseText = error.localizedDescription
                 print("Error: \(error.localizedDescription)")
@@ -64,8 +64,8 @@ struct AttestedCageView: View {
     }
 }
 
-struct AttestedCageView_Previews: PreviewProvider {
+struct AttestedEnclaveView_Previews: PreviewProvider {
     static var previews: some View {
-        AttestedCageView()
+        AttestedEnclaveView()
     }
 }
