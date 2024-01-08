@@ -2,7 +2,6 @@ import SwiftUI
 
 import EvervaultCore
 import EvervaultCages
-import EvervaultEnclaves
 
 private struct CageResponse: Decodable {
     let response: String
@@ -43,9 +42,9 @@ struct AttestedCageView: View {
         .padding()
         .task {
             let url = URL(string: "https://\(cageName).\(appId).cage.evervault.com/hello")!
-            let urlSession = Evervault.enclaveAttestationSession(
-                enclaveAttestationData: EnclaveAttestationData(
-                    enclaveName: cageName,
+            let urlSession = Evervault.cageAttestationSession(
+                cageAttestationData: AttestationDataWithApp(
+                    cageName: cageName,
                     appUuid: appId,
                     provider: provider
                 )
