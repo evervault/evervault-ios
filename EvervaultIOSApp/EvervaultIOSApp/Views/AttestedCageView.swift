@@ -27,8 +27,8 @@ struct AttestedCageView: View {
     }
 
     // replace with your cage name and app id
-    private let cageName = "donal-prod-jan-2"
-    private let appId = "app-7823eafc5d4e"
+    private let cageName = "example-cage"
+    private let appId = "app-uuid" //Make sure it's hyphenated
     
     @State private var responseText: String? = nil
 
@@ -45,7 +45,7 @@ struct AttestedCageView: View {
             let url = URL(string: "https://\(cageName).\(appId).cage.evervault.com/hello")!
             let urlSession = Evervault.enclaveAttestationSession(
                 enclaveAttestationData: EnclaveAttestationData(
-                    cageName: cageName,
+                    enclaveName: cageName,
                     appUuid: appId,
                     provider: provider
                 )

@@ -21,6 +21,10 @@ let package = Package(
             name: "EvervaultCages",
             targets: ["EvervaultCages", "AttestationBindings"]
         ),
+        .library(
+            name: "EvervaultEnclaves",
+            targets: ["EvervaultEnclaves", "EvervaultCages", "AttestationBindings"]
+        ),
     ],
     dependencies: [
         .package(url: "https://github.com/birdrides/mockingbird.git", .upToNextMinor(from: "0.20.0"))
@@ -55,7 +59,8 @@ let package = Package(
             name: "EvervaultEnclaves",
             dependencies: [
                 "EvervaultCore",
-                "EvervaultCages"
+                "EvervaultCages",
+                "AttestationBindings"
             ]
         ),
         .testTarget(
