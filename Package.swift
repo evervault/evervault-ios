@@ -21,6 +21,10 @@ let package = Package(
             name: "EvervaultCages",
             targets: ["EvervaultCages", "AttestationBindings"]
         ),
+        .library(
+            name: "EvervaultEnclaves",
+            targets: ["EvervaultEnclaves", "EvervaultCages", "AttestationBindings"]
+        ),
     ],
     dependencies: [
         .package(url: "https://github.com/birdrides/mockingbird.git", .upToNextMinor(from: "0.20.0"))
@@ -50,6 +54,14 @@ let package = Package(
             name: "AttestationBindings",
             url: "https://github.com/evervault/evervault-ios/releases/download/0.0.5/AttestationBindings.xcframework.zip",
             checksum: "77d9e009074b9c0bbaf524e36eec0b4ca08af7db9fd7d91f2da0e2241aeee44e"
+        ),
+        .target(
+            name: "EvervaultEnclaves",
+            dependencies: [
+                "EvervaultCore",
+                "EvervaultCages",
+                "AttestationBindings"
+            ]
         ),
         .testTarget(
             name: "EvervaultCoreTests",

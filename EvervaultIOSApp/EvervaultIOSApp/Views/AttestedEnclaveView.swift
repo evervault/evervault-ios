@@ -1,13 +1,13 @@
 import SwiftUI
 
 import EvervaultCore
-import EvervaultCages
+import EvervaultEnclaves
 
-private struct CageResponse: Decodable {
+private struct EnclaveResponse: Decodable {
     let response: String
 }
 
-struct AttestedCageView: View {
+struct AttestedEnclaveView: View {
 
     // replace with your provider
     public var provider: (@escaping ([PCRs]?, Error?) -> Void) -> Void = { completion in
@@ -26,7 +26,7 @@ struct AttestedCageView: View {
     }
 
     // replace with your cage name and app id
-    private let cageName = "example-cage"
+    private let enclaveName = "example-enclave"
     private let appId = "app-uuid" //Make sure it's hyphenated
     
     @State private var responseText: String? = nil
@@ -41,10 +41,10 @@ struct AttestedCageView: View {
         }
         .padding()
         .task {
-            let url = URL(string: "https://\(cageName).\(appId).cage.evervault.com/hello")!
-            let urlSession = Evervault.cageAttestationSession(
-                cageAttestationData: AttestationDataWithApp(
-                    cageName: cageName,
+            let url = URL(string: "https://\(enclaveName).\(appId).enclave.evervault.com/hello")!
+            let urlSession = Evervault.enclaveAttestationSession(
+                enclaveAttestationData: EnclaveAttestationData(
+                    enclaveName: enclaveName,
                     appUuid: appId,
                     provider: provider
                 )
@@ -53,8 +53,8 @@ struct AttestedCageView: View {
             do {
                 let response = try await urlSession.data(from: url)
                 print(response)
-                let cageResponse = try! JSONDecoder().decode(CageResponse.self, from: response.0)
-                responseText = cageResponse.response
+                let enclaveResponse = try! JSONDecoder().decode(EnclaveResponse.self, from: response.0)
+                responseText = enclaveResponse.response
             } catch {
                 responseText = error.localizedDescription
                 print("Error: \(error.localizedDescription)")
@@ -63,8 +63,8 @@ struct AttestedCageView: View {
     }
 }
 
-struct AttestedCageView_Previews: PreviewProvider {
+struct AttestedEnclaveView_Previews: PreviewProvider {
     static var previews: some View {
-        AttestedCageView()
+        AttestedEnclaveView()
     }
 }
