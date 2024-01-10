@@ -42,23 +42,13 @@ struct ContentView: View {
                         Text("Custom Style")
                     }
                 }
-
-                Section("Cages") {
-                    NavigationLink(destination: CageView()) {
-                        Text("Cage HTTP Request")
-                    }
-                    
-                    NavigationLink(destination: AttestedCageView()) {
-                        Text("New Cage HTTP Request")
-                    }
-                }
                 
-//                Section("Enclaves") {
-//
-//                    NavigationLink(destination: AttestedEnclaveView()) {
-//                        Text("Enclave HTTP Request")
-//                    }
-//                }
+               Section("Enclaves") {
+
+                   NavigationLink(destination: AttestedEnclaveView()) {
+                       Text("Enclave HTTP Request")
+                   }
+               }
             }
         } detail: {}
     }
