@@ -1,5 +1,11 @@
 # evervault-ios
 
+## 0.3.0
+
+### Minor Changes
+
+- 1c62aa1: Add the EvervaultEnclaves package with a function to create an attestation session for requests to an Evervault Enclave.
+
 ## 0.2.0
 
 ### Minor Changes
