@@ -8,26 +8,41 @@ private struct EnclaveResponse: Decodable {
 }
 
 struct AttestedEnclaveView: View {
+    // The Evervault API returns a list of the active PCRs for an Enclave under a top level "data" key:
+    // { "data": [ { "pcr0": "...", ... } ] }
+    public struct EvervaultProviderResponse: Decodable {
+        public let data: [PCRs]
 
-    // replace with your provider
+        public init(data: [PCRs]) {
+            self.data = data
+        }
+    }
+
+    // replace with your cage name and app id
+    private let enclaveName = "example-enclave"
+    private let appId = "app-uuid" //Make sure it's hyphenated
+
+    // Using the Evervault API as a PCR Provider
     public var provider: (@escaping ([PCRs]?, Error?) -> Void) -> Void = { completion in
-        URLSession.shared.dataTask(with: URL(string: "https://example.provider.com")!) { data, _, error in
+        var request = URLRequest(url: URL(string: "https://api.evervault.com/enclaves/\(enclaveName)/attestation")!)
+        var underscoredAppId = appId.replacingOccurrences(of: "-", with: "_")
+        request.addValue(underscoredAppId, forHTTPHeaderField: "x-evervault-app-id")
+        URLSession.shared.dataTask(with: request) { data, _, error in
             guard let data = data, error == nil else {
                 completion(nil, error ?? NSError(domain: "Evervault Provider", code: -1, userInfo: [NSLocalizedDescriptionKey: "No data or error."]))
                 return
             }
             do {
-                completion(try JSONDecoder().decode([PCRs].self, from: data), nil)
+                // Decode the API Response into a PCRContainer
+                let container = try JSONDecoder().decode(EvervaultProviderResponse.self, from: data)
+                // Extract the PCRs array from the container and pass it to the completion handler
+                completion(container.data, nil)
             } catch {
                 print("Error: ", error.localizedDescription)
                 completion(nil, error)
             }
         }.resume()
     }
-
-    // replace with your cage name and app id
-    private let enclaveName = "example-enclave"
-    private let appId = "app-uuid" //Make sure it's hyphenated
     
     @State private var responseText: String? = nil
 
