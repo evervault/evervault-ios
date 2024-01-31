@@ -1,8 +1,8 @@
 import Foundation
 
-class AttestationDocumentCache {
+public class AttestationDocumentCache {
     
-    static let shared = AttestationDocumentCache()
+    public static let shared = AttestationDocumentCache()
     private let helper = AttestationDocumentHttpHelper.shared
     private let backgroundQueue = DispatchQueue(label: "com.evervault.attestationDocQueue")
     
@@ -61,6 +61,14 @@ class AttestationDocumentCache {
                         print("Evervault: Error fetching attestation document for \(identifier). Error: \(enclaveError.localizedDescription)")
                     }
                 }
+            }
+        }
+    }
+    
+    public func fetchAttestationDocumentAsync(identifier: String) async -> String? {
+        await withCheckedContinuation { continuation in
+            getCachedAttestationDoc(identifier: identifier) { attestationDoc in
+                continuation.resume(returning: attestationDoc)
             }
         }
     }

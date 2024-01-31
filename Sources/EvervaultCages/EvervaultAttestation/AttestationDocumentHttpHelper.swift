@@ -55,7 +55,7 @@ class AttestationDocumentHttpHelper {
         
         return url
     }
-    
+
     func fetchAttestationDoc(host: String, identifier: String, completion: @escaping (Result<String, AttestationError>) -> Void) {
         do {
             let url = try buildUrl(host: host, identifier: identifier)
