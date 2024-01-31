@@ -8,16 +8,28 @@ private struct EnclaveResponse: Decodable {
 }
 
 struct AttestedEnclaveView: View {
+    public struct EvervaultProviderResponse: Decodable {
+        public let data: [PCRs]
 
-    // replace with your provider
+        public init(data: [PCRs]) {
+            self.data = data
+        }
+    }
+    
+    
+    //Automatically pulls PCRs for Enclave from Evervault API
     public var provider: (@escaping ([PCRs]?, Error?) -> Void) -> Void = { completion in
-        URLSession.shared.dataTask(with: URL(string: "https://example.provider.com")!) { data, _, error in
+        var request = URLRequest(url: URL(string: "https://api.evervault.com/enclaves/$[ENCLAVE_NAME]/attestation")!)
+        request.addValue("$[UNDERSCORED APP UUID]", forHTTPHeaderField: "x-evervault-app-id")
+
+        URLSession.shared.dataTask(with: request) { data, _, error in
             guard let data = data, error == nil else {
                 completion(nil, error ?? NSError(domain: "Evervault Provider", code: -1, userInfo: [NSLocalizedDescriptionKey: "No data or error."]))
                 return
             }
             do {
-                completion(try JSONDecoder().decode([PCRs].self, from: data), nil)
+                let container = try JSONDecoder().decode(EvervaultProviderResponse.self, from: data)
+                completion(container.data, nil)
             } catch {
                 print("Error: ", error.localizedDescription)
                 completion(nil, error)
@@ -25,9 +37,8 @@ struct AttestedEnclaveView: View {
         }.resume()
     }
 
-    // replace with your cage name and app id
-    private let enclaveName = "example-enclave"
-    private let appId = "app-uuid" //Make sure it's hyphenated
+    private let enclaveName = "$[ENCLAVE_NAME]"
+    private let appId = "$[HYPHENATED APP UUID]"
     
     @State private var responseText: String? = nil
 
@@ -41,19 +52,19 @@ struct AttestedEnclaveView: View {
         }
         .padding()
         .task {
-            let url = URL(string: "https://\(enclaveName).\(appId).enclave.evervault.com/hello")!
-            let urlSession = Evervault.enclaveAttestationSession(
-                enclaveAttestationData: EnclaveAttestationData(
-                    enclaveName: enclaveName,
-                    appUuid: appId,
-                    provider: provider
-                )
-            )
-
             do {
-                let response = try await urlSession.data(from: url)
-                print(response)
-                let enclaveResponse = try! JSONDecoder().decode(EnclaveResponse.self, from: response.0)
+                // Use async function to get the session
+                let urlSession = await Evervault.enclaveAttestationSession(
+                    enclaveAttestationData: EnclaveAttestationData(
+                        enclaveName: enclaveName,
+                        appUuid: appId,
+                        provider: provider
+                    )
+                )
+
+                let url = URL(string: "https://\(enclaveName).\(appId).enclave.evervault.com/hello")!
+                let (data, _) = try await urlSession.data(from: url)
+                let enclaveResponse = try JSONDecoder().decode(EnclaveResponse.self, from: data)
                 responseText = enclaveResponse.response
             } catch {
                 responseText = error.localizedDescription
