@@ -1,7 +1,6 @@
 import Foundation
 
 import EvervaultCore
-//import EvervaultAttestation
 import AttestationBindings
 
 extension Evervault {
