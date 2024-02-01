@@ -45,22 +45,14 @@ public class AttestationDocumentCache {
     }
     
     private func updateCacheWithSpecificAttestationDoc(identifier: String) {
-        self.helper.fetchAttestationDoc(host: "cage", identifier: identifier) { result in
+        self.helper.fetchAttestationDoc(host: "enclave", identifier: identifier) { result in
             switch result {
             case .success(let attestationDoc):
                 print("Evervault: Received Attestation Document for ", identifier)
                 self.attestationDocMap[identifier] = attestationDoc
                 
-            case .failure(_):
-                self.helper.fetchAttestationDoc(host: "enclave", identifier: identifier) { enclaveResult in
-                    switch enclaveResult {
-                    case .success(let attestationDoc):
-                        print("Evervault: Received Attestation Document for \(identifier)")
-                        self.attestationDocMap[identifier] = attestationDoc
-                    case .failure(let enclaveError):
-                        print("Evervault: Error fetching attestation document for \(identifier). Error: \(enclaveError.localizedDescription)")
-                    }
-                }
+            case .failure(let enclaveError):
+                print("Evervault: Error fetching attestation document for \(identifier). Error: \(enclaveError.localizedDescription)")
             }
         }
     }
@@ -80,26 +72,16 @@ public class AttestationDocumentCache {
             return
         }
         
-        // We need to try fetch the AD from first cage and then enclave as a fallback.
-        self.helper.fetchAttestationDoc(host: "cage", identifier: identifier) { result in
+        self.helper.fetchAttestationDoc(host: "enclave", identifier: identifier) { result in
             switch result {
             case .success(let attestationDoc):
                 print("Evervault: Fetched Attestation Document for \(identifier)")
                 self.attestationDocMap[identifier] = attestationDoc
                 completion(attestationDoc)
                 
-            case .failure(_):
-                self.helper.fetchAttestationDoc(host: "enclave", identifier: identifier) { enclaveResult in
-                        switch enclaveResult {
-                            case .success(let attestationDoc):
-                                print("Evervault: Received Attestation Document for \(identifier)")
-                                self.attestationDocMap[identifier] = attestationDoc
-                                completion(attestationDoc)
-                            case .failure(let error):
-                                print("Evervault: Error fetching attestation document for \(identifier). Error: \(error.localizedDescription)")
-                                completion(nil)
-                        }
-                    }
+            case .failure(let enclaveError):
+                print("Evervault: Error fetching attestation document for \(identifier). Error: \(enclaveError.localizedDescription)")
+                completion(nil)
             }
         }
     }

@@ -9,12 +9,12 @@ final class CagesAttestationTest: XCTestCase {
 
     func testConnectionUnauthenticated() async throws {
         
-        let cageName = "synthetic-cage"
+        let name = "synthetic-cage"
         let appUuid = "app-f5f084041a7e"
-        let url = URL(string: "https://\(cageName).\(appUuid).cage.evervault.com/echo")!
+        let url = URL(string: "https://\(name).\(appUuid).cage.evervault.com/echo")!
         let urlSession = Evervault.cageAttestationSession(
             cageAttestationData: AttestationDataWithApp(
-                cageName: cageName,
+                name: name,
                 appUuid: appUuid,
                 pcrs: PCRs(
                     pcr0: "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
@@ -40,12 +40,12 @@ final class CagesAttestationTest: XCTestCase {
     
     func testConnectionAuthenticated() async throws {
         
-        let cageName = "synthetic-cage"
+        let name = "synthetic-cage"
         let appUuid = "app-f5f084041a7e"
-        let url = URL(string: "https://\(cageName).\(appUuid).cage.evervault.com/echo")!
+        let url = URL(string: "https://\(name).\(appUuid).cage.evervault.com/echo")!
         let urlSession = Evervault.cageAttestationSession(
             cageAttestationData: AttestationDataWithApp(
-                cageName: cageName,
+                name: name,
                 appUuid: appUuid,
                 pcrs: PCRs(
                     pcr0: "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
@@ -76,12 +76,12 @@ final class CagesAttestationTest: XCTestCase {
     }
     
     func testAttestationFails() async throws {
-        let cageName = "synthetic-cage"
+        let name = "synthetic-cage"
         let appUuid = "app-f5f084041a7e"
-        let url = URL(string: "https://\(cageName).\(appUuid).cage.evervault.com/echo")!
+        let url = URL(string: "https://\(name).\(appUuid).cage.evervault.com/echo")!
         let urlSession = Evervault.cageAttestationSession(
             cageAttestationData: AttestationDataWithApp(
-                cageName: cageName,
+                name: name,
                 appUuid: appUuid,
                 pcrs: PCRs(
                     // Replace with legitimate PCR strings when not in debug mode
