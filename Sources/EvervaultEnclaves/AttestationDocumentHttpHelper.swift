@@ -14,7 +14,7 @@ class AttestationDocumentHttpHelper {
         var errorDescription: String? {
             switch self {
             case .invalidURL:
-                return "Invalid Cage Attestation URL."
+                return "Invalid Enclave Attestation URL."
             case .requestError(let error):
                 return "Request error: \(error.localizedDescription)"
             case .invalidHTTPResponse:
