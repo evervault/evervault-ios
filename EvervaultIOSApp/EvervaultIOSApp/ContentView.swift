@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-import EvervaultCages
 import EvervaultCore
 import EvervaultInputs
 import EvervaultEnclaves

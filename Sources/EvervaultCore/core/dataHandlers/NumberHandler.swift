@@ -5,7 +5,6 @@ internal struct NumberHandler: DataHandler {
     let encryptionService: EncryptionService
 
     func canEncrypt(data: Any) -> Bool {
-        print(data)
         return data is Int ||
                data is Int8 ||
                data is Int16 ||

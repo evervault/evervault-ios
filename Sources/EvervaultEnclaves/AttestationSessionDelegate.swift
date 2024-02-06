@@ -12,14 +12,10 @@ public class TrustedAttestationSessionDelegate: NSObject, URLSessionDelegate {
 
     private let attestationData: [AttestationDataWithApp]
 
-    public init(cageAttestationData: [AttestationDataWithApp]) {
-        self.attestationData = cageAttestationData
-    }
-
     public init(enclaveAttestationData: [EnclaveAttestationData]) {
         self.attestationData = enclaveAttestationData.map { enclaveAttestationData in
             return AttestationDataWithApp(
-                cageName: enclaveAttestationData.enclaveName,
+                name: enclaveAttestationData.enclaveName,
                 appUuid: enclaveAttestationData.appUuid,
                 provider: enclaveAttestationData.provider
             )

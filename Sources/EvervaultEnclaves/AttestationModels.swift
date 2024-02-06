@@ -14,37 +14,27 @@ public struct PCRs: Decodable {
     }
 }
 
-public struct AttestationData {
-    public let cageName: String
-    public let pcrs: [PCRs]
-
-    public init(cageName: String, pcrs: PCRs...) {
-        self.cageName = cageName
-        self.pcrs = pcrs
-    }
-}
-
 public struct AttestationDataWithApp {
-    public let cageName: String
+    public let name: String
     public let appUuid: String
     public let provider: (@escaping ([PCRs]?, Error?) -> Void) -> Void
 
-    public init(cageName: String, appUuid: String, pcrs: PCRs...) {
-        self.cageName = cageName
+    public init(name: String, appUuid: String, pcrs: PCRs...) {
+        self.name = name
         self.appUuid = appUuid
         self.provider = { completion in
             completion(pcrs, nil)
         }
     }
     
-    public init(cageName: String, appUuid: String, provider: @escaping (@escaping ([PCRs]?, Error?) -> Void) -> Void) {
-        self.cageName = cageName
+    public init(name: String, appUuid: String, provider: @escaping (@escaping ([PCRs]?, Error?) -> Void) -> Void) {
+        self.name = name
         self.appUuid = appUuid
         self.provider = provider
     }
     
     public var identifier: String {
-        return "\(cageName).\(appUuid)"
+        return "\(name).\(appUuid)"
     }
 }
 
@@ -72,6 +62,6 @@ public struct EnclaveAttestationData {
     }
 
     public func toAttestationDataWithApp() -> AttestationDataWithApp {
-        return AttestationDataWithApp(cageName: enclaveName, appUuid: appUuid, provider: provider)
+        return AttestationDataWithApp(name: enclaveName, appUuid: appUuid, provider: provider)
     }
 }
