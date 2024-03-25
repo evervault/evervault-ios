@@ -1,5 +1,11 @@
 # evervault-ios
 
+## 1.1.0
+
+### Minor Changes
+
+- abbae3f: Add privacy info to SDK and update attestation bindings
+
 ## 1.0.0
 
 ### Major Changes
