@@ -37,8 +37,8 @@ struct AttestedEnclaveView: View {
         }.resume()
     }
 
-    private let enclaveName = "$[ENCLAVE_NAME]"
-    private let appUuid = "$[HYPHENATED APP UUID]"
+    private let enclaveName = "synthetic-cage"
+    private let appUuid = "app-f5f084041a7e"
     
     @State private var responseText: String? = nil
 
@@ -62,7 +62,7 @@ struct AttestedEnclaveView: View {
                     )
                 )
 
-                let url = URL(string: "https://\(enclaveName).\(appUuid).enclave.evervault.com/hello")!
+                let url = URL(string: "https://\(enclaveName).\(appUuid).enclave.evervault.com/echo")!
                 let (data, _) = try await urlSession.data(from: url)
                 let enclaveResponse = try JSONDecoder().decode(EnclaveResponse.self, from: data)
                 responseText = enclaveResponse.response
