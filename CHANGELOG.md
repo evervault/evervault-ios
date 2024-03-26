@@ -1,5 +1,11 @@
 # evervault-ios
 
+## 1.1.1
+
+### Patch Changes
+
+- db5cba7: Fix linker issue
+
 ## 1.1.0
 
 ### Minor Changes
