@@ -19,7 +19,7 @@ jobs:
       uses: actions/setup-node@v3
 
     - name: Install dependencies
-      run: npm install 
+      run: npm install
 
     - name: Create Release Pull Request
       id: changesets
@@ -35,7 +35,7 @@ jobs:
       run: |
         PACKAGE_VERSION=$(node -p "require('./package.json').version")
 
-        if git tag | grep -q "$PACKAGE_VERSION"; then
+        if git tag | grep -w -q "$PACKAGE_VERSION"; then
             echo "Tag already exists. No new release needed."
         else
             echo "Tag ($PACKAGE_VERSION) does not exist. Creating a new tag and a new release..."
