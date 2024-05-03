@@ -66,14 +66,14 @@ public struct PaymentCardInput: View {
                     MultiplatformNumberTextfield(text: $creditCardNumber, prompt: "4242 4242 4242 4242", label: "Card number")
                         .focused($focusedField, equals: .number)
                 ),
-                expiryField: AnyView(
+                expiryField: validationConfig.validateExpiry ? AnyView(
                     MultiplatformNumberTextfield(text: $expiryDate, prompt: "MM/YY", label: "Expiry")
                         .focused($focusedField, equals: .expiry)
-                ),
-                cvcField: AnyView(
+                    ) : AnyView(EmptyView()),
+                cvcField: validationConfig.validateCVC ? AnyView(
                     MultiplatformNumberTextfield(text: $cvc, prompt: "CVC", label: "CVC")
                         .focused($focusedField, equals: .cvc)
-                )
+                    ) : AnyView(EmptyView())
             ))
         )
         .onChange(of: self.rawCardData.card.number) { number in

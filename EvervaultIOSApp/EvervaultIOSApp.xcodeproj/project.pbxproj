@@ -19,6 +19,7 @@
 		2FF3151E2A336FDB003814D5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2FF3151C2A336FDB003814D5 /* Localizable.strings */; };
 		460A3ED92B6ABFDE004B766E /* EvervaultEnclaves in Frameworks */ = {isa = PBXBuildFile; productRef = 460A3ED82B6ABFDE004B766E /* EvervaultEnclaves */; };
 		460A3EDD2B6AC22A004B766E /* AttestedEnclaveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460A3EDC2B6AC22A004B766E /* AttestedEnclaveView.swift */; };
+		906ADA042BE51CBA002387E7 /* CreditCardCustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906ADA032BE51CBA002387E7 /* CreditCardCustomView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,7 @@
 		2FF645C32A53577100475285 /* CageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CageView.swift; sourceTree = "<group>"; };
 		4602E6232AD58DD100EEC8B5 /* AttestedCageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttestedCageView.swift; sourceTree = "<group>"; };
 		460A3EDC2B6AC22A004B766E /* AttestedEnclaveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AttestedEnclaveView.swift; path = EvervaultIOSApp/Views/AttestedEnclaveView.swift; sourceTree = "<group>"; };
+		906ADA032BE51CBA002387E7 /* CreditCardCustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CreditCardCustomView.swift; path = EvervaultIOSApp/Views/CreditCardCustomView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +70,7 @@
 		2F5529492A2F682400802999 = {
 			isa = PBXGroup;
 			children = (
+				906ADA032BE51CBA002387E7 /* CreditCardCustomView.swift */,
 				460A3EDC2B6AC22A004B766E /* AttestedEnclaveView.swift */,
 				2F55297F2A2F682D00802999 /* evervault-ios */,
 				2F5529542A2F682400802999 /* EvervaultIOSApp */,
@@ -200,6 +203,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				906ADA042BE51CBA002387E7 /* CreditCardCustomView.swift in Sources */,
 				460A3EDD2B6AC22A004B766E /* AttestedEnclaveView.swift in Sources */,
 				2F193AFD2A375CED001ACD3A /* CreditCardInputView.swift in Sources */,
 				2F5529582A2F682400802999 /* ContentView.swift in Sources */,
