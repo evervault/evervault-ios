@@ -9,13 +9,13 @@ import Foundation
 
 /// Configuration for validating payment card data fields.
 public struct EnabledFields: Equatable {
-    var validateCardNumber: Bool = true
-    var validateExpiry: Bool = true
-    var validateCVC: Bool = true
+    var isCardNumberEnabled: Bool = true
+    var isExpiryEnabled: Bool = true
+    var isCVCEnabled: Bool = true
     
-    public init(validateCardNumber: Bool = true, validateExpiry: Bool = true, validateCVC: Bool = true) {
-        self.validateCardNumber = validateCardNumber
-        self.validateExpiry = validateExpiry
-        self.validateCVC = validateCVC
+    public init(isCardNumberEnabled: Bool = true, isExpiryEnabled: Bool = true, isCVCEnabled: Bool = true) {
+        self.isCardNumberEnabled = isCardNumberEnabled
+        self.isExpiryEnabled = isExpiryEnabled
+        self.isCVCEnabled = isCVCEnabled
     }
 }

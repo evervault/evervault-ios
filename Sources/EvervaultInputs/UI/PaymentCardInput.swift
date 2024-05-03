@@ -66,11 +66,11 @@ public init(cardData: Binding<PaymentCardData>, fields: EnabledFields = EnabledF
                     MultiplatformNumberTextfield(text: $creditCardNumber, prompt: "4242 4242 4242 4242", label: "Card number")
                         .focused($focusedField, equals: .number)
                 ),
-                expiryField: fields.validateExpiry ? AnyView(
+                expiryField: fields.isExpiryEnabled ? AnyView(
                     MultiplatformNumberTextfield(text: $expiryDate, prompt: "MM/YY", label: "Expiry")
                         .focused($focusedField, equals: .expiry)
                     ) : AnyView(EmptyView()),
-                cvcField: fields.validateCVC ? AnyView(
+                cvcField: fields.isCVCEnabled ? AnyView(
                     MultiplatformNumberTextfield(text: $cvc, prompt: "CVC", label: "CVC")
                         .focused($focusedField, equals: .cvc)
                     ) : AnyView(EmptyView())

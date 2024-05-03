@@ -10,7 +10,7 @@ internal extension PaymentCardData {
         let validator = CreditCardValidator(number)
         self.card.type = validator.predictedType
         
-        if fields.validateCardNumber {
+        if fields.isCardNumberEnabled {
             var number = validator.string
             if let type = self.card.type {
                 number = String(number.prefix(type.validNumberLength.last!))
@@ -24,11 +24,11 @@ internal extension PaymentCardData {
             }
         }
         
-        if fields.validateCVC {
+        if fields.isCVCEnabled {
             self.card.cvc = String(cvc.numbers.prefix(CreditCardValidator.maxCvcLength(for: self.card.type)))
         }
 
-        if fields.validateExpiry {
+        if fields.isExpiryEnabled {
             let expiryParts = expiry.split(separator: "/")
             self.card.expMonth = expiryParts.count > 0 ? String(expiryParts[0]).numbers : ""
             self.card.expYear = expiryParts.count > 1 ? String(expiryParts[1]).numbers : ""
@@ -40,15 +40,15 @@ internal extension PaymentCardData {
         let yearNumber = Int(self.card.expYear)
 
         let actualType = validator.actualType
-        self.isValid = actualType != nil && validator.isValid && (!fields.validateCVC ||  CreditCardValidator.isValidCvc(cvc: cvc, type: actualType!)) && (!fields.validateExpiry || (monthNumber != nil && (1...12).contains(monthNumber!) && yearNumber != nil))
-        self.isPotentiallyValid = validator.isPotentiallyValid && (!fields.validateExpiry || (monthNumber == nil || (1...12).contains(monthNumber!)))
+        self.isValid = actualType != nil && validator.isValid && (!fields.isCVCEnabled ||  CreditCardValidator.isValidCvc(cvc: cvc, type: actualType!)) && (!fields.isExpiryEnabled || (monthNumber != nil && (1...12).contains(monthNumber!) && yearNumber != nil))
+        self.isPotentiallyValid = validator.isPotentiallyValid && (!fields.isExpiryEnabled || (monthNumber == nil || (1...12).contains(monthNumber!)))
         self.isEmpty = number.isEmpty && cvc.isEmpty && expiry.isEmpty
         self.fields = fields
 
         if !self.isPotentiallyValid {
             if !validator.isPotentiallyValid {
                 self.error = .invalidPan
-            } else if fields.validateExpiry && monthNumber != nil && !(1...12).contains(monthNumber!) {
+            } else if fields.isExpiryEnabled && monthNumber != nil && !(1...12).contains(monthNumber!) {
                 self.error = .invalidMonth
             }
         }
