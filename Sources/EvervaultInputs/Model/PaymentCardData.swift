@@ -18,7 +18,9 @@ public struct PaymentCardData: Equatable {
 
     /// If there's an error in the payment card, this holds the `PaymentCardError`.
     public var error: PaymentCardError? = nil
-
+    
+    public var validationConfig: PaymentCardValidationConfig = PaymentCardValidationConfig()
+    
     /// Creates a new instance of `PaymentCardData`.
     public init() {}
 }

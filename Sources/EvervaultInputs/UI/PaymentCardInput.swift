@@ -22,6 +22,8 @@ public struct PaymentCardInput: View {
 
     /// The final, validated payment card data.
     @Binding private var cardData: PaymentCardData
+    
+    @State private var validationConfig: PaymentCardValidationConfig
 
     /// The style to be applied to this `PaymentCardInput` view, provided by the environment.
     @Environment(\.paymentCardInputStyle) private var style
@@ -37,8 +39,9 @@ public struct PaymentCardInput: View {
     /// Creates a new instance of `PaymentCardInput`.
     ///
     /// - Parameter cardData: A `Binding` to the final payment card data.
-    public init(cardData: Binding<PaymentCardData>) {
+    public init(cardData: Binding<PaymentCardData>, validationConfig: PaymentCardValidationConfig = PaymentCardValidationConfig()) {
         _cardData = cardData
+        _validationConfig = State(initialValue: validationConfig)
     }
 
     /// The name of the image for the current card type.
@@ -91,7 +94,7 @@ public struct PaymentCardInput: View {
             updateCardData()
         }
         .onChange(of: creditCardNumber) { value in
-            self.rawCardData.updateNumber(value)
+            self.rawCardData.updateNumber(value, config: self.validationConfig)
             self.creditCardNumber = self.rawCardData.card.number
 
             let validator = CreditCardValidator(self.creditCardNumber)
@@ -100,7 +103,7 @@ public struct PaymentCardInput: View {
             }
         }
         .onChange(of: cvc) { value in
-            self.rawCardData.updateCvc(value)
+            self.rawCardData.updateCvc(value, config: self.validationConfig)
             self.cvc = self.rawCardData.card.cvc
             
             if value.count == 0 {
@@ -117,7 +120,7 @@ public struct PaymentCardInput: View {
             expiryTextLen = value.count
             expiryDate = CreditCardFormatter.formatExpiryDate(value)
 
-            self.rawCardData.updateExpiry(value)
+            self.rawCardData.updateExpiry(value, config: self.validationConfig)
 
             if value.count == 5 {
                 focusedField = .cvc
