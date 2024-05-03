@@ -23,7 +23,7 @@ public struct PaymentCardInput: View {
     /// The final, validated payment card data.
     @Binding private var cardData: PaymentCardData
     
-    @State private var validationConfig: PaymentCardValidationConfig
+    @State private var fields: EnabledFields
 
     /// The style to be applied to this `PaymentCardInput` view, provided by the environment.
     @Environment(\.paymentCardInputStyle) private var style
@@ -39,9 +39,9 @@ public struct PaymentCardInput: View {
     /// Creates a new instance of `PaymentCardInput`.
     ///
     /// - Parameter cardData: A `Binding` to the final payment card data.
-    public init(cardData: Binding<PaymentCardData>, validationConfig: PaymentCardValidationConfig = PaymentCardValidationConfig()) {
+public init(cardData: Binding<PaymentCardData>, fields: EnabledFields = EnabledFields()) {
         _cardData = cardData
-        _validationConfig = State(initialValue: validationConfig)
+        _fields = State(initialValue: fields)
     }
 
     /// The name of the image for the current card type.
@@ -66,11 +66,11 @@ public struct PaymentCardInput: View {
                     MultiplatformNumberTextfield(text: $creditCardNumber, prompt: "4242 4242 4242 4242", label: "Card number")
                         .focused($focusedField, equals: .number)
                 ),
-                expiryField: validationConfig.validateExpiry ? AnyView(
+                expiryField: fields.validateExpiry ? AnyView(
                     MultiplatformNumberTextfield(text: $expiryDate, prompt: "MM/YY", label: "Expiry")
                         .focused($focusedField, equals: .expiry)
                     ) : AnyView(EmptyView()),
-                cvcField: validationConfig.validateCVC ? AnyView(
+                cvcField: fields.validateCVC ? AnyView(
                     MultiplatformNumberTextfield(text: $cvc, prompt: "CVC", label: "CVC")
                         .focused($focusedField, equals: .cvc)
                     ) : AnyView(EmptyView())
@@ -94,7 +94,7 @@ public struct PaymentCardInput: View {
             updateCardData()
         }
         .onChange(of: creditCardNumber) { value in
-            self.rawCardData.updateNumber(value, config: self.validationConfig)
+            self.rawCardData.updateNumber(value, fields: self.fields)
             self.creditCardNumber = self.rawCardData.card.number
 
             let validator = CreditCardValidator(self.creditCardNumber)
@@ -103,7 +103,7 @@ public struct PaymentCardInput: View {
             }
         }
         .onChange(of: cvc) { value in
-            self.rawCardData.updateCvc(value, config: self.validationConfig)
+            self.rawCardData.updateCvc(value, fields: self.fields)
             self.cvc = self.rawCardData.card.cvc
             
             if value.count == 0 {
@@ -120,7 +120,7 @@ public struct PaymentCardInput: View {
             expiryTextLen = value.count
             expiryDate = CreditCardFormatter.formatExpiryDate(value)
 
-            self.rawCardData.updateExpiry(value, config: self.validationConfig)
+            self.rawCardData.updateExpiry(value, fields: self.fields)
 
             if value.count == 5 {
                 focusedField = .cvc

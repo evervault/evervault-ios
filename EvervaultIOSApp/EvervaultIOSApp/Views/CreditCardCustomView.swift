@@ -11,12 +11,12 @@ import EvervaultInputs
 struct CreditCardCustomView: View {
     @State private var cardData = PaymentCardData()
     
-    private var validationConfig = PaymentCardValidationConfig(validateCardNumber: true, validateExpiry: false, validateCVC: false)
+    private var enabledFields = EnabledFields(validateCardNumber: true, validateExpiry: false, validateCVC: false)
     
     var body: some View {
         Form {
             Section("Payment card input") {
-                PaymentCardInput(cardData: $cardData, validationConfig: validationConfig).paymentCardInputStyle(<#T##S#>)
+                PaymentCardInput(cardData: $cardData, fields: enabledFields)
             }
             
             Section("Payment card data") {

@@ -8,7 +8,7 @@
 import Foundation
 
 /// Configuration for validating payment card data fields.
-public struct PaymentCardValidationConfig: Equatable {
+public struct EnabledFields: Equatable {
     var validateCardNumber: Bool = true
     var validateExpiry: Bool = true
     var validateCVC: Bool = true
