@@ -22,6 +22,7 @@ internal struct CreditCardValidator {
 
     private static let maxCvcLength = 3
     private static let maxCvcLengthAmex = 4
+    private static let allowedMonths = 1...12
 
     /// Create validation value
     /// - Parameter string: credit card number
@@ -101,6 +102,29 @@ internal struct CreditCardValidator {
         return cvc
             .trimmingCharacters(in: .whitespacesAndNewlines)
             .count == maxCvcLength(for: type)
+    }
+    
+    public static func isValidExpiry(expirationMonthNumber: String, expirationYearLastTwoDigits: String) -> Bool {
+        guard let monthNumber = Int(expirationMonthNumber), allowedMonths.contains(monthNumber) else {
+            return false
+        }
+                
+        guard let yearInCentury = Int(expirationYearLastTwoDigits) else {
+            return false
+        }
+                
+        return getExpirationDate(monthNumber: monthNumber, lastTwoDigitsOfYear: yearInCentury) >= Date()
+    }
+    
+    private static func getExpirationDate(monthNumber: Int, lastTwoDigitsOfYear: Int) -> Date {
+        let calendar = Calendar.current
+        let currentYear = calendar.component(.year, from: Date())
+        let currentCentury = currentYear - (currentYear % 100)
+        var components = DateComponents()
+        components.year = currentCentury + lastTwoDigitsOfYear
+        components.month = monthNumber
+        components.day = calendar.range(of: .day, in: .month, for: calendar.date(from: components)!)?.upperBound
+        return calendar.date(from: components)!
     }
 
     /// Validate string for credit card type

@@ -1,6 +1,5 @@
 import Foundation
 
-/// Configuration for validating payment card data fields.
 public struct EnabledFields: Equatable {
     var isCardNumberEnabled: Bool = true
     var isExpiryEnabled: Bool = true

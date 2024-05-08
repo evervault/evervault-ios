@@ -6,7 +6,7 @@ internal extension PaymentCardData {
         return "\(card.expMonth)/\(card.expYear)"
     }
 
-    init(number: String, cvc: String, expiry: String, fields: EnabledFields) {
+    init(number: String, cvc: String, expiry: String, fields: EnabledFields = EnabledFields()) {
         let validator = CreditCardValidator(number)
         self.card.type = validator.predictedType
         
@@ -33,14 +33,15 @@ internal extension PaymentCardData {
             self.card.expMonth = expiryParts.count > 0 ? String(expiryParts[0]).numbers : ""
             self.card.expYear = expiryParts.count > 1 ? String(expiryParts[1]).numbers : ""
         }
-        
-    
 
         let monthNumber = Int(self.card.expMonth)
-        let yearNumber = Int(self.card.expYear)
-
+        
         let actualType = validator.actualType
-        self.isValid = actualType != nil && validator.isValid && (!fields.isCVCEnabled ||  CreditCardValidator.isValidCvc(cvc: cvc, type: actualType!)) && (!fields.isExpiryEnabled || (monthNumber != nil && (1...12).contains(monthNumber!) && yearNumber != nil))
+        let isCardNumberValid = actualType != nil && validator.isValid && fields.isCardNumberEnabled
+        let isCVCValid = ((fields.isCVCEnabled && CreditCardValidator.isValidCvc(cvc: cvc, type: actualType!)) || (!fields.isCVCEnabled))
+        let isExpiryValid = ((fields.isExpiryEnabled && CreditCardValidator.isValidExpiry(expirationMonthNumber: self.card.expMonth, expirationYearLastTwoDigits: self.card.expYear)) || (!fields.isExpiryEnabled))
+        
+        self.isValid = isCardNumberValid && isExpiryValid && isCVCValid
         self.isPotentiallyValid = validator.isPotentiallyValid && (!fields.isExpiryEnabled || (monthNumber == nil || (1...12).contains(monthNumber!)))
         self.isEmpty = number.isEmpty && cvc.isEmpty && expiry.isEmpty
         self.fields = fields
