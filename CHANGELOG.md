@@ -1,5 +1,11 @@
 # evervault-ios
 
+## 1.1.5
+
+### Patch Changes
+
+- dcb959d: Bump attestation bindings dependancy
+
 ## 1.1.4
 
 ### Patch Changes
