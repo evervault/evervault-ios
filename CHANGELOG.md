@@ -1,5 +1,11 @@
 # evervault-ios
 
+## 1.1.4
+
+### Patch Changes
+
+- c4b1ffa: revert bindings change
+
 ## 1.1.3
 
 ### Patch Changes
