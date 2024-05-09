@@ -1,5 +1,11 @@
 # evervault-ios
 
+## 1.1.3
+
+### Patch Changes
+
+- 4649d8f: Fix invalid package checksum
+
 ## 1.1.2
 
 ### Patch Changes
