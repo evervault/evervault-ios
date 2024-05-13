@@ -48,7 +48,7 @@ let package = Package(
         ),
         .binaryTarget(
             name: "AttestationBindings",
-            url: "https://github.com/evervault/evervault-ios/releases/download/1.1.1/AttestationBindings.xcframework.zip",
+            url: "https://github.com/evervault/evervault-ios/releases/download/1.1.5/AttestationBindings.xcframework.zip",
             checksum: "444c0cb0baab41754d6052994e482e8f096befa7b40eb4e7f77fdcb1d0e52bc7"
         ),
         .testTarget(
