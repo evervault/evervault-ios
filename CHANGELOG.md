@@ -1,5 +1,11 @@
 # evervault-ios
 
+## 1.1.6
+
+### Patch Changes
+
+- 1f97de0: Fix attestation bindings fat binary
+
 ## 1.1.5
 
 ### Patch Changes
