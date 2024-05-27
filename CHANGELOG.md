@@ -1,5 +1,11 @@
 # evervault-ios
 
+## 1.2.0
+
+### Minor Changes
+
+- 0884b70: add data role support
+
 ## 1.1.6
 
 ### Patch Changes
