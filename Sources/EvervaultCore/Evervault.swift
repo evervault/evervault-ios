@@ -117,11 +117,11 @@ public class Evervault {
     /// Note that the encryption process is performed asynchronously using the `async` and `await` keywords. It's recommended to call this function from within an `async` context or use `await` when calling it.
     ///
     /// - Note: The Evervault iOS SDK documentation may provide more detailed information and additional examples.
-    public func encrypt(_ data: Any) async throws -> Any {
+    public func encrypt(_ data: Any, role: String? = nil) async throws -> Any {
         guard let client = client else {
             throw EvervaultError.initializationError
         }
-        return try await client.encrypt(data)
+        return try await client.encrypt(data, role: role)
     }
     
     /// Decrypts the provided data using the Evervault encryption service
@@ -204,11 +204,11 @@ fileprivate struct Client {
         )
     }
 
-    internal func encrypt(_ data: Any) async throws -> Any {
+    internal func encrypt(_ data: Any, role: String?) async throws -> Any {
         let cipher = try await cryptoLoader.loadCipher()
         let handlers = DataHandlers(encryptionService: cipher)
 
-        return try handlers.encrypt(data: data)
+        return try handlers.encrypt(data: data, role: role)
     }
         
     internal func decrypt<T>(token: String, data: Any) async throws -> T {

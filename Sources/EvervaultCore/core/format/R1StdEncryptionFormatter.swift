@@ -7,10 +7,7 @@ struct R1StdEncryptionFormatter: EncryptionFormatter {
     let isDebug: Bool
 
     func formatEncryptedData(dataType: DataType, keyIv: Data, encryptedData: String) -> String {
-
-        let evVersionPrefix = evVersion.data(using: .utf8)!.base64EncodedString().paddingRemoved
-
-        return "ev:\(isDebug ? "debug:" : "")\(evVersionPrefix)\(dataType != .string ? ":\(dataType.rawValue)" : ""):\(keyIv.base64EncodedString().paddingRemoved):\(publicKey.base64EncodedString().paddingRemoved):\(encryptedData.paddingRemoved):$"
+        return "ev:\(isDebug ? "debug:" : "")\(evVersion)\(dataType != .string ? ":\(dataType.rawValue)" : ""):\(keyIv.base64EncodedString().paddingRemoved):\(publicKey.base64EncodedString().paddingRemoved):\(encryptedData.paddingRemoved):$"
     }
 
     func formatFile(keyIv: Data, encryptedData: Data) -> Data {

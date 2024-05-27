@@ -4,8 +4,8 @@ import XCTest
 
 class R1StdEncryptionFormatterTest: XCTestCase {
 
-    let formatter = R1StdEncryptionFormatter(evVersion: "NOC", publicKey: Data(base64Encoded: "UEs=".data(using: .utf8)!)!, isDebug: false)
-    let everVaultVersionToUse = Data("NOC".utf8).base64EncodedString()
+    let formatter = R1StdEncryptionFormatter(evVersion: "QkTC", publicKey: Data(base64Encoded: "UEs=".data(using: .utf8)!)!, isDebug: false)
+    let everVaultVersionToUse = Data("QkTC".utf8).base64EncodedString()
 
     func testFormattingEncryptedDataMustReturnDataInCorrectFormat() {
 
