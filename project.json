@@ -17,7 +17,7 @@
   ],
   "manifest_display_name" : "Evervault",
   "name" : "Evervault",
-  "path" : "/Users/jeremywagemans/Evervault/evervault-ios",
+  "path" : "/Users/eoinpowermoran/Evervault/evervault-ios",
   "platforms" : [
     {
       "name" : "ios",
@@ -89,7 +89,7 @@
       ],
       "resources" : [
         {
-          "path" : "/Users/jeremywagemans/Evervault/evervault-ios/Sources/EvervaultInputs/Resources/nl.lproj/Localizable.strings",
+          "path" : "/Users/eoinpowermoran/Evervault/evervault-ios/Sources/EvervaultInputs/Resources/nl.lproj/Localizable.strings",
           "rule" : {
             "process" : {
               "localization" : "nl"
@@ -97,7 +97,7 @@
           }
         },
         {
-          "path" : "/Users/jeremywagemans/Evervault/evervault-ios/Sources/EvervaultInputs/Resources/en.lproj/Localizable.strings",
+          "path" : "/Users/eoinpowermoran/Evervault/evervault-ios/Sources/EvervaultInputs/Resources/en.lproj/Localizable.strings",
           "rule" : {
             "process" : {
               "localization" : "en"
@@ -105,7 +105,7 @@
           }
         },
         {
-          "path" : "/Users/jeremywagemans/Evervault/evervault-ios/Sources/EvervaultInputs/Resources/Assets.xcassets",
+          "path" : "/Users/eoinpowermoran/Evervault/evervault-ios/Sources/EvervaultInputs/Resources/Assets.xcassets",
           "rule" : {
             "process" : {
 
