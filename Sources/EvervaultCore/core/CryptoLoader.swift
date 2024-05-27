@@ -73,7 +73,9 @@ internal actor CryptoLoader {
             dataCipher: dataCipherFactory.createCipher(
                 ecdhTeamKey: teamKeyPublic,
                 derivedSecret: sharedKey,
-                config: config.encryption
+                config: config.encryption,
+                isDebug: isDebugMode,
+                ephemeralPublicKey: generatedEcdhKey
             ),
             config: config.encryption
         )
@@ -91,4 +93,5 @@ enum CryptoError: Error {
     case notPossibleToHandleDataType
     case exceededMaxFileSizeError(maxFileSizeInMB: Int)
     case encryptionFailed
+    case dataRolesNotSupportedForFiles
 }
