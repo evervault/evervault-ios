@@ -7,8 +7,8 @@ internal struct Crypto: EncryptionService {
     let dataCipher: DataCipher
     let config: EncryptionConfig
 
-    func encryptString(string: String, dataType: DataType) throws -> String {
-        try encrypt(data: string.data(using: .utf8)!) { encryptedData, keyIv in
+    func encryptString(string: String, role: String?, dataType: DataType) throws -> String {
+        try encrypt(dataType: dataType, data: string.data(using: .utf8)!, role: role) { encryptedData, keyIv in
             encryptionFormatter.formatEncryptedData(
                 dataType: dataType,
                 keyIv: keyIv,
@@ -17,12 +17,16 @@ internal struct Crypto: EncryptionService {
         }
     }
 
-    func encryptData(data: Data) throws -> Data {
+    func encryptData(data: Data, role: String?) throws -> Data {
+        if role != Optional.none {
+            throw CryptoError.dataRolesNotSupportedForFiles
+        }
+        
         guard data.count <= config.maxFileSizeInBytes else {
             throw CryptoError.exceededMaxFileSizeError(maxFileSizeInMB: config.maxFileSizeInMB)
         }
 
-        return try encrypt(data: data) { encryptedData, keyIv in
+        return try encrypt(dataType: Optional.none, data: data, role: Optional.none) { encryptedData, keyIv in
             encryptionFormatter.formatFile(
                 keyIv: keyIv,
                 encryptedData: encryptedData
@@ -30,8 +34,8 @@ internal struct Crypto: EncryptionService {
         }
     }
 
-    private func encrypt<T>(data: Data, format: (Data, Data) -> T) throws -> T {
-        let encryptedData = try dataCipher.encrypt(data: data)
+    private func encrypt<T>(dataType: DataType?, data: Data, role: String?, format: (Data, Data) -> T) throws -> T {
+        let encryptedData = try dataCipher.encrypt(data: data, role: role, dataType: dataType)
         return format(encryptedData.data, encryptedData.keyIv)
     }
 }

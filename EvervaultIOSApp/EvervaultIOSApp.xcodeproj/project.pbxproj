@@ -356,7 +356,6 @@
 				DEVELOPMENT_ASSET_PATHS = "\"EvervaultIOSApp/Preview Content\"";
 				DEVELOPMENT_TEAM = DUZ7NZ5T5Y;
 				ENABLE_PREVIEWS = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = EvervaultIOSApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

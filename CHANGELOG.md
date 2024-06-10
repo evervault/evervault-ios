@@ -1,5 +1,41 @@
 # evervault-ios
 
+## 1.2.0
+
+### Minor Changes
+
+- 0884b70: add data role support
+
+## 1.1.6
+
+### Patch Changes
+
+- 1f97de0: Fix attestation bindings fat binary
+
+## 1.1.5
+
+### Patch Changes
+
+- dcb959d: Bump attestation bindings dependancy
+
+## 1.1.4
+
+### Patch Changes
+
+- c4b1ffa: revert bindings change
+
+## 1.1.3
+
+### Patch Changes
+
+- 4649d8f: Fix invalid package checksum
+
+## 1.1.2
+
+### Patch Changes
+
+- 749510b: bumping attestation bindings version
+
 ## 1.1.1
 
 ### Patch Changes

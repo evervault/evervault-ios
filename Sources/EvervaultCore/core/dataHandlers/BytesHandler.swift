@@ -8,7 +8,7 @@ internal struct BytesHandler: DataHandler {
         data is Data
     }
 
-    func encrypt(data: Any, context: DataHandlerContext) throws -> Any {
-        try encryptionService.encryptData(data: data as! Data)
+    func encrypt(data: Any, role: String?, context: DataHandlerContext) throws -> Any {
+        try encryptionService.encryptData(data: data as! Data, role: role)
     }
 }

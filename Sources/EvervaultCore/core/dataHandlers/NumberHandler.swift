@@ -23,7 +23,7 @@ internal struct NumberHandler: DataHandler {
                !(data is Bool)
     }
 
-    func encrypt(data: Any, context: DataHandlerContext) throws -> Any {
-        try encryptionService.encryptString(string: String(describing: data), dataType: .number)
+    func encrypt(data: Any, role: String?, context: DataHandlerContext) throws -> Any {
+        try encryptionService.encryptString(string: String(describing: data), role: role, dataType: .number)
     }
 }
