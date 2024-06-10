@@ -38,7 +38,7 @@ internal extension PaymentCardData {
         
         let actualType = validator.actualType
         let isCardNumberValid = actualType != nil && validator.isValid && fields.isCardNumberEnabled
-        let isCVCValid = ((fields.isCVCEnabled && CreditCardValidator.isValidCvc(cvc: cvc, type: actualType!)) || (!fields.isCVCEnabled))
+        let isCVCValid = actualType != nil && ((fields.isCVCEnabled && CreditCardValidator.isValidCvc(cvc: cvc, type: actualType!)) || (!fields.isCVCEnabled))
         let isExpiryValid = ((fields.isExpiryEnabled && CreditCardValidator.isValidExpiry(expirationMonthNumber: self.card.expMonth, expirationYearLastTwoDigits: self.card.expYear)) || (!fields.isExpiryEnabled))
         
         self.isValid = isCardNumberValid && isExpiryValid && isCVCValid
