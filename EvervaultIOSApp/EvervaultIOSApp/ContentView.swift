@@ -40,6 +40,9 @@ struct ContentView: View {
                         .paymentCardInputStyle(CustomPaymentCardInputStyle())) {
                         Text("Custom Style")
                     }
+                    NavigationLink(destination: CreditCardCustomView()) {
+                        Text("Custom Card Only")
+                    }
                 }
                 
                Section("Enclaves") {
