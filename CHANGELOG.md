@@ -1,5 +1,11 @@
 # evervault-ios
 
+## 1.3.0
+
+### Minor Changes
+
+- 1a146d1: Support conditional rendering of card fields
+
 ## 1.2.0
 
 ### Minor Changes
