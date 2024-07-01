@@ -98,10 +98,14 @@ internal struct CreditCardValidator {
         }
     }
 
-    public static func isValidCvc(cvc: String, type: CreditCardType) -> Bool {
-        return cvc
-            .trimmingCharacters(in: .whitespacesAndNewlines)
-            .count == maxCvcLength(for: type)
+    public static func isValidCvc(cvc: String, type: CreditCardType?) -> Bool {
+        let trimmedCvc = cvc.trimmingCharacters(in: .whitespacesAndNewlines)
+            let cvcLength = trimmedCvc.count
+            if let cardType = type {
+                return cvcLength == maxCvcLength(for: cardType)
+            } else {
+                return cvcLength == 3 || cvcLength == 4
+            }
     }
     
     public static func isValidExpiry(expirationMonthNumber: String, expirationYearLastTwoDigits: String) -> Bool {

@@ -62,10 +62,10 @@ public init(cardData: Binding<PaymentCardData>, fields: EnabledFields = EnabledF
         AnyView(
             style.makeBody(configuration: PaymentCardInputStyleConfiguration(
                 cardImage: Image(cardImageName, bundle: Bundle.module),
-                cardNumberField: AnyView(
+                cardNumberField: fields.isCardNumberEnabled ? AnyView(
                     MultiplatformNumberTextfield(text: $creditCardNumber, prompt: "4242 4242 4242 4242", label: "Card number")
                         .focused($focusedField, equals: .number)
-                ),
+                    ) : AnyView(EmptyView()),
                 expiryField: fields.isExpiryEnabled ? AnyView(
                     MultiplatformNumberTextfield(text: $expiryDate, prompt: "MM/YY", label: "Expiry")
                         .focused($focusedField, equals: .expiry)

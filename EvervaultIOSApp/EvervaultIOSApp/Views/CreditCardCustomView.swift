@@ -4,7 +4,7 @@ import EvervaultInputs
 struct CreditCardCustomView: View {
     @State private var cardData = PaymentCardData()
 
-    private var enabledFields = EnabledFields(isCardNumberEnabled: true, isExpiryEnabled: false, isCVCEnabled: false)
+    private var enabledFields = EnabledFields(isCardNumberEnabled: true, isExpiryEnabled: false, isCVCEnabled: true)
 
     var body: some View {
         Form {
