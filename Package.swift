@@ -23,7 +23,11 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(url: "https://github.com/birdrides/mockingbird.git", .upToNextMinor(from: "0.20.0"))
+        .package(url: "https://github.com/birdrides/mockingbird.git", .upToNextMinor(from: "0.20.0")),
+        .package(
+            url: "https://github.com/evervault/evervault-pay.git",
+            from: "0.0.19"
+        ),
     ],
     targets: [
         .target(
@@ -34,6 +38,7 @@ let package = Package(
             name: "EvervaultInputs",
             dependencies: [
                 "EvervaultCore",
+                .product(name: "EvervaultPayment", package: "evervault-pay"),
             ],
             resources: [
                 .process("Resources")
