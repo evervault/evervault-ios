@@ -1,5 +1,11 @@
 # evervault-ios
 
+## 2.0.0
+
+### Major Changes
+
+- 8ce0bb7: Add Evervault Apple Pay to iOS SDK
+
 ## 1.3.0
 
 ### Minor Changes
