@@ -1,6 +1,15 @@
 {
   "pins" : [
     {
+      "identity" : "evervault-pay",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/evervault/evervault-pay.git",
+      "state" : {
+        "revision" : "d058bc450581bd4204dcc5eee1fb9a457cacffb1",
+        "version" : "0.0.20"
+      }
+    },
+    {
       "identity" : "mockingbird",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/birdrides/mockingbird.git",
