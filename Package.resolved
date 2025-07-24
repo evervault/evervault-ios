@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/evervault/evervault-pay.git",
       "state" : {
-        "revision" : "d058bc450581bd4204dcc5eee1fb9a457cacffb1",
-        "version" : "0.0.20"
+        "revision" : "da5e13cadb0db4b63dcedc4f4504058af85d7b09",
+        "version" : "0.0.21"
       }
     },
     {

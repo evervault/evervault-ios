@@ -26,7 +26,7 @@ let package = Package(
         .package(url: "https://github.com/birdrides/mockingbird.git", .upToNextMinor(from: "0.20.0")),
         .package(
             url: "https://github.com/evervault/evervault-pay.git",
-            from: "0.0.20"
+            from: "0.0.21"
         ),
     ],
     targets: [
