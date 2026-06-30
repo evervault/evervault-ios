@@ -61,7 +61,7 @@ public init(cardData: Binding<PaymentCardData>, fields: EnabledFields = EnabledF
     public var body: some View {
         AnyView(
             style.makeBody(configuration: PaymentCardInputStyleConfiguration(
-                cardImage: Image(cardImageName, bundle: Bundle.module),
+                cardImage: Image(cardImageName, bundle: Bundle.evervaultInputs),
                 cardNumberField: fields.isCardNumberEnabled ? AnyView(
                     MultiplatformNumberTextfield(text: $creditCardNumber, prompt: "4242 4242 4242 4242", label: "Card number")
                         .focused($focusedField, equals: .number)
