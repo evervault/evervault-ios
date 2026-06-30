@@ -27,6 +27,7 @@ jobs:
       with:
         title: 'New Release'
         commit: 'Release new version'
+        version: npm run version
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

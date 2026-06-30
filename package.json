@@ -2,6 +2,9 @@
   "name": "evervault-ios",
   "private": true,
   "version": "2.1.0",
+  "scripts": {
+    "version": "changeset version && node scripts/sync-podspec-version.js"
+  },
   "devDependencies": {
     "@changesets/cli": "^2.26.2"
   }
